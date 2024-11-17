@@ -1,8 +1,4 @@
 import streamlit as st
-st.write('connected')
-st.write ('correct')
-st.write ('hallo zusammen')
-
 import requests
 
 def get_club_players(club_id, season_id):
