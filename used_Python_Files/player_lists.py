@@ -8,6 +8,6 @@ from API_functions import get_age
 meta_player_list = []
 
 for club in club_id:
-    meta_player_list.append(get_club_players(club))
+    meta_player_list.extend(get_club_players(club))
 
 print(meta_player_list)
