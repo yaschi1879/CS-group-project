@@ -29,4 +29,4 @@ def get_profile(player_id):
     player_profile = response.json()
     return player_profile
 
-st.write(get_marketvalue(340950))
+st.write ('scheisse')
