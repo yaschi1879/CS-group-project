@@ -1,2 +1,2 @@
 import streamlit as st
-st.writ('ok')
+st.write('ok')

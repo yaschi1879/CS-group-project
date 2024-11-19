@@ -10,3 +10,4 @@ meta_player_list = []
 
 for club in club_id:
     meta_player_list.extend(get_club_players(club))
+
