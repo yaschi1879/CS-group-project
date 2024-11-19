@@ -51,3 +51,5 @@ def get_achievements(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
     response = requests.get(url)
     return response.json()
+
+get_club_players(31)
