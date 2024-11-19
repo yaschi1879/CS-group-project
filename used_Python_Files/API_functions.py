@@ -52,4 +52,4 @@ def get_achievements(player_id):
     response = requests.get(url)
     return response.json()
 
-get_club_players(31)
+print(get_club_players(31))
