@@ -1,5 +1,20 @@
 import requests
 
+def get_stadium_name(club_id):
+    url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
+    response = requests.get(url)
+    club_info = response.json()
+    stadium_name = club_info.get("stadiumName", False)
+    return stadium_name
+# gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
+
+def get_club_image(club_id):
+    url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
+    response = requests.get(url)
+    image = response.json()
+    return image["image"]
+# gibt url für club logo zrück
+
 def get_club_players(club_id, season_id="2024"):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/players"
     response = requests.get(url, season_id)
@@ -43,13 +58,6 @@ def get_club_name_user_input(club_name):
 # gibt den korrekten club namen als id zurück
 # club_name als string
 
-def get_club_image(club_id):
-    url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
-    response = requests.get(url)
-    image = response.json()
-    return image["image"]
-# gibt url für club logo zrück
-
 def get_player_name_user_input(player_name):
     url = f"https://transfermarkt-api.fly.dev/players/search/{player_name}"
     response = requests.get(url)
@@ -63,7 +71,7 @@ def get_league_name_user_input(competition_name):
     response = requests.get(url)
     league = response.json()
     return [i["id"] for i in league["results"]]
-# achtung: gibt eine liste aller ligen id's zurück, die z.B. zu super league passen      
+# achtung: gibt eine liste aller liga id's zurück, die z.B. zu super league passen    
 # competintion_name als string
 
 def get_league_id(club_id):
@@ -71,6 +79,7 @@ def get_league_id(club_id):
     response = requests.get(url)
     league = response.json()
     return league["league"]["id"]
+# gibt die Liga des clubs als id zurück
 
 def get_league_name(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
@@ -94,7 +103,9 @@ def get_marketvalue_history(player_id):
 def get_transfer_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/transfers"
     response = requests.get(url)
-    return response.json()
+    transfers = response.json()
+    return transfers["transfers"]
+# gibt liste der transfers zurück
 
 def get_stats(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/stats"
@@ -104,4 +115,5 @@ def get_stats(player_id):
 def get_achievements(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
     response = requests.get(url)
-    return response.json()
+    achievements = response.json()
+    return achievements["achievements"]
