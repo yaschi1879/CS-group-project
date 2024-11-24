@@ -9,8 +9,12 @@ player_list = []
 for club in club_id:
     player_list.extend(get_club_players(club))
 
-# dieser part ist für die erstellung der player_list
+# dieser part ist für die erstellung der player_list, dauert ein paar minuten
 # zuerst ausführen
+# -------------------------------------------------------------------------------
+# der part der jetzt kommt ist für die wahl eines spielers
+# immer separat ausführen, sonst wird der erste teil auch immer ausgeführt
+# für separat ausführen indem markieren und mit shift + enter ausführen
 
 import random
 from filter_criteria import check_player_criteria
