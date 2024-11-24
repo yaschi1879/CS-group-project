@@ -1,9 +1,10 @@
-from api_functions import get_age, get_marketvalue
+from api_functions import get_filter_criteria
 
 # diese funktion checkt, ob der spieler die kriterien für den schwierigkeitsgrad erfüllt
 def check_player_criteria(player_id, difficulty):
-    age = get_age(player_id)
-    market_value = get_marketvalue(player_id)
+    info = get_filter_criteria(player_id)
+    market_value = info[0]
+    age = info[1]
     
     if difficulty == "easy":
         if age < 30 and market_value >= 80:

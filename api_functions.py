@@ -27,7 +27,7 @@ def get_club_players(club_id, season_id="2024"):
 # gibt die jeweiligen Spieler ID's des Clubs als Liste zurück, mit default aktuelle Saison
 # club_id als integer, season_id als string
 
-def get_marketvalue(player_id):
+def get_filter_criteria(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/profile"
     response = requests.get(url)
     player_profile = response.json()
@@ -36,17 +36,9 @@ def get_marketvalue(player_id):
         market_value = float(market_value.replace("m", ""))
     elif "k" in market_value:
         market_value = float(market_value.replace("k", "")) / 1000
-    else:
-        market_value = float(market_value)
-    return market_value
+    age = int(player_profile["age"])
+    return [market_value, age]
 # gibt Markwert in mio als float zurück z.B. 10.34, Markwert ist in Euro
-# player_id als integer
-
-def get_age(player_id):
-    url = f"https://transfermarkt-api.fly.dev/players/{player_id}/profile"
-    response = requests.get(url)
-    player_profile = response.json()
-    return int(player_profile["age"])
 # gibt Alter als integer zurück
 # player_id als integer
 
