@@ -6,33 +6,38 @@ def check_player_criteria(player_id, difficulty):
     market_value = info[0]
     age = info[1]
     
-    if difficulty == "easy":
-        if age < 30 and market_value >= 80:
+    if market_value == "not_availabe":
+        return False
+    
+    elif difficulty == "no":
+        return True
+    
+    elif difficulty == "easy":
+        if age < 30 and market_value >= 65:
             return True
         elif 30 <= age <= 32 and market_value >= 30:
             return True
         elif age > 32 and market_value >= 25:
             return True
+        else:
+            return False
 
     elif difficulty == "medium":
-        if age < 30 and 40 <= market_value < 80:
+        if age < 30 and 40 <= market_value < 65:
             return True
         elif 30 <= age <= 32 and 20 <= market_value < 30:
             return True
         elif age > 32 and 10 <= market_value < 25:
             return True
+        else:
+            return False
 
     elif difficulty == "difficult":
-        if age < 30 and market_value < 40:
+        if age < 30 and market_value < 30:
             return True
         elif 30 <= age <= 32 and market_value < 15:
             return True
         elif age > 32 and market_value < 10:
             return True
-
-# falls kein schwierigkeitsgrad ausgewählt ist
-    else:
-        return True
-
-# falls die kriterien nicht erfüllt werden
-    return False
+        else:
+            return False

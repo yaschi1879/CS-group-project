@@ -67,13 +67,10 @@ def player_dictionary(player_id):
     
     player_dictionary["old_stadium"] = stadium_name(player_id)
     player_dictionary["foot"] = profile["foot"]
-    player_dictionary["outfitter"] = profile["outfitter"]
     player_dictionary["joined_date"] = profile["club"]["joined"]
     # werden als Startpunkt verwendet
     
     return player_dictionary
-
-print(player_dictionary(139208))
 
 #def player_regression(player_id):
     

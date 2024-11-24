@@ -32,13 +32,18 @@ def get_filter_criteria(player_id):
     response = requests.get(url)
     player_profile = response.json()
     market_value = player_profile["marketValue"].replace("€", "")
-    if "m" in market_value:
-        market_value = float(market_value.replace("m", ""))
-    elif "k" in market_value:
-        market_value = float(market_value.replace("k", "")) / 1000
+    if "marketValue" in player_profile:
+        market_value = player_profile["marketValue"].replace("€", "")
+        if "m" in market_value:
+            market_value = float(market_value.replace("m", ""))
+        elif "k" in market_value:
+            market_value = float(market_value.replace("k", "")) / 1000
+    else:
+        market_value = "not_available"
     age = int(player_profile["age"])
     return [market_value, age]
 # gibt Markwert in mio als float zurück z.B. 10.34, Markwert ist in Euro
+# falls kein market value vorhanden, wird "not_available" zurückgegeben
 # gibt Alter als integer zurück
 # player_id als integer
 
