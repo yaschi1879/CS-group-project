@@ -8,12 +8,13 @@ def get_stadium_name(club_id):
     return stadium_name
 # gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
 
-def get_club_image(club_id):
+def get_club(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
-    image = response.json()
-    return image["image"]
-# gibt url für club logo zrück
+    club = response.json()
+    return [club["name"], club["image"]]
+# gibt club name als item 0 zrück
+# gibt url für club logo als item 1 zrück
 
 def get_club_players(club_id, season_id="2024"):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/players"
@@ -71,19 +72,14 @@ def get_league_name_user_input(competition_name):
 # achtung: gibt eine liste aller liga id's zurück, die z.B. zu super league passen    
 # competintion_name als string
 
-def get_league_id(club_id):
+def get_league(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
     league = response.json()
-    return league["league"]["id"]
-# gibt die Liga des clubs als id zurück
-
-def get_league_name(club_id):
-    url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
-    response = requests.get(url)
-    league = response.json()
-    return league["league"]["name"]
-# gibt Lige des Clubs als name zurück
+    return [league["league"]["id"], league["league"]["name"]]
+# gibt die Liga des clubs als Liste zrück
+# item = 0 -> Liga ID
+# item = 1 -> Liga Name
 
 # geben jeweils 1 zu 1 das von API wieder:
 # player_id als integer

@@ -20,7 +20,7 @@ import random
 from filter_criteria import check_player_criteria
 from player_data import player_dictionary
  
-difficulty = "medium"
+difficulty = "no"
 # Schwierigkeit kann easy, medium oder difficult oder no für keine schwierigkeit sein
 selected_player = False
 

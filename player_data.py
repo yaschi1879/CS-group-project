@@ -1,5 +1,5 @@
 import random
-from api_functions import get_profile, get_league_id, get_club_image, get_transfer_history, get_achievements, get_stadium_name
+from api_functions import get_profile, get_league, get_club, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
     if "Goalkeeper" in position:
@@ -37,16 +37,19 @@ def stadium_name(player_id):
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
     random_club = random.choice(old_clubs)
     stadium_name = get_stadium_name(random_club)
-    while not stadium_name:
+    while not stadium_name and len(old_clubs) != 0:
         old_clubs.remove(random_club)
         random_club = random.choice(old_clubs)
         stadium_name = get_stadium_name(random_club)
+    if len(old_clubs) == 0:
+        return "no old stadium"
     return stadium_name
 # gibt den stadion namen eines zufälligen alten clubs zurück
 
 def player_dictionary(player_id):
     player_dictionary = {}
     profile = get_profile(player_id)
+    league = get_league(profile["club"]["id"])
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
     player_dictionary["age"] = int(profile["age"])
@@ -59,10 +62,12 @@ def player_dictionary(player_id):
     # falls der spieler keine andere positionen hat, bleibt es bei der Hauptposition
     player_dictionary["shirt_number"] = profile["shirtNumber"].replace("#", "")
     player_dictionary["club_id"] = profile["club"]["id"]
-    player_dictionary["club_image"] = get_club_image(profile["club"]["id"])
-    player_dictionary["league_id"] = get_league_id(profile["club"]["id"])
-    player_dictionary["old_clubs"] = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
-    # gibt die club id's aller ehemaligen clubs zurück
+    player_dictionary["club_name"] = get_club(profile["club"]["id"])[0]
+    player_dictionary["club_image"] = get_club(profile["club"]["id"])[1]
+    player_dictionary["league_id"] = league[0]
+    player_dictionary["league_name"] = league[1]
+    player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
+    # gibt die club id's aller ehemaligen clubs als liste zurück
     player_dictionary["titels"] = sort_titles(player_id)
     
     player_dictionary["old_stadium"] = stadium_name(player_id)
@@ -71,6 +76,3 @@ def player_dictionary(player_id):
     # werden als Startpunkt verwendet
     
     return player_dictionary
-
-#def player_regression(player_id):
-    
