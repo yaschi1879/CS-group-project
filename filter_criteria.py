@@ -1,6 +1,8 @@
 from api_functions import get_filter_criteria
 
 # diese funktion checkt, ob der spieler die kriterien für den schwierigkeitsgrad erfüllt
+# falls ja, gibt funktion true zrück, falls nein false
+
 def check_player_criteria(player_id, difficulty):
     info = get_filter_criteria(player_id)
     market_value = info[0]
@@ -10,7 +12,14 @@ def check_player_criteria(player_id, difficulty):
         return False
     
     elif difficulty == "none":
-        return True
+        if age < 26 and market_value < 10:
+            return False
+        elif 26 <= age < 30 and market_value < 5:
+            return False
+        elif 30 <= age and market_value < 1:
+            return False
+        else:
+            return True
     
     elif difficulty == "easy":
         if age < 26 and market_value >= 80:

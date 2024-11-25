@@ -23,10 +23,9 @@ difficulty = "none"
 # Schwierigkeit kann easy, medium oder difficult oder none für keine schwierigkeit sein
 selected_player = False
 
-# Solange ein Spieler gefunden wird, der die Kriterien erfüllt, random einen Spieler auswählen
+# Solange ein Spieler kein gefunden wird, der die Kriterien erfüllt, werden zufällig weitere Spieler ausgewählt
 while not selected_player:
     player = random.choice(player_list)
-
     if check_player_criteria(player, difficulty):
         selected_player = player
     else:
