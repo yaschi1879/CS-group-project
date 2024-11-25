@@ -8,7 +8,7 @@ def classify_position(position):
         return "Defender"
     elif "Midfield" in position:
         return "Midfielder"
-    elif "Winger" in position or "Forward" in position:
+    elif "Winger" in position or "Forward" in position or "Striker" in position:
         return "Striker"
 # sortiert die Positionen zu: Goalkeeper, Defender, Midfielder und Striker
     
@@ -50,13 +50,16 @@ def player_dictionary(player_id):
     player_dictionary = {}
     profile = get_profile(player_id)
     league = get_league(profile["club"]["id"])
+    
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
     player_dictionary["age"] = int(profile["age"])
     player_dictionary["height"] = int(float(profile["height"].replace(",", ".").replace("m", "")) * 100)
+    # gibt grösse in centimeter als integer zurück
     player_dictionary["image"] = profile["imageURL"]
     player_dictionary["country"] = profile["citizenship"][0]
     player_dictionary["classified_position"] = classify_position(profile["position"]["main"])
+    # gibt klassifizierte position zurück
     player_dictionary["position"] = [profile["position"]["main"]] + profile["position"].get("other", [])
     # achtung!!! gibt mehrere positionen als liste zurück
     # falls der spieler keine andere positionen hat, bleibt es bei der Hauptposition
