@@ -9,7 +9,7 @@ def check_player_criteria(player_id, difficulty):
     if market_value == "not_availabe":
         return False
     
-    elif difficulty == "no":
+    elif difficulty == "none":
         return True
     
     elif difficulty == "easy":

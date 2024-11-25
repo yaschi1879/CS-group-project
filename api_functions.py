@@ -32,7 +32,6 @@ def get_filter_criteria(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/profile"
     response = requests.get(url)
     player_profile = response.json()
-    market_value = player_profile["marketValue"].replace("€", "")
     if "marketValue" in player_profile:
         market_value = player_profile["marketValue"].replace("€", "")
         if "m" in market_value:
