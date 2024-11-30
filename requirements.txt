@@ -1,3 +1,5 @@
 streamlit
 requests
-random
+python-dateutil
+pandas
+scikit-learn
