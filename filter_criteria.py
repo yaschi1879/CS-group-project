@@ -46,11 +46,11 @@ def check_player_criteria(player_id, difficulty):
             return False
 
     elif difficulty == "difficult":
-        if age < 26 and market_value <= 50:
+        if age < 26 and 10 <= market_value <= 50:
             return True
-        elif 26 <= age <= 30 and market_value < 40:
+        elif 26 <= age <= 30 and 5 <= market_value < 40:
             return True
-        elif 30 < age <= 33 and market_value < 15:
+        elif 30 < age <= 33 and 1 <= market_value < 15:
             return True
         elif age > 33 and market_value <= 3:
             return True
