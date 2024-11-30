@@ -102,7 +102,7 @@ def get_transfer_history(player_id):
 def get_stats(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/stats"
     response = requests.get(url)
-    return response.json()
+    return response.json()["stats"]
 
 def get_achievements(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
