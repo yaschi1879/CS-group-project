@@ -11,7 +11,7 @@ def time_left(contract, reference_date):
     months = difference.years * 12 + difference.months
     return months
 
-def last_transfer_value(values, reference_date):
+def last_market_value(values, reference_date):
     date_reference = datetime.strptime(reference_date, "%Y-%m-%d")
     last_update = None
     for value in values:
@@ -28,9 +28,9 @@ def last_transfer_value(values, reference_date):
         return "n.a."
     return market_value
 
-def diff_market_value(player_id, reference_date, sec_reference_date):
-    market_value_1 = last_transfer_value(player_id, reference_date)
-    market_value_2 = last_transfer_value(player_id, sec_reference_date)
+def diff_market_value(values, reference_date, sec_reference_date):
+    market_value_1 = last_market_value(values, reference_date)
+    market_value_2 = last_market_value(values, sec_reference_date)
     if market_value_1 == "n.a." or market_value_2 == "n.a.":
         return "n.a."
     return market_value_1 - market_value_2
@@ -67,7 +67,7 @@ def minutes_played(player_id, reference_date):
     
 def training_dictionary(player_id):
     profile = get_profile(player_id)
-    history = get_marketvalue_history(player_id)["marketValueHistory"]
+    values = get_marketvalue_history(player_id)
     reference_date = "2024-07-01"
     sec_reference_date = "2023-12-01"
     dict = {}
@@ -77,8 +77,8 @@ def training_dictionary(player_id):
     dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
     dict["o30"] = calculate_age(profile["dateOfBirth"], reference_date) > 30
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
-    dict["market_value_t"] = last_transfer_value(history, reference_date)
-    dict["diff_market_value"] = diff_market_value(player_id, reference_date, sec_reference_date)
+    dict["market_value_t"] = last_market_value(values, reference_date)
+    dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
     dict["min_europacup"] = minutes_played(player_id, reference_date)
     return dict
     
@@ -92,7 +92,7 @@ def forecast_dictionary(player_id):
     dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
     dict["o30"] = calculate_age(profile["dateOfBirth"], reference_date) > 30
     dict["time_left"] = time_left(profile["club"]["contractExpires"], reference_date)
-    dict["marketValue"] = last_transfer_value(history, reference_date)
+    dict["marketValue"] = last_market_value(history, reference_date)
     dict["diff_marketValue"] = diff_market_value(player_id, reference_date, sec_reference_date)
     dict["min_europacup"] = minutes_played(player_id, reference_date)
     return dict

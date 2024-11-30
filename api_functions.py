@@ -90,7 +90,7 @@ def get_profile(player_id):
 def get_marketvalue_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/market_value"
     response = requests.get(url)
-    return response.json()
+    return response.json()["marketValueHistory"]
 
 def get_transfer_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/transfers"

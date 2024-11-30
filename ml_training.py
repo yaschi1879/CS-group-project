@@ -59,5 +59,6 @@ print("Coefficients:", model.coef_)
 # 6. Ergebnisse in einem DataFrame ausgeben
 coef_df = pd.DataFrame({
     "Feature": X.columns,
-    "Coefficient": model.coef_})
+    "Coefficient": model.coef_
+    })
 print(coef_df)
