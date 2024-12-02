@@ -1,5 +1,5 @@
 import random
-from b_utils.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
+from a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
     if "Goalkeeper" in position:
