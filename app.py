@@ -5,16 +5,15 @@ from a_pages import who_am_i
 
 
 # Sidebar mit Navigationsoptionen
-st.sidebar.title("Navigation")
-option = st.sidebar.radio(
-    "Wählen Sie eine Option:",
-    ("Homepage", "Searchbar", "Game")
-)
+st.set_page_config(page_title="Application", layout="wide")
 
-# Für jede Option in der Navigation Inhalte widergeben
-if option == "Homepage":
+# Création des onglets
+selected_page = st.sidebar.radio("Menu", ["Home Page", "Searchbar", "Who am I"])
+
+# Affichage conditionnel des pages
+if selected_page == "Home Page":
     home_page()
-elif option == "Searchbar":
+elif selected_page == "Searchbar":
     searchbar()
-elif option == "Game":
+elif selected_page == "Who am I":
     who_am_i()
