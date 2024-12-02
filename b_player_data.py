@@ -1,5 +1,5 @@
 import random
-from api_functions import get_profile, get_league, get_club, get_transfer_history, get_achievements, get_stadium_name
+from a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
     if "Goalkeeper" in position:
@@ -65,8 +65,7 @@ def player_dictionary(player_id):
     # falls der spieler keine andere positionen hat, bleibt es bei der Hauptposition
     player_dictionary["shirt_number"] = profile["shirtNumber"].replace("#", "")
     player_dictionary["club_id"] = profile["club"]["id"]
-    player_dictionary["club_name"] = get_club(profile["club"]["id"])[0]
-    player_dictionary["club_image"] = get_club(profile["club"]["id"])[1]
+    player_dictionary["club_name"] = profile["club"]["name"]
     player_dictionary["league_id"] = league[0]
     player_dictionary["league_name"] = league[1]
     player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in get_transfer_history(player_id)]

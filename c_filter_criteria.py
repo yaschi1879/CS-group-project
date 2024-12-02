@@ -1,4 +1,4 @@
-from api_functions import get_filter_criteria
+from a_api_functions import get_filter_criteria
 
 # diese funktion checkt, ob der spieler die kriterien für den schwierigkeitsgrad erfüllt
 # falls ja, gibt funktion true zrück, falls nein false

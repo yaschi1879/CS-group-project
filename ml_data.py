@@ -1,4 +1,4 @@
-from api_functions import get_profile, get_marketvalue_history, get_stats, get_filter_criteria
+from a_api_functions import get_profile, get_marketvalue_history, get_stats, get_filter_criteria
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 

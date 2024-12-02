@@ -8,14 +8,6 @@ def get_stadium_name(club_id):
     return stadium_name
 # gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
 
-def get_club(club_id):
-    url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
-    response = requests.get(url)
-    club = response.json()
-    return [club["name"], club["image"]]
-# gibt club name als item 0 zrück
-# gibt url für club logo als item 1 zrück
-
 def get_club_players(club_id, season_id="2024"):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/players"
     response = requests.get(url, season_id)
