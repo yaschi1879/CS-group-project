@@ -1,7 +1,7 @@
+import streamlit as st
 from b_player_data import player_dictionary
 from d_game_initialize import generate_player_list, start_game
-
-
+from c_filter_criteria import check_player_criteria
 
 player_data = {
     "name": "Lionel Messi",
@@ -15,11 +15,6 @@ player_data = {
     "shirt_number": 10,
     "height": 170
 }
-
-# Game variables
-POINTS = 50
-LIVES = 3
-
 
 # List of predetermined questions
 QUESTIONS = [
@@ -67,13 +62,8 @@ def ask_user_for_question():
         except ValueError:
             print("\nPlease submit a valid number.\n")
 
-
-
-
-
 def process_question(player_data, question_index, user_input):
     # processes the question and returns an answer if the Information is right or wrong
-    points_deduction = 2
 
     if question_index == 0:  # "Am I currently playing for ...?"
         is_correct = user_input.lower() == player_data["current_club"].lower()
@@ -100,11 +90,7 @@ def process_question(player_data, question_index, user_input):
     else:
         return False, 0 
     
-    return is_correct, points_deduction
-
-
-
-
+    return is_correct
 
 def guess_player(player_data, lives):
     #here the user is asked if he/she wants to guess the player already oder not
@@ -125,59 +111,3 @@ def guess_player(player_data, lives):
     
     print("\nYou chose not to guess.")
     return lives, False, False #No guess taken and game goes on 
-
-
-
-
-
-def play_game(player_data):
-    lives = LIVES #access to the global points and lives
-    points = POINTS
-
-    print(f"Welcome to Who am I -- Football Edition!")
-    print(f"You have {points} points and {lives} lives. Let us begin!")
-
-    while points > 0 and lives > 0:
-        # User selects a question
-        question_index, user_input = ask_user_for_question()
-
-        #working on the question
-        is_correct, points_deduction = process_question(player_data, question_index, user_input)
-
-        #here the points are deducted if the Question was wrong 
-        if not is_correct:
-            points -= points_deduction
-            print(f"\nWrong answer! You lost {points_deduction} points.")
-        else:
-            print("\nCorrect! Well done!")
-        
-        print(f"\nPoints remaining: {points}, Lives remaining: {lives}")
-
-        #Guessing the player or not 
-        lives, game_won, game_lost = guess_player(player_data, lives)
-
-        if game_won:
-            print("\nYou won the Game")
-            break #game will be ended
-
-
-        if game_lost:
-            print("\nGame Over!") #game ends because of no more lives left
-            break
-
-        
-play_game(player_data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

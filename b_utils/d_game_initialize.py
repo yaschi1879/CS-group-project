@@ -1,4 +1,3 @@
-import random
 import streamlit as st
 from a_api_functions import get_club_players
 from c_filter_criteria import check_player_criteria
@@ -19,17 +18,18 @@ def generate_player_list(club_list):
 
 print(generate_player_list(club_list_test))
 
-def start_game(player_list, difficulty):
-    selected_player = False
-    while not selected_player:
-        player = random.choice(player_list)
-        if check_player_criteria(player, difficulty):
-            selected_player = player
-        else:
-            player_list.remove(player)
-
 def initialize_player_lists():
     if "original_player_list" not in st.session_state:
         st.session_state["original_player_list"] = []
     if "current_player_list" not in st.session_state:
         st.session_state["current_player_list"] = []
+
+def start_game(original_player_list, difficulty):
+    selected_player = False
+    current_player_list = original_player_list
+    while not selected_player:
+        player = random.choice(current_player_list)
+        if check_player_criteria(player, difficulty):
+            selected_player = player
+        else:
+            current_player_list.remove(player)
