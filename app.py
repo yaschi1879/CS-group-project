@@ -17,7 +17,7 @@ page = st.sidebar.radio("Select a page", options=list(pages.keys()))
 
 # Define functions for each page
 def load_home_page():
-    import a_pages.home_page
+    from a_pages import home_page
 
 def load_game_page():
     import a_pages.who_am_i
