@@ -17,7 +17,7 @@ if st.button("Start Game"):
     st.write("Game has started with player:", selected_player['name'])
 
 # Code Lars hier eingefügt!!!
-def test():
+def who_am_i():
     # Create a centered layout
     col1, col2, col3, col4, col5 = st.columns([3, 2, 3, 2, 3])  # The middle column takes up the majority of the space
 

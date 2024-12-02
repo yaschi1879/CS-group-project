@@ -1,6 +1,6 @@
 import streamlit as st
 
-def test():
+def searchbar():
     st.header("Search Engine")
 
     col1, col2 = st.columns([3,1])
