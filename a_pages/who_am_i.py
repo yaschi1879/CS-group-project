@@ -11,6 +11,13 @@ original_player_list = st.session_state["original_player_list"]
 # ---------------------------------------------------------------------------------------
 
 
+if st.button("Start Game"):
+    players = get_player_list(difficulty)
+    selected_player = start_game(players, difficulty)
+    st.session_state.selected_player = selected_player
+    st.write("Game has started with player:", selected_player['name'])
+
+# Code Lars hier eingefügt!!!
 def test():
     # Create a centered layout
     col1, col2, col3, col4, col5 = st.columns([3, 2, 3, 2, 3])  # The middle column takes up the majority of the space
