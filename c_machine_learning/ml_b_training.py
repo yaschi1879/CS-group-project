@@ -47,7 +47,7 @@ X = data_frame_clean.drop(columns=["market_value_t+1"]).astype(float)
 X = sm.add_constant(X)
 
 # Aufteilung in Trainings- und Testdaten
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # Statsmodels-Modell fitten
 model = sm.OLS(y_train, X_train)
