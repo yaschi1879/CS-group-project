@@ -196,3 +196,5 @@ def who_am_i():
                     st.error("❌ Game over! You've used up all your lives.")
         else:
             st.error("❌ No lives left! Restart the app to try again.")
+
+who_am_i()
