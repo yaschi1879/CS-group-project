@@ -1,5 +1,5 @@
 import streamlit as st
-from b_utils.d_game_initialize import initialize_player_lists, generate_player_list, club_list_test
+from b_coding.d_game_initialize import initialize_player_lists, generate_player_list, club_list_test
 
 st.title("Welcome to Who am I?")
 st.write("Start the game by navigating to the game page.")

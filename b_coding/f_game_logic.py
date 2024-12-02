@@ -1,7 +1,7 @@
 import streamlit as st
 import random
-from b_utils.e_game_functions import ask_user_for_question, process_question, guess_player
-from b_utils.c_filter_criteria import check_player_criteria
+from b_coding.e_game_functions import ask_user_for_question, process_question, guess_player
+from b_coding.c_filter_criteria import check_player_criteria
 
 def play_game(original_player_list, difficulty):
     # Game variables

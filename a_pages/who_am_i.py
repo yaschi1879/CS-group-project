@@ -1,11 +1,11 @@
 import streamlit as st
-from b_utils.d_game_initialize import initialize_player_lists, generate_player_list, club_list, club_list_test
+from b_coding.d_game_initialize import initialize_player_lists, generate_player_list, club_list, club_list_test
 
 initialize_player_lists()
 if not st.session_state["original_player_list"]:
     st.warning("The player list has not been generated yet. Generating now...")
     st.session_state["original_player_list"] = generate_player_list(club_list_test)
-    st.success("The player list was successfully generated!")   
+    st.success("The player list has successfully been generated!")   
 original_player_list = st.session_state["original_player_list"]
 # nicht rauslöschen, ist wichtig fürs spiel, muss ganz am anfang der seite sein
 # ---------------------------------------------------------------------------------------

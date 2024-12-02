@@ -1,4 +1,4 @@
-from b_utils.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
+from b_coding.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -19,13 +19,13 @@ def last_market_value(values, reference_date):
         if value_date < date_reference:
             if last_update is None or value_date > datetime.strptime(last_update["date"], "%b %d, %Y"):
                 last_update = value
+    if last_update is None:
+        return "n.a."
     market_value =  last_update["value"].replace("€", "")
     if "m" in market_value:
         market_value = float(market_value.replace("m", ""))
     elif "k" in market_value:
         market_value = float(market_value.replace("k", "")) / 1000
-    if last_update is None:
-        return "n.a."
     return market_value
 
 def diff_market_value(values, reference_date, sec_reference_date):
@@ -46,14 +46,14 @@ def calculate_age(birth_date, reference_date):
 def training_dictionary(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
-    reference_date = "2024-07-01"
-    sec_reference_date = "2023-12-01"
+    reference_date = "2023-12-01"
+    sec_reference_date = "2022-12-01"
     dict = {}
     print(player_id)
     dict["market_value_t+1"] = get_filter_criteria(player_id)[0]
-    dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
-    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and not profile["position"]["main"] == "Goalkeeper"
-    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) > 34 and profile["position"]["main"] == "Goalkeeper"
+    dict["u25"] = calculate_age(profile["dateOfBirth"], reference_date) <= 25
+    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) >= 30 and not profile["position"]["main"] == "Goalkeeper"
+    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) >= 34 and profile["position"]["main"] == "Goalkeeper"
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
     dict["market_value_t"] = last_market_value(values, reference_date)
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
@@ -61,14 +61,14 @@ def training_dictionary(player_id):
     
 def forecast_dictionary(player_id):
     profile = get_profile(player_id)
-    history = get_marketvalue_history(player_id)["marketValueHistory"]
+    values = get_marketvalue_history(player_id)["marketValueHistory"]
     reference_date = "2024-12-01"
-    sec_reference_date = "2024-07-01"
+    sec_reference_date = "2023-12-01"
     dict = {}
-    dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
-    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and not profile["position"]["main"] == "Goalkeeper"
-    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) > 34 and profile["position"]["main"] == "Goalkeeper"
-    dict["time_left"] = time_left(profile["club"]["contractExpires"], reference_date)
-    dict["marketValue"] = last_market_value(history, reference_date)
-    dict["diff_marketValue"] = diff_market_value(player_id, reference_date, sec_reference_date)
+    dict["u25"] = calculate_age(profile["dateOfBirth"], reference_date) <= 25
+    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) >= 30 and not profile["position"]["main"] == "Goalkeeper"
+    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) >= 34 and profile["position"]["main"] == "Goalkeeper"
+    dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
+    dict["market_value_t"] = last_market_value(values, reference_date)
+    dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
     return dict
