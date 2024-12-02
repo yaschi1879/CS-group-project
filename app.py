@@ -1,20 +1,38 @@
 import streamlit as st
-from a_pages.home_page import home_page
-from a_pages.searchbar import searchbar
-from a_pages.who_am_i import who_am_i
+# Page title
+st.set_page_config(page_title="Who Am I? Game", page_icon="⚽")
 
+# Sidebar for page navigation
+st.sidebar.title("Navigation")
+pages = {
+    "Home": "home_page",
+    "Game": "who_am_i",
+    "Leaderboard": "leaderboard",
+    "Search": "searchbar"
+}
 
+# Page selection in sidebar
+page = st.sidebar.radio("Select a page", options=list(pages.keys()))
 
-# Sidebar mit Navigationsoptionen
-st.set_page_config(page_title="Application", layout="wide")
+# Define functions for each page
+def load_home_page():
+    from a_pages import home_page
 
-# Création des onglets
-selected_page = st.sidebar.radio("Menu", ["Home Page", "Searchbar", "Who am I"])
+def load_game_page():
+    import a_pages.who_am_i
 
-# Affichage conditionnel des pages
-if selected_page == "Home Page":
-    home_page()
-elif selected_page == "Searchbar":
-    searchbar()
-elif selected_page == "Who am I":
-    who_am_i()
+def load_leaderboard_page():
+    import a_pages.leaderboard
+
+def load_search_page():
+    import a_pages.searchbar
+
+# Call the appropriate function based on the selected page
+if page == "Home":
+    load_home_page()
+elif page == "Game":
+    load_game_page()
+elif page == "Leaderboard":
+    load_leaderboard_page()
+elif page == "Search":
+    load_search_page()
