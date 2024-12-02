@@ -1,5 +1,5 @@
 import streamlit as st
-from b_utils.d_game_initialize import initialize_player_lists
+from b_utils.d_game_initialize import initialize_player_lists, generate_player_list, club_list, club_list_test
 
 initialize_player_lists()
 if not st.session_state["original_player_list"]:
@@ -9,14 +9,6 @@ if not st.session_state["original_player_list"]:
 original_player_list = st.session_state["original_player_list"]
 # nicht rauslöschen, ist wichtig fürs spiel, muss ganz am anfang der seite sein
 # ---------------------------------------------------------------------------------------
-
-difficulty = st.selectbox("Select Difficulty", options=["none", "easy", "medium", "difficult"])
-
-if st.button("Start Game"):
-    players = get_player_list(difficulty)
-    selected_player = start_game(players, difficulty)
-    st.session_state.selected_player = selected_player
-    st.write("Game has started with player:", selected_player['name'])
 
 
 def test():
