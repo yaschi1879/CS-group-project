@@ -10,7 +10,6 @@ original_player_list = st.session_state["original_player_list"]
 # nicht rauslöschen, ist wichtig fürs spiel, muss ganz am anfang der seite sein
 # ---------------------------------------------------------------------------------------
 
-
 if st.button("Start Game"):
     players = get_player_list(difficulty)
     selected_player = start_game(players, difficulty)
