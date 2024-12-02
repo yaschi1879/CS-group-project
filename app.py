@@ -1,7 +1,8 @@
 import streamlit as st
-from a_pages import home_page
-from a_pages import searchbar
-from a_pages import who_am_i
+from a_pages.home_page import home_page
+from a_pages.searchbar import searchbar
+from a_pages.who_am_i import who_am_i
+
 
 
 # Sidebar mit Navigationsoptionen
