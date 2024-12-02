@@ -3,7 +3,7 @@ from b_coding.d_game_initialize import initialize_player_lists, generate_player_
 
 st.title("Welcome to Who am I?")
 st.write("Start the game by navigating to the game page.")
-
+st.write ("hello")
 
 
 # alles (von anfang an, bis hier) vor dem strich kann verändert werden
