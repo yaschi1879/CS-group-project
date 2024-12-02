@@ -1,7 +1,7 @@
 import streamlit as st
 import random
-from e_game_functions import LIVES, POINTS, ask_user_for_question, process_question, guess_player
-from c_filter_criteria import check_player_criteria
+from b_utils.e_game_functions import ask_user_for_question, process_question, guess_player
+from b_utils.c_filter_criteria import check_player_criteria
 
 def play_game(original_player_list, difficulty):
     # Game variables
@@ -9,8 +9,6 @@ def play_game(original_player_list, difficulty):
     lives = 3
     points_deduction_wrong = 2
     points_deduction_correct = 1
-    lives = LIVES
-    points = POINTS
     current_player_list = original_player_list
     selected_player = False
     

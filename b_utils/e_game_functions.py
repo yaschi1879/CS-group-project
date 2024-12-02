@@ -1,7 +1,7 @@
 import streamlit as st
-from b_player_data import player_dictionary
-from d_game_initialize import generate_player_list, start_game
-from c_filter_criteria import check_player_criteria
+from b_utils.b_player_data import player_dictionary
+from b_utils.d_game_initialize import generate_player_list, start_game
+from b_utils.c_filter_criteria import check_player_criteria
 
 player_data = {
     "name": "Lionel Messi",
