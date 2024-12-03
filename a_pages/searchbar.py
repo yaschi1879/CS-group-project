@@ -17,7 +17,7 @@ def searchbar():
             player = player_dictionary(id)
             st.write(f"Suchergebnisse für: {user_input}")
 
-            st.write(id)
+            st.write(player)
 
             #results = [item for item in player if user_input.lower() in item["Name"].lower()]
 
