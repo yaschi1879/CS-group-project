@@ -55,23 +55,28 @@ def searchbar():
                     st.markdown(", ".join(player["titels"]))
             else:
                 st.write("No results found")
+            try:
 
-            market_value = get_marketvalue_history(player_id)
-            # Daten in ein DataFrame umwandeln
-            df = pd.DataFrame(market_value)
+                market_value = get_marketvalue_history(player_id)
+                # Daten in ein DataFrame umwandeln
+                df = pd.DataFrame(market_value)
 
-            # Den `value`-Wert bereinigen (ohne "€" und "m") und in Millionen umwandeln
-            df['value'] = df['value'].str.replace('€', '').str.replace('m', '').astype(float)
+                # Den `value`-Wert bereinigen (ohne "€" und "m") und in Millionen umwandeln
+                df['value'] = df['value'].str.replace('€', '').str.replace('m', '').astype(float)
 
-            # Datum konvertieren
-            df['date'] = pd.to_datetime(df['date'])
+                # Datum konvertieren
+                df['date'] = pd.to_datetime(df['date'])
 
-            # Daten sortieren (falls nötig)
-            df = df.sort_values(by='date')
+                # Daten sortieren (falls nötig)
+                df = df.sort_values(by='date')
 
-            # Line Chart darstellen
-            st.title("Player Value Development")
-            st.line_chart(df[['date', 'value']].set_index('date'))
+                # Line Chart darstellen
+                st.title("Player Value Development")
+                st.line_chart(df[['date', 'value']].set_index('date'))
+
+            except:
+                st.write("Line Chart not available.")
+
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
 
