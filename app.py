@@ -6,20 +6,12 @@ import a_pages.home_page
 
 
 
-# Page title
-st.set_page_config(page_title="Who Am I? Game", page_icon="⚽")
-
-# Sidebar for page navigation
+# Sidebar mit Navigationsoptionen
 st.sidebar.title("Navigation")
-pages = {
-    "Home": "home_page",
-    "Game": "who_am_i",
-    "Leaderboard": "leaderboard",
-    "Search": "searchbar"
-}
-
-# Page selection in sidebar
-page = st.sidebar.radio("Select a page", options=list(pages.keys()))
+page = st.sidebar.radio(
+    "Wählen Sie eine Option:",
+    ("Home", "Search", "Game", "Leaderboard")
+)
 
 # Call the appropriate function based on the selected page
 if page == "Home":
