@@ -19,14 +19,14 @@ def searchbar():
 
             st.write(player)
 
-            #results = [item for item in player if user_input.lower() in item["Name"].lower()]
+            results = [item for item in player if user_input.lower() in item["name"].lower()]
 
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
-            #if results:
-                #for result in results:
-                    #st.write(f"Name: {result['name']}, Position: {result['position']}, Team: {result['club_name']}")
-            #else:
-                #st.write("No results found")
+            if results:
+                for result in results:
+                    st.write(f"Name: {result['name']}, Position: {result['position']}, Team: {result['club_name']}")
+            else:
+                st.write("No results found")
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
 
