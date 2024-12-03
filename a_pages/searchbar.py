@@ -75,7 +75,7 @@ def searchbar():
                 st.line_chart(df[['date', 'value']].set_index('date'))
 
             except:
-                st.write("Line Chart not available.")
+                st.warning("Line Chart not available.")
 
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
