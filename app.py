@@ -17,10 +17,8 @@ page = st.sidebar.radio(
 if page == "Home":
     a_pages.home_page.home_page()
 elif page == "Game":
-    pass
-    #a_pages.who_am_i.who_am_i()
+    a_pages.who_am_i.who_am_i()
 elif page == "Leaderboard":
-    pass
-    #a_pages.leaderboard.stats()
+    a_pages.leaderboard.stats()
 elif page == "Search":
     a_pages.searchbar.searchbar()
