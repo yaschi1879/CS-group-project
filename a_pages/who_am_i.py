@@ -64,7 +64,7 @@ def who_am_i():
     col1, col2, col3 = st.columns([2,2,1], vertical_alignment="bottom")
 
     with col1:
-        question_template = st.selectbox(
+        question_template = st.selectbox( 
             "Choose a question:",
             ["", 
             "Are you currently playing for ...", 
@@ -130,3 +130,6 @@ def who_am_i():
                     st.error("❌ Game over! You've used up all your lives.")
         else:
             st.error("❌ Game over! You have no points remaining.")
+
+
+
