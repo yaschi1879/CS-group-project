@@ -16,8 +16,8 @@ page = st.sidebar.radio(
 # Call the appropriate function based on the selected page
 if page == "Home":
     a_pages.home_page.home_page()
-elif page == "Game":
-    a_pages.who_am_i.who_am_i()
+#elif page == "Game":
+   # a_pages.who_am_i.who_am_i()
 #elif page == "Leaderboard":
 #    a_pages.leaderboard.stats()
 elif page == "Search":
