@@ -1,38 +1,26 @@
 import streamlit as st
-# Page title
-st.set_page_config(page_title="Who Am I? Game", page_icon="⚽")
+import a_pages.searchbar
+import a_pages.leaderboard
+import a_pages.who_am_i
+import a_pages.home_page
 
-# Sidebar for page navigation
+
+
+# Sidebar mit Navigationsoptionen
 st.sidebar.title("Navigation")
-pages = {
-    "Home": "home_page",
-    "Game": "who_am_i",
-    "Leaderboard": "leaderboard",
-    "Search": "searchbar"
-}
-
-# Page selection in sidebar
-page = st.sidebar.radio("Select a page", options=list(pages.keys()))
-
-# Define functions for each page
-def load_home_page():
-    from a_pages import home_page
-
-def load_game_page():
-    import a_pages.who_am_i
-
-def load_leaderboard_page():
-    import a_pages.leaderboard
-
-def load_search_page():
-    import a_pages.searchbar
+page = st.sidebar.radio(
+    "Wählen Sie eine Option:",
+    ("Home", "Search", "Game", "Leaderboard")
+)
 
 # Call the appropriate function based on the selected page
 if page == "Home":
-    load_home_page()
+    a_pages.home_page.home_page()
 elif page == "Game":
-    load_game_page()
+    pass
+    #a_pages.who_am_i.who_am_i()
 elif page == "Leaderboard":
-    load_leaderboard_page()
+    pass
+    #a_pages.leaderboard.stats()
 elif page == "Search":
-    load_search_page()
+    a_pages.searchbar.searchbar()
