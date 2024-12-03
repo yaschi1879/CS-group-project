@@ -1,7 +1,7 @@
 import streamlit as st
-#from c_coding.d_game_initialize import initialize_player_lists, generate_player_list
-#from c_coding.f_game_logic import play_game
-#from b_support_pages.sp_who_am_i import handle_question_selection
+from c_coding.d_game_initialize import initialize_player_lists, generate_player_list
+from c_coding.f_game_logic import play_game
+from b_support_pages.sp_who_am_i import handle_question_selection
 
 # Code Lars hier eingefügt!!!
 def who_am_i():
