@@ -71,7 +71,7 @@ def searchbar():
                 df = df.sort_values(by='date')
 
                 # Line Chart darstellen
-                st.title("Player Value Development")
+                st.title("Market Value Development (in Mio. EUR)")
                 st.line_chart(df[['date', 'value']].set_index('date'))
 
             except:
