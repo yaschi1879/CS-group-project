@@ -130,5 +130,3 @@ def who_am_i():
                     st.error("❌ Game over! You've used up all your lives.")
         else:
             st.error("❌ Game over! You have no points remaining.")
-
-who_am_i()
