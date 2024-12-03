@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from c_coding.b_player_data import player_dictionary
 from c_coding.a_api_functions import get_player_name_user_input, get_marketvalue_history
 
@@ -58,29 +57,21 @@ def searchbar():
                 st.write("No results found")
 
             market_value = get_marketvalue_history(player_id)
-            # Daten in DataFrame umwandeln
+            # Daten in ein DataFrame umwandeln
             df = pd.DataFrame(market_value)
 
-            # Bereinigung des `value`-Werts
+            # Den `value`-Wert bereinigen (ohne "€" und "m") und in Millionen umwandeln
             df['value'] = df['value'].str.replace('€', '').str.replace('m', '').astype(float)
 
             # Datum konvertieren
             df['date'] = pd.to_datetime(df['date'])
 
-            # Plot mit Matplotlib erstellen
-            plt.figure(figsize=(10, 6))
-            plt.plot(df['date'], df['value'], marker='o', linestyle='-', color='blue')
+            # Daten sortieren (falls nötig)
+            df = df.sort_values(by='date')
 
-            # Titel und Achsenbeschriftungen hinzufügen
-            plt.title("Market Value Development", fontsize=16)
-            plt.xlabel("Date", fontsize=14)
-            plt.ylabel("Market Value (€ Million)", fontsize=14)
-
-            # Gitter hinzufügen
-            plt.grid(True)
-
-            # Diagramm in Streamlit anzeigen
-            st.pyplot(plt)
+            # Line Chart darstellen
+            st.title("Player Value Development")
+            st.line_chart(df[['date', 'value']].set_index('date'))
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
 
