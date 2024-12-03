@@ -17,12 +17,12 @@ def searchbar():
             player = player_dictionary(player_id)
             st.write(f"Suchergebnisse für: {user_input}")
 
-            st.write(player)
+            st.json(player)
 
             if isinstance(player, dict): 
                 # If the `player` dictionary itself represents the result
                 if player_id in player.get("id", ""):  # Safely check if the ID matches
-                    st.write(f"Name: {player.get('name')}\n, Position: {player.get('position')}\n, Team: {player.get('club_name')}")
+                    st.write(f"Name: {player.get('name')}, Position: {player.get('position')}, Team: {player.get('club_name')}")
                 else:
                     st.write("No results found")
 
