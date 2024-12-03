@@ -22,7 +22,7 @@ def searchbar():
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
             if results:
                 for result in results:
-                    st.write(f"Name: {result['Name']}, Position: {result['Position']}, Team: {result['Team']}")
+                    st.write(f"Name: {result['name']}, Position: {result['position']}, Team: {result['club_name']}")
             else:
                 st.write("No results found")
 # Hier muss der Output dann noch schön dargestellt werden
