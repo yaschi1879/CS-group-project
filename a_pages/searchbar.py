@@ -19,13 +19,15 @@ def searchbar():
 
             st.write(player)
 
-            if isinstance(player, list):
-                results = [
-                    item for item in player 
-                    if "id" in item and player_id in item["id"]
-                ]
+            if isinstance(player, dict): 
+                # If the `player` dictionary itself represents the result
+                if player_id in player.get("id", ""):  # Safely check if the ID matches
+                    st.write(f"Name: {player.get('name')}, Position: {player.get('position')}, Team: {player.get('club_name')}")
+                else:
+                    st.write("No results found")
+
             else:
-                results = []
+                st.write("No results found")
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
             if results:
                 for result in results:
