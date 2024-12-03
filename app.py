@@ -1,4 +1,6 @@
 import streamlit as st
+import a_pages.searchbar
+
 # Page title
 st.set_page_config(page_title="Who Am I? Game", page_icon="⚽")
 
@@ -25,7 +27,7 @@ def load_leaderboard_page():
     import a_pages.leaderboard
 
 def load_search_page():
-    import a_pages.searchbar
+    pass
 
 # Call the appropriate function based on the selected page
 if page == "Home":
@@ -35,4 +37,4 @@ elif page == "Game":
 elif page == "Leaderboard":
     load_leaderboard_page()
 elif page == "Search":
-    load_search_page()
+    a_pages.searchbar.searchbar()
