@@ -115,7 +115,7 @@ def home_page():
         initialize_original_player_list()
         st.write("Player list successfully generated")
 # Appeler la fonction
-home_page()
+
 
 
 
