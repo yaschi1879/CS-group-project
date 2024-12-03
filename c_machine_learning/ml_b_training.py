@@ -3,7 +3,7 @@
 import random
 import pandas as pd
 from c_machine_learning.ml_a_data import training_dictionary
-from b_coding.a_api_functions import get_club_players
+from c_coding.a_api_functions import get_club_players
 import time
 
 club_id = [281, 418, 27, 31, 12, 583, 16, 631, 46, 1050, 15, 985, 131, 294, 720, 

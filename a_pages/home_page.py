@@ -1,5 +1,5 @@
 import streamlit as st
-from b_coding.d_game_initialize import initialize_player_lists, generate_player_list, club_list_test
+from c_coding.d_game_initialize import initialize_player_lists, generate_player_list, club_list_test
 
 def home_page():
     # Initialisation de l'état pour gérer la connexion
@@ -120,8 +120,6 @@ home_page()
 # ---------------------------------------------------------------------------------------
 # ab hier nicht rauslöschen, ist wichtig fürs spiel, muss ganz am ende der seite sein
 initialize_player_lists()
-if not st.session_state["original_player_list"]:
-    st.warning("The player list has not been generated yet. Generating now...")
-    st.session_state["original_player_list"] = generate_player_list(club_list_test)
-    st.success("The player list was successfully generated!")
-original_player_list = st.session_state["original_player_list"]
+if "original_player_list" not in st.session_state:
+    st.write("generating player list...")
+    st.session_state.original_player_list = generate_player_list()

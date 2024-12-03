@@ -1,15 +1,18 @@
 import streamlit as st
 import random
-from b_coding.e_game_functions import ask_user_for_question, process_question, guess_player
-from b_coding.c_filter_criteria import check_player_criteria
+from c_coding.e_game_functions import ask_user_for_question, process_question, guess_player
+from c_coding.c_filter_criteria import check_player_criteria
+from c_coding.b_player_data import player_dictionary
+    
+# initialisierung von current_player_list
 
-def play_game(original_player_list, difficulty):
+# bevor diese definition abgerufen wird, schwierigkeit einstellen
+def play_game(current_player_list, difficulty):
     # Game variables
     points = 50
     lives = 3
     points_deduction_wrong = 2
     points_deduction_correct = 1
-    current_player_list = original_player_list
     selected_player = False
     
     while not selected_player:
@@ -19,7 +22,9 @@ def play_game(original_player_list, difficulty):
         else:
             current_player_list.remove(player)
     
-    st.session_state["current_player"] = selected_player
+    st.session_state["current_player_list"] = current_player_list
+    
+    player_data = player_dictionary(selected_player)
     
     while points > 0 and lives > 0:
         question_index, user_input = ask_user_for_question()
@@ -46,3 +51,6 @@ def play_game(original_player_list, difficulty):
             st.session_state["points"] = points
             st.session_state["lives"] = lives
             return False  # Spiel verloren
+        
+def exit_game(original_player_list):
+    current_player_list = original_player_list

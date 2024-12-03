@@ -1,5 +1,5 @@
 import random
-from b_coding.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
+from c_coding.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
     if "Goalkeeper" in position:
@@ -11,20 +11,20 @@ def classify_position(position):
     elif "Winger" in position or "Forward" in position or "Striker" in position:
         return "Striker"
 # sortiert die Positionen zu: Goalkeeper, Defender, Midfielder und Striker
-    
+
 def sort_titles(player_id):
     achievements = get_achievements(player_id)
     titles = []
     for i in achievements:
         title = i["title"]
         if title == "World Cup winner":
-            titles.append("WC")
+            titles.append("World Cup")
         elif title == "European champion":
-            titles.append("EC")
+            titles.append("European Championship")
         elif title == "Champions League winner":
-            titles.append("CL")
+            titles.append("Champions League")
         elif "spanish champion" or "italian champion" or "english champion" or "german champion" or "french champion" in title.lower():
-            titles.append("league")
+            titles.append("Top 5 League")
     if not titles:
         return "none"
     return list(set(titles))

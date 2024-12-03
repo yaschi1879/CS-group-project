@@ -1,42 +1,14 @@
 import streamlit as st
-from b_coding.b_player_data import player_dictionary
-from b_coding.d_game_initialize import generate_player_list, start_game
-from b_coding.c_filter_criteria import check_player_criteria
-
-player_data = {
-    "name": "Lionel Messi",
-    "current_club": "Inter Miami",
-    "league": "MLS",
-    "nationality": "Argentina",
-    "previous_club": "PSG",
-    "position": "Forward",
-    "titles": ["World Cup", "Champions League"],
-    "age": 36,
-    "shirt_number": 10,
-    "height": 170
-}
-
-# List of predetermined questions
-QUESTIONS = [
-    "1. Am I currently playing for ... (club)?",
-    "2. Do I play in the ... (league)?",
-    "3. Am I from ... (nationality)?",
-    "4. Did I use to play for ... (club)?",
-    "5. Do I play as a ... (position)?",
-    "6. Am I a ... winner (CL/WC/EC)?",
-    "7. Am I older than ... (age)?",
-    "8. Am I younger than ... (age)?",
-    "9. Do I wear the shirt number ... at my current club (shirt number)?",
-    "10. Am I taller than ... (height in cm)?",
-    "11. Am I shorter than ... (height in cm)?"
-]
+from c_coding.b_player_data import player_dictionary
+from c_coding.d_game_initialize import generate_player_list, start_game
+from c_coding.c_filter_criteria import check_player_criteria
 
 def ask_user_for_question():
     """
     # Displays the list of questions and allows the user to select one.
     """
-    while True:  # Korrekt eingerückter Block beginnt hier
-        print("\n\nThese are the questions you can choose from:")
+    while True:
+        # print("\n\nThese are the questions you can choose from:")
         for i, question in enumerate(QUESTIONS):
             print(f"{i + 1}. {question}")  # Zeigt die Fragen an
             

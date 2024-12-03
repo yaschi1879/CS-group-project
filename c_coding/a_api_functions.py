@@ -59,8 +59,11 @@ def get_league_name_user_input(competition_name):
     url = f"https://transfermarkt-api.fly.dev/competitions/search/{competition_name}"
     response = requests.get(url)
     league = response.json()
-    return [i["id"] for i in league["results"]]
-# achtung: gibt eine liste aller liga id's zurück, die z.B. zu super league passen    
+    if not league["results"]:
+        return False
+    country_id_mapping = {i["country"]: i["id"] for i in league["results"]}
+    return country_id_mapping
+# achtung: gibt eine liste aller liga id's als value zurück, mit den entsprechenden ländern als key   
 # competintion_name als string
 
 def get_league(club_id):
