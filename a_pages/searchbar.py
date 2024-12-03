@@ -19,7 +19,7 @@ def searchbar():
 
             st.write(player)
 
-            results = [item for item in player if user_input.lower() in item["name"].lower()]
+            results = [item for item in player if id in item["id"]]
 
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
             if results:
