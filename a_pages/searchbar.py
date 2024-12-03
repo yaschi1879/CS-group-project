@@ -1,5 +1,7 @@
 import streamlit as st
-
+players = [
+    {"Name": "Lionel Messi", "Position": "Forward", "Team": "Inter Miami"}
+     ]
 def searchbar():
     st.header("Search Engine")
 
