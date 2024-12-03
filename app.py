@@ -1,6 +1,6 @@
 import streamlit as st
 import a_pages.searchbar
-import a_pages.leaderboard
+#import a_pages.leaderboard
 import a_pages.who_am_i
 import a_pages.home_page
 
