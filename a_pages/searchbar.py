@@ -1,6 +1,6 @@
 import streamlit as st
 from c_coding.b_player_data import player_dictionary
-from c_coding.a_api_functions import get_player_name_user_input
+from c_coding.a_api_functions import get_player_name_user_input, get_marketvalue_history
 
 def searchbar():
     st.header("Search Engine")
@@ -17,8 +17,6 @@ def searchbar():
             player = player_dictionary(player_id)
             st.write(f"Suchergebnisse für: {user_input}")
 
-            st.json(player)
-
             if isinstance(player, dict): 
                 # If the `player` dictionary itself represents the result
                 if player_id in player.get("id", ""):  # Safely check if the ID matches
@@ -30,42 +28,35 @@ def searchbar():
                     col1, col2 = st.columns(2)
 
                     with col1:
-                        st.subheader("Persönliche Details")
+                        st.subheader("Personal Details:")
                         st.markdown(f"""
-                        - *Alter:* {player['age']}
-                        - *Größe:* {player['height']} cm
-                        - *Fuß:* {player['foot']}
-                        - *Trikotnummer:* {player['shirt_number']}
+                        - *Age:* {player['age']}
+                        - *Height:* {player['height']} cm
+                        - *Foot:* {player['foot']}
+                        - *Shirt Number:* {player['shirt_number']}
                         - *Beigetreten:* {player['joined_date']}
                         """)
 
                     with col2:
-                        st.subheader("Verein und Liga")
+                        st.subheader("Club and League:")
                         st.markdown(f"""
-                        - *Verein:* {player['club_name']}
-                        - *Liga:* {player['league_name']}
-                        - *Ehemalige Vereine:* {', '.join(player['old_clubs_ids'])}
-                        - *Früheres Stadion:* {player['old_stadium']}
+                        - *Club:* {player['club_name']}
+                        - *League:* {player['league_name']}
+                        - *Past Clubs:* {', '.join(player['old_clubs_ids'])}
+                        - *Old Stadium:* {player['old_stadium']}
                         """)
 
                     # Positionen und Erfolge als separate Abschnitte
-                    st.subheader("Spielpositionen")
+                    st.subheader("Position:")
                     st.markdown(", ".join(player["position"]))
 
-                    st.subheader("Erfolge")
+                    st.subheader("Achievements:")
                     st.markdown(", ".join(player["titels"]))
-                    #st.write(f"Name: {player.get('name')}, Position: {player.get('position')}, Team: {player.get('club_name')}")
-                else:
-                    st.write("No results found")
-
             else:
                 st.write("No results found")
-    # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
-            #if results:
-                #for result in results:
-                    #st.write(f"Name: {result['name']}, Position: {result['position']}, Team: {result['club_name']}")
-            #else:
-                #st.write("No results found")
+
+            market_value = get_marketvalue_history(player_id)
+            st.write(market_value)
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
 
