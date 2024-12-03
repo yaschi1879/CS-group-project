@@ -13,14 +13,19 @@ def searchbar():
         search_button = st.button("Search")
         
     if search_button:
-            id = get_player_name_user_input(user_input)
-            player = player_dictionary(id)
+            player_id = get_player_name_user_input(user_input)
+            player = player_dictionary(player_id)
             st.write(f"Suchergebnisse für: {user_input}")
 
             st.write(player)
 
-            results = [item for item in player if id in item["id"]]
-
+            if isinstance(player, list):
+                results = [
+                    item for item in player 
+                    if "id" in item and player_id in item["id"]
+                ]
+            else:
+                results = []
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
             if results:
                 for result in results:
