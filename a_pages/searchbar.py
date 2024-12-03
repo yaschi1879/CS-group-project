@@ -22,7 +22,39 @@ def searchbar():
             if isinstance(player, dict): 
                 # If the `player` dictionary itself represents the result
                 if player_id in player.get("id", ""):  # Safely check if the ID matches
-                    st.write(f"Name: {player.get('name')}, Position: {player.get('position')}, Team: {player.get('club_name')}")
+                    # Spielerinfo als Überschrift und Bild
+                    st.title(f"{player['name']} - {player['classified_position']}")
+                    st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
+
+                    # Informationen in zwei Spalten aufteilen
+                    col1, col2 = st.columns(2)
+
+                    with col1:
+                        st.subheader("Persönliche Details")
+                        st.markdown(f"""
+                        - *Alter:* {player['age']}
+                        - *Größe:* {player['height']} cm
+                        - *Fuß:* {player['foot']}
+                        - *Trikotnummer:* {player['shirt_number']}
+                        - *Beigetreten:* {player['joined_date']}
+                        """)
+
+                    with col2:
+                        st.subheader("Verein und Liga")
+                        st.markdown(f"""
+                        - *Verein:* {player['club_name']}
+                        - *Liga:* {player['league_name']}
+                        - *Ehemalige Vereine:* {', '.join(player['old_clubs_ids'])}
+                        - *Früheres Stadion:* {player['old_stadium']}
+                        """)
+
+                    # Positionen und Erfolge als separate Abschnitte
+                    st.subheader("Spielpositionen")
+                    st.markdown(", ".join(player["position"]))
+
+                    st.subheader("Erfolge")
+                    st.markdown(", ".join(player["titels"]))
+                    #st.write(f"Name: {player.get('name')}, Position: {player.get('position')}, Team: {player.get('club_name')}")
                 else:
                     st.write("No results found")
 
