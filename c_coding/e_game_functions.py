@@ -3,6 +3,20 @@ from c_coding.b_player_data import player_dictionary
 from c_coding.d_game_initialize import generate_player_list, start_game
 from c_coding.c_filter_criteria import check_player_criteria
 
+QUESTIONS = [
+    "Are you currently playing for ...", 
+    "Are you currently playing in ...", 
+    "Do you come from ...", 
+    "Did you use to play for ...", 
+    "Are you a ... winner", 
+    "Are you older than ...", 
+    "Are you younger than ...", 
+    "Do you play as a ...", 
+    "Do you currently wear the shirt number ... ", 
+    "Are you taller than ...", 
+    "Are you shorter than ..."
+]
+
 def ask_user_for_question():
     """
     # Displays the list of questions and allows the user to select one.

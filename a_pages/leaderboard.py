@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
 #Nur als Beispiel, muss noch ganz geändert werden !!
 
 def stats():
-    import matplotlib.pyplot as plt
 
     st.title("Stats")
     st.write("Bienvenue sur la page des statistiques.")
