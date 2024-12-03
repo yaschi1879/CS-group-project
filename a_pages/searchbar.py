@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from c_coding.b_player_data import player_dictionary
 from c_coding.a_api_functions import get_player_name_user_input, get_marketvalue_history
 
@@ -56,7 +57,21 @@ def searchbar():
                 st.write("No results found")
 
             market_value = get_marketvalue_history(player_id)
-            st.write(market_value)
+            # Daten in ein DataFrame umwandeln
+            df = pd.DataFrame(market_value)
+
+            # Den `value`-Wert bereinigen (ohne "€" und "m") und in Millionen umwandeln
+            df['value'] = df['value'].str.replace('€', '').str.replace('m', '').astype(float)
+
+            # Datum konvertieren
+            df['date'] = pd.to_datetime(df['date'])
+
+            # Daten sortieren (falls nötig)
+            df = df.sort_values(by='date')
+
+            # Line Chart darstellen
+            st.title("Player Value Development")
+            st.line_chart(df[['date', 'value']].set_index('date'))
 # Hier muss der Output dann noch schön dargestellt werden
 # Und evtl. Grafik mit Marktwert Entwicklung
 
