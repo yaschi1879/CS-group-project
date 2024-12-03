@@ -1,5 +1,5 @@
 import streamlit as st
-from c_coding.d_game_initialize import initialize_player_lists, generate_player_list, club_list_test
+from c_coding.d_game_initialize import initialize_original_player_list, generate_player_list, club_list_test
 
 def home_page():
     # Initialisation de l'état pour gérer la connexion
@@ -110,16 +110,12 @@ def home_page():
                     st.error("Please fill out all the fields before sending.")
     with col3:
         st.write("")
-        
-
+    if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
+        st.write("Generating player list...")
+        initialize_original_player_list()
+        st.write("Player list successfully generated")
 # Appeler la fonction
 home_page()
 
 
-# alles (von anfang an, bis hier) vor dem strich kann verändert werden
-# ---------------------------------------------------------------------------------------
-# ab hier nicht rauslöschen, ist wichtig fürs spiel, muss ganz am ende der seite sein
-initialize_player_lists()
-if "original_player_list" not in st.session_state:
-    st.write("generating player list...")
-    st.session_state.original_player_list = generate_player_list()
+

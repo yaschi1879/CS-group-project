@@ -1,28 +1,19 @@
 import streamlit as st
-from c_coding.d_game_initialize import initialize_player_lists, generate_player_list,
+from c_coding.a_api_functions import get_player_name_user_input
+from c_coding.d_game_initialize import initialize_original_player_lists, generate_player_list, initialize_game_variables
 from c_coding.f_game_logic import play_game
 from b_support_pages.sp_who_am_i import handle_question_selection
 
 # Code Lars hier eingefügt!!!
 def who_am_i():
-    initialize_player_lists()
-    if "original_player_list" not in st.session_state:
-        st.write("generating player list...")
+    # initialisierung der original player list
+    if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
+        st.write("Generating player list...")
         st.session_state.original_player_list = generate_player_list()
-    st.session_state.current_player_list = st.session_state.original_player_list.copy()
+        st.write("Player list successfully generated")
 
-    if "current_player_list" not in st.session_state:
-        st.session_state.current_player_list = st.session_state.original_player_list.copy()
-    if "selected_player" not in st.session_state:
-        st.session_state.selected_player = None
-    if "questions" not in st.session_state:
-        st.session_state.questions = []
-    if "lives" not in st.session_state:
-        st.session_state.lives = 3
-    if "points" not in st.session_state:
-        st.session_state.points = 50
-    if "guessed_players" not in st.session_state:
-        st.session_state.guessed_players = []
+    # initialisierung der game variables
+    initialize_game_variables ()
     
     # Create a centered layout
     col1, col2, col3, col4, col5 = st.columns([3, 2, 3, 2, 3])  # The middle column takes up the majority of the space
@@ -67,7 +58,6 @@ def who_am_i():
     col1, col2, col3 = st.columns([2,2,1], vertical_alignment="bottom")
 
     with col1:
-        
         question_template = st.selectbox(
             "Choose a question:",
             ["", 
@@ -91,12 +81,15 @@ def who_am_i():
 
     with col3:
         if st.button("Ask Question"):
-            # Add the question to the session state list
+            # jetzt wird frage sozusagen vom user abgegeben
+            # !!!!!!!!!!!!! hier code der die antwort vergleicht mit lösung !!!!!!!!!!!!!!!!!!!!
+            
+            # hier wird frage mit dem input des users gespeichert
             if selected:
                 full_question = question_template.replace("...", selected)
                 st.session_state.questions.append(full_question)
             else:
-                st.warning("Please provide an additional input to complete the question.")
+                st.warning("Please provide an additional input to complete the question!")
 
     # Display all questions asked so far
     st.subheader("Questions Asked:")
@@ -108,6 +101,7 @@ def who_am_i():
 
     with col1:
         user_input = st.text_input("Enter your guess:", placeholder="Type Player here...", label_visibility="collapsed")
+        guessed_player = get_player_name_user_input(user_input)
 
     with col2:
         button_clicked = st.button("Guess")
@@ -115,13 +109,12 @@ def who_am_i():
     # Überprüfung bei Button-Klick
     if button_clicked:
         if st.session_state.lives > 0:
-            if user_input in players_data and user_input not in st.session_state.guessed_players:
+            if guessed_player in players_data
                 # Spieler korrekt erraten
                 st.success("🎉 You guessed the player correctly!")
-                st.image(players_data[user_input], caption=f"{user_input}", width=200)
-                st.session_state.guessed_players.append(user_input)
-            elif user_input in st.session_state.guessed_players:
-                st.warning("You already guessed this player!")
+                st.image(players_data[guessed_player], caption=f"{#hier name des Spielers !!!}", width=200)
+            elif guessed_player in st.session_state.players_guessed_so_far:
+                st.warning("You have already tried this player!")
             else:
                 # Spieler nicht korrekt erraten
                 st.session_state.lives -= 1
@@ -130,6 +123,6 @@ def who_am_i():
                 else:
                     st.error("❌ Game over! You've used up all your lives.")
         else:
-            st.error("❌ No lives left! Restart the app to try again.")
+            st.error("❌ Game over! You have no points remaining.")
 
 who_am_i()

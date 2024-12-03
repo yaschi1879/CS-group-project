@@ -2,11 +2,10 @@ import streamlit as st
 from c_coding.a_api_functions import get_club_name_user_input, get_league_name_user_input
 
 def handle_question_selection(question_template, col2):
-    """
-    Funktion zur Handhabung der Fragenauswahl und Eingabe von spezifischen Werten.
-    """
     selected = None
-
+    
+    # je nachdem, welche frage im who_am_i ausgwählt wurde, wird der user jetzt zu input aufgefordert
+    
     if question_template == "Are you currently playing for ...":
         current_club = col2.text_input("Enter my club name:")
         selected = get_club_name_user_input(current_club)
@@ -54,30 +53,29 @@ def handle_question_selection(question_template, col2):
         ["GK", "Defender", "Midfielder", "Striker"]
         )
 
-        # Initialisiere ausgewählte Position als None
-        selected = None
-
         # Schritt 2: Spezialisierung basierend auf der Hauptposition
         if main_position == "Defender":
             specific_position = col2.selectbox(
-                "Choose a specific position for Defender:",
+                "Optional: Choose a specific position for Defender:",
                 ["", "Left Back", "Center Back", "Right Back"]
             )
             selected = specific_position if specific_position else main_position
 
         elif main_position == "Midfielder":
             specific_position = col2.selectbox(
-                "Choose a specific position for Midfielder:",
+                "Optional: Choose a specific position for Midfielder:",
                 ["", "Defensive Midfielder", "Offensive Midfielder", "Right Midfielder", "Left Midfielder"]
             )
             selected = specific_position if specific_position else main_position
 
         elif main_position == "Striker":
             specific_position = col2.selectbox(
-                "Choose a specific position for Striker:",
+                "Optional: Choose a specific position for Striker:",
                 ["", "Left Wing", "Right Wing", "Center Forward"]
             )
             selected = specific_position if specific_position else main_position
+
+        # !!!!!!! muss noch mit API abgestimmt werden !!!!!!!!
 
         else:
             # Für Goalkeeper keine weitere Auswahl
@@ -99,3 +97,4 @@ def handle_question_selection(question_template, col2):
         selected = f"shorter than {height} cm"
 
     return selected
+    # user input wird zurückgegeben in der variable selected
