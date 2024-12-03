@@ -1,7 +1,7 @@
 import streamlit as st
-players = [
-    {"Name": "Lionel Messi", "Position": "Forward", "Team": "Inter Miami"}
-     ]
+from c_coding.b_player_data import player_dictionary
+from c_coding.a_api_functions import get_player_name_user_input
+
 def searchbar():
     st.header("Search Engine")
 
@@ -13,8 +13,11 @@ def searchbar():
         search_button = st.button("Search")
         
     if search_button:
+            id = get_player_name_user_input(user_input)
+            player = player_dictionary(id)
             st.write(f"Suchergebnisse für: {user_input}")
-            results = [item for item in players if user_input.lower() in item["Name"].lower()]
+
+            results = [item for item in player if user_input.lower() in item["Name"].lower()]
 
     # Calling results from a players llist // Attention on what should be displayed and how (in line 22): Name, ...!!!
             if results:
