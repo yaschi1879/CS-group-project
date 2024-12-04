@@ -2,7 +2,7 @@ import streamlit as st
 from c_coding.a_api_functions import get_player_name_user_input
 from c_coding.d_game_initialize import initialize_original_player_list, generate_player_list, initialize_game_variables
 from c_coding.f_game_logic import play_game
-from b_support_pages.sp_who_am_i import handle_question_selection
+from b_game_logic.a_questions import handle_question_selection
 
 # Code Lars hier eingefügt!!!
 def who_am_i():
@@ -104,23 +104,7 @@ def who_am_i():
         button_clicked = st.button("Guess")
 
     # Überprüfung bei Button-Klick
-    if button_clicked:
-        if st.session_state.lives > 0:
-            if guessed_player in players_data:
-                # Spieler korrekt erraten
-                st.success("🎉 You guessed the player correctly!")
-                st.image(players_data[guessed_player], caption=f"{guessed_player}", width=200)
-            elif guessed_player in st.session_state.players_guessed_so_far:
-                st.warning("You have already tried this player!")
-            else:
-                # Spieler nicht korrekt erraten
-                st.session_state.lives -= 1
-                if st.session_state.lives > 0:
-                    st.error(f"❌ Wrong guess! You have {st.session_state.lives} lives left.")
-                else:
-                    st.error("❌ Game over! You've used up all your lives.")
-        else:
-            st.error("❌ Game over! You have no points remaining.")
+    
 
 who_am_i()
 
