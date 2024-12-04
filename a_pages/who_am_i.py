@@ -6,6 +6,7 @@ from b_game_logic.a_questions import handle_question_selection
 
 # Code Lars hier eingefügt!!!
 def who_am_i():
+    import streamlit as st
     st.write("yes")
 
 
