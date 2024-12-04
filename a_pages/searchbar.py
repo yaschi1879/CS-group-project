@@ -60,16 +60,15 @@ def searchbar():
                 # Daten in ein DataFrame umwandeln
                 df = pd.DataFrame(market_value)
 
-                # Den `value`-Wert bereinigen (ohne "€")
-                df["value"] = df["value"].str.replace('€', '')
-                
-                # Markwert in Millionen umwandeln
-                if "m" in df["value"]:
-                    df["value"] = float(df["value"].replace("m", ""))
-                elif "k" in df["value"]:
-                    df["value"] = float(df["value"]).replace("k", "") / 1000
-        
+                def clean_value(value):
+                    value = value.replace('€', '').replace(',', '')
+                    if 'm' in value:
+                        return float(value.replace('m', '')) 
+                    elif 'k' in value:
+                        return float(value.replace('k', '')) /1000  
 
+                df["value"] = df["value"].apply(clean_value)
+                
                 # Datum konvertieren
                 df['date'] = pd.to_datetime(df['date'])
 
