@@ -29,6 +29,7 @@ def initialize_game_variables():
     st.session_state.players_guessed_so_far = []
     st.session_state.player_data = {}
     st.session_state.questions = []
+    st.session_state.question_procedure = False
     
 def initialize_question_variables():
     st.session_state.selected = []

@@ -2,26 +2,30 @@ import streamlit as st
 import random
 from c_coding.c_filter_criteria import check_player_criteria
 from c_coding.b_player_data import player_dictionary
-from b_game_logic.aa_questions import handle_question_selection
+from b_game.c_try_question import handle_question_selection
 from c_coding.a_api_functions import get_player_name_user_input
-from c_coding.d_game_initialize import initialize_game_variables, initialize_question_variables
+from b_game.d_game_initialize import initialize_game_variables, initialize_question_variables
 
 def play_game():
     while not st.session_state.selected_player:
-        player = random.choice(st.session_state.current_player_list)
-        if check_player_criteria(player):
-            st.session_state.selected_player = player
-        else:
-            st.session_state.current_player_list.remove(player)
+        with st.spinner("Searching for a player ⚽"):
+            player = random.choice(st.session_state.current_player_list)
+            if check_player_criteria(player):
+                st.session_state.selected_player = player
+                st.success(f"🎉 Player has been selected based on difficulty: {st.session_state.difficulty}")
+            else:
+                st.session_state.current_player_list.remove(player)
     
-    try:
-        if not st.session_state.player_data:
-            st.session_state.player_data = player_dictionary(st.session_state.selected_player)
-    except:
-        st.session_state.selected_player = []
-        st.rerun()
+    if not st.session_state.player_data:
+        try:
+            with st.spinner("Gathering data for the selected player"):
+                st.session_state.player_data = player_dictionary(st.session_state.selected_player)
+                st.success("🎉 Set up completed")
+        except:
+            st.session_state.selected_player = []
+            st.rerun()
     
-    col1, col2, col3 = st.columns([1, 1, 4])
+    col1, col2, col3 = st.columns([1, 1, 3])
     with col1:
         st.write("lives:", "⚽" * st.session_state.lives, "❌ " * (3 - st.session_state.lives))
     with col2:
@@ -51,15 +55,14 @@ def play_game():
     
     if question_button:
         if st.session_state.question_template:
-            col1, col2 = st.columns([1, 1])
-            handle_question_selection(st.session_state.question_template, col1, col2)
+            st.session_state.question_procedure = True
+            
+    if st.session_state.user_input and not st.session_state.question_procedure:
+        st.write("scheisse man")
     
-        else:
-            with col1:
-                st.warning("Please select a question first.")
-    
-    if st.session_state.user_input:
-        st.write(st.session_state.user_input)
+    if st.session_state.question_procedure == True:
+        col, col2 = st.columns([1, 1])
+        handle_question_selection(st.session_state.question_template, col1, col2)
         
     
     match_found = None
@@ -112,15 +115,14 @@ def play_game():
     col1, col2 = st.columns([3, 2], vertical_alignment="bottom")
 
     with col1:
-        user_input = st.text_input("I think I got it! Are you ...?:", placeholder="Type Player here...", label_visibility="collapsed")
+        user_input = st.text_input("Enter Player Name", placeholder="Type Player here...", label_visibility="collapsed")
 
-    with col2:
-        guess_clicked = st.button("Enter guess")
+    #with col2:
+        #guess_clicked = st.button("Enter guess")
         
-    if guess_clicked:
-        if user_input:
-            guessed_player_id = get_player_name_user_input(user_input)[0]
-            guessed_player_name = get_player_name_user_input(user_input)[1]
+    if user_input:
+        guessed_player_id = get_player_name_user_input(user_input)[0]
+        guessed_player_name = get_player_name_user_input(user_input)[1]
         if guessed_player_id is None:
             st.warning("Player not found, Please try again.")
         elif st.session_state.lives > 0:
@@ -134,13 +136,17 @@ def play_game():
                 # Spieler nicht korrekt erraten
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
-                    st.error(f"❌ Wrong guess! You have {st.session_state.lives} lives left.")
+                    col1, col2 = st.columns([4,1])
+                    with col1:
+                        st.error(f"❌ Wrong guess! You have {st.session_state.lives} lives left. Click on continue")
+                    with col2:
+                        st.button("Continue")
                 else:
-                    st.error("❌ Game over! You've used up all your lives.")
+                    st.error("❌ Game over! You've used up all your lives. Select one of the options below")
         elif st.session_state.lives == 0:
-            st.warning("Game over! You have 0 lives left. Click on next round to continue")
+            st.error("❌ Game over! You've used up all your lives. Select one of the options below")
     
-    col1, col2, col3 = st.columns([1, 1, 1])     
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])     
     with col1:
         # Button zum Verlassen des Spiels
         if st.button("Exit the Game"):
@@ -152,10 +158,13 @@ def play_game():
         if st.button("Change Difficulty"):
             # Logik zum Wechseln der Schwierigkeit hier
             st.write("Difficulty change coming soon...")
-
+    
     with col3:
+        if st.button("Show Solution"):
+            st.write("Show Solution coming soon...")
+
+    with col4:
         # Button für die nächste Runde
         if st.button("Next Round"):
             initialize_game_variables()
             st.rerun()
-        

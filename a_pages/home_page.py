@@ -1,5 +1,5 @@
 import streamlit as st
-from c_coding.d_game_initialize import initialize_original_player_list, generate_player_list, club_list_test
+from b_game.d_game_initialize import initialize_original_player_list
 
 def home_page():
     # Initialisation de l'état pour gérer la connexion
@@ -110,10 +110,11 @@ def home_page():
                     st.error("Please fill out all the fields before sending.")
     with col3:
         st.write("")
+    
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
-        st.write("Generating player list...")
-        initialize_original_player_list()
-        st.write("Player list successfully generated")
+            with st.spinner("Generating player list... ⚽"):
+                initialize_original_player_list()
+            st.success("🎉 Player list successfully generated!")
 # Appeler la fonction
 
 
