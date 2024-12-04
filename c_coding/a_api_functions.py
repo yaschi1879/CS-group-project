@@ -43,16 +43,18 @@ def get_club_name_user_input(club_name):
     url = f"https://transfermarkt-api.fly.dev/clubs/search/{club_name}"
     response = requests.get(url)
     clubs = response.json()
-    return clubs["results"][0]["id"]
-# gibt den korrekten club namen als id zurück
+    return [clubs["results"][0]["id"], clubs["results"][0]["name"]]
+# item 0 gibt die korrekte club id zurück
+# item 1 gibt den korrekten club namen zurück
 # club_name als string
 
 def get_player_name_user_input(player_name):
     url = f"https://transfermarkt-api.fly.dev/players/search/{player_name}"
     response = requests.get(url)
     players = response.json()
-    return players["results"][0]["id"]
-# gibt den korrekten spieler namen als id zurück
+    return [players["results"][0]["id"], players["results"][0]["name"]]
+# item 0 gibt die korrekte player id zurück
+# item 1 gibt den korrekten player namen zurück
 # club_name als string
 
 def get_league_name_user_input(competition_name):

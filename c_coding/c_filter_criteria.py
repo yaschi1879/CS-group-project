@@ -1,9 +1,11 @@
 from c_coding.a_api_functions import get_filter_criteria
+import streamlit as st
 
 # diese funktion checkt, ob der spieler die kriterien für den schwierigkeitsgrad erfüllt
 # falls ja, gibt funktion true zrück, falls nein false
 
-def check_player_criteria(player_id, difficulty):
+def check_player_criteria(player_id):
+    difficulty = st.session_state.difficulty
     info = get_filter_criteria(player_id)
     market_value = info[0]
     age = info[1]
@@ -11,7 +13,7 @@ def check_player_criteria(player_id, difficulty):
     if market_value == "not_availabe":
         return False
     
-    elif difficulty == "none":
+    elif difficulty == "None":
         if age < 26 and market_value < 10:
             return False
         elif 26 <= age < 30 and market_value < 5:
@@ -21,7 +23,7 @@ def check_player_criteria(player_id, difficulty):
         else:
             return True
     
-    elif difficulty == "easy":
+    elif difficulty == "Easy":
         if age < 26 and market_value >= 80:
             return True
         elif 26 <= age <= 30 and market_value >= 60:
@@ -33,7 +35,7 @@ def check_player_criteria(player_id, difficulty):
         else:
             return False
 
-    elif difficulty == "medium":
+    elif difficulty == "Medium":
         if age < 26 and 50 < market_value < 80:
             return True
         elif 26 <= age <= 30 and 40 <= market_value < 60:
@@ -45,7 +47,7 @@ def check_player_criteria(player_id, difficulty):
         else:
             return False
 
-    elif difficulty == "hard":
+    elif difficulty == "Hard":
         if age < 26 and 10 <= market_value <= 50:
             return True
         elif 26 <= age <= 30 and 5 <= market_value < 40:

@@ -1,100 +1,143 @@
+from c_coding.a_api_functions import get_club_name_user_input
 import streamlit as st
-from c_coding.a_api_functions import get_club_name_user_input, get_league_name_user_input
 
-def handle_question_selection(question_template, col2):
-    selected = None
+def handle_question_selection(question_template, col1, col2):
+    
+    league_codes = {
+    "Premier League": "GB1"
+    # !!!!!!!!!!!!! hier noch vervollständigen !!!!!!!!!!!!!!!!!!!!!!!!!
+    }
+    
     
     # je nachdem, welche frage im who_am_i ausgwählt wurde, wird der user jetzt zu input aufgefordert
     
-    if question_template == "Are you currently playing for ...":
-        current_club = col2.text_input("Enter my club name:")
-        selected = get_club_name_user_input(current_club)
-        # gibt club id zurück
+    if question_template == "Are you currently playing for ...?":
+        st.session_state.user_input = col1.text_input("Enter my club name:")
+        st.write("ja")
+        st.session_state.question_state["current_club"] = current_club
+        st.write(current_club)
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        with col2:
+            st.write("")
+            st.write("")
+            if st.button("Confirm Club"):
+                st.session_state.confirmed = True
+            
+        if current_club:
+            st.write("if passt")
+            st.session_state.question_state["current_club"] = current_club
         
-    elif question_template == "Are you currently playing in ...":
-        league = col2.text_input("Enter the name of the league")
-        league_choices = get_league_name_user_input(league)
-        if league_choices == False:
-            st.error("League not found, try again.")
-        else:
-            country = col2.selectbox("Select the country corresponding to your desired league", list(league_choices.keys()), index=0)
-            # die api gibt für einen liga namen mehrere länder zurück, z.B. für SuperLeague -> Schweiz, Türkei, etc
-            # hier kann dann das korrekte land in einer selectbox ausgewählt werden
-        selected = league_choices[country]
+        if st.session_state.confirmed and current_club:
+            st.write("2. if psst")
+        # !!!!!!!!!!!!!!! das muss zwischen drin jetzt für jede frage gemacht werden mit anderem Confirm ... !!!!
+            # gibt club id als liste zurück
+            st.session_state.selected = list(get_club_name_user_input(current_club)[0])
+            # gibt club namen zurück
+            st.session_state.exact_input = get_club_name_user_input(current_club)[1]
+            st.session_state.index = "club_id"
+            st.write(f"hier: {st.session_state.exact_input}")
+        
+        
+    elif question_template == "Are you currently playing in ...?":
+        league = col1.selectbox(
+            "Choose a league:",
+            ["Premier League", "Bundesliga", "Seria A", "La Liga", "Ligue 1"]
+        )
+        # !!!!!!!!!!!!!!!!!!!!!! hier alle Ligen der Top 40 Clubs !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        if league:
+            selected = [league_codes[league]]
+            exact_input = league
+            index = "league_id"
+            
 
-    elif question_template == "Do you come from ...":
-        nationality = col2.text_input("Enter the name of the country")
-        selected = nationality
+    elif question_template == "Do you come from ...?":
+        nationality = col1.text_input("Enter the name of the country")
+        if nationality:
+            selected = [nationality]
+            exact_input = nationality
+            index = "country"
 
-    elif question_template == "Did you use to play for ...":
-        past_club = col2.text_input("Enter the name of a former club")
-        club = get_club_name_user_input(past_club)
-        selected = club
+    elif question_template == "Did you use to play for ...?":
+        past_club = col1.text_input("Enter the name of a former club")
+        if past_club:
+            # gibt alte club id als liste zurück
+            selected = list(get_club_name_user_input(past_club)[0])
+            # gibt alten club namen zurück
+            exact_input = get_club_name_user_input(past_club)[1]
+            index = "old_clubs_ids"
 
-    elif question_template == "Are you a ... winner":
-        achievements = col2.selectbox(
+    elif question_template == "Are you a ... winner?":
+        achievements = col1.selectbox(
             "Choose a titel:",
             ["Top 5 League", "Champions League", "World Cup", "European Championship"]
         )
-        selected = achievements
+        if achievements:
+            selected = achievements
+            exact_input = achievements
+            index = "titels"
 
-    elif question_template == "Are you older than ...":
-        age = col2.slider("Age (Years):", min_value=15, max_value=45, value=30, step=1)
-        selected = f"older than {age}"
+    elif question_template == "Are you ... years old?":
+        age_range = col1.slider("Age (Years):", min_value=15, max_value=45, value=(20, 25), step=1)
+        age_list = list(range(age_range[0], age_range[1] + 1))
+        if age_list:
+            selected = age_list
+            exact_input = f"between {age_range[0]} and {age_range[1]}"
+            index = "age"
 
-    elif question_template == "Are you younger than ...":
-        age = col2.slider("Age (Years):", min_value=15, max_value=45, value=30, step=1)
-        selected = f"younger than {age}"
-
-    elif question_template == "Do you play as a ...":
+    elif question_template == "Do you play as a ...?":
+        
         # Schritt 1: Hauptposition auswählen
-        main_position = col2.selectbox(
+        main_position = col1.selectbox(
         "Choose a main position:",
-        ["GK", "Defender", "Midfielder", "Striker"]
+        ["Goalkeeper", "Defender", "Midfielder", "Striker"]
         )
-
+        index = "classified_position"
+        selected = [main_position]
+        exact_input = main_position
+        
         # Schritt 2: Spezialisierung basierend auf der Hauptposition
         if main_position == "Defender":
             specific_position = col2.selectbox(
                 "Optional: Choose a specific position for Defender:",
                 ["", "Left Back", "Center Back", "Right Back"]
             )
-            selected = specific_position if specific_position else main_position
+            if specific_position:
+                index = "position"
+                selected = [specific_position]
+                exact_input = specific_position
 
         elif main_position == "Midfielder":
             specific_position = col2.selectbox(
                 "Optional: Choose a specific position for Midfielder:",
                 ["", "Defensive Midfielder", "Offensive Midfielder", "Right Midfielder", "Left Midfielder"]
             )
-            selected = specific_position if specific_position else main_position
+            if specific_position:
+                index = "position"
+                selected = [specific_position]
+                exact_input = specific_position
 
         elif main_position == "Striker":
             specific_position = col2.selectbox(
                 "Optional: Choose a specific position for Striker:",
                 ["", "Left Wing", "Right Wing", "Center Forward"]
             )
-            selected = specific_position if specific_position else main_position
-
+            if specific_position:
+                index = "position"
+                selected = [specific_position]
+                exact_input = specific_position
         # !!!!!!! muss noch mit API abgestimmt werden !!!!!!!!
 
-        else:
-            # Für Goalkeeper keine weitere Auswahl
-            selected = main_position
-
-    elif question_template == "Do you currently wear the shirt number ... ":
-        shirt_number = col2.selectbox(
-            "Choose a shirt number range:",
-            ["Under 20", "20-30", "Over 30"]
-        )
-        selected = shirt_number
-
-    elif question_template == "Are you taller than ...":
-        height = col2.slider("Height (cm):", min_value=150, max_value=220, value=185, step=1)
-        selected = f"taller than {height} cm"
-
-    elif question_template == "Are you shorter than ...":
-        height = col2.slider("Height (cm):", min_value=150, max_value=220, value=185, step=1)
-        selected = f"shorter than {height} cm"
-
-    return selected
-    # user input wird zurückgegeben in der variable selected
+    elif question_template == "Do you currently wear the shirt number ...?":
+        shirt_number = col1.text_input("Enter the shirt number")
+        selected = [shirt_number]
+        index = "shirt_number"
+        exact_input = shirt_number
+        
+    elif question_template == "Are you ...cm tall?":
+        height_range = col1.slider("Height (Centimeters):", min_value=150, max_value=220, value=(180, 185), step=1)
+        height_list = list(range(height_range[0], age_range[1] + 1))
+        selected = height_list
+        index = "height"
+        exact_input = f"between {height_range[0]} and {height_range[1]}"
+    
+    
