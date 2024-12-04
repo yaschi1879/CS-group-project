@@ -4,29 +4,20 @@ from c_coding.d_game_initialize import initialize_original_player_list, generate
 from c_coding.f_game_logic import play_game
 from b_support_pages.sp_who_am_i import handle_question_selection
 
-players_data = [
-    {"Name": "Lionel Messi", "Position": "Forward", "Team": "Inter Miami"}
-     ]
-
-
-
 # Code Lars hier eingefügt!!!
 def who_am_i():
     # initialisierung der original player list
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
         st.write("Generating player list...")
-        st.session_state.original_player_list = generate_player_list()
+        initialize_original_player_list()
         st.write("Player list successfully generated")
 
-    # initialisierung der game variables
-    initialize_game_variables ()
-    
     # Create a centered layout
     col1, col2, col3, col4, col5 = st.columns([3, 2, 3, 2, 3])  # The middle column takes up the majority of the space
 
     with col3:
         # Display the logo at the top of the page
-        st.image("logo.png", width=200)
+        st.image("d_pictures/logo.png", width=200)
     
     # Obere rechte Ecke: Lebensanzeige
     with col5:
