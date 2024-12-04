@@ -122,5 +122,6 @@ def who_am_i():
         else:
             st.error("❌ Game over! You have no points remaining.")
 
+who_am_i()
 
 
