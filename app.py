@@ -1,7 +1,7 @@
 import streamlit as st
 import a_pages.searchbar
 #import a_pages.leaderboard
-#import a_pages.who_am_i
+import a_pages.who_am_i
 import a_pages.home_page
 
 
@@ -9,7 +9,6 @@ import a_pages.home_page
 # Sidebar mit Navigationsoptionen
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
-    "Wählen Sie eine Option:",
     ("Home", "Search", "Game", "Leaderboard")
 )
 
