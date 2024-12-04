@@ -35,7 +35,7 @@ def searchbar():
                         - *Height:* {player['height']} cm
                         - *Foot:* {player['foot']}
                         - *Shirt Number:* {player['shirt_number']}
-                        - *Beigetreten:* {player['joined_date']}
+                        - *Joined the club:* {player['joined_date']}
                         """)
 
                     with col2:
@@ -56,13 +56,19 @@ def searchbar():
             else:
                 st.write("No results found")
             try:
-
                 market_value = get_marketvalue_history(player_id)
                 # Daten in ein DataFrame umwandeln
                 df = pd.DataFrame(market_value)
 
-                # Den `value`-Wert bereinigen (ohne "€" und "m") und in Millionen umwandeln
-                df['value'] = df['value'].str.replace('€', '').str.replace('m', '').astype(float)
+                # Den `value`-Wert bereinigen (ohne "€")
+                df["value"] = df["value"].str.replace('€', '')
+                
+                # Markwert in Millionen umwandeln
+                if "m" in df["value"]:
+                    df["value"] = float(df["value"].replace("m", ""))
+                elif "k" in df["value"]:
+                    df["value"] = float(df["value"]).replace("k", "") / 1000
+        
 
                 # Datum konvertieren
                 df['date'] = pd.to_datetime(df['date'])
