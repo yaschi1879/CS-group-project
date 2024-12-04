@@ -9,8 +9,10 @@ import a_pages.who_am_i
 # Sidebar mit Navigationsoptionen
 st.sidebar.title("Navigation")
 page = st.sidebar.radio(
-    ("Home", "Search", "Game", "Leaderboard")
+    "Select Page:",  # Titel für die Sidebar
+    ("Home", "Search", "Game", "Leaderboard")  # Optionen
 )
+
 
 # Call the appropriate function based on the selected page
 if page == "Home":
