@@ -46,8 +46,9 @@ def calculate_age(birth_date, reference_date):
 def training_dictionary(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
-    reference_date = "2023-12-01"
-    sec_reference_date = "2022-12-01"
+    # Beispiel für einen Forecast, der 1 Jahr in die zukunft prognostizieren soll
+    reference_date = "2023-12-01" # immer 2024-12-01 minus die anzahl jahre
+    sec_reference_date = "2022-12-01" # immer 2024-12-01 minus die anzahl jahre +1
     dict = {}
     print(player_id)
     dict["market_value_t+1"] = get_filter_criteria(player_id)[0]
