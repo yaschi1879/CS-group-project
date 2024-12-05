@@ -59,29 +59,39 @@ def searchbar():
         else:
             st.write("No results found")
         try:
-                market_value = get_marketvalue_history(player_id)
-                # Daten in ein DataFrame umwandeln
+            market_value = get_marketvalue_history(player_id)
+    
+    # Prüfe, ob Daten vorhanden sind
+            if not market_value or len(market_value) == 0:
+                st.warning("No market value data available.")
+            else:
+        # Daten in ein DataFrame umwandeln
                 df = pd.DataFrame(market_value)
 
                 def clean_value(value):
                     value = value.replace('€', '').replace(',', '')
                     if 'm' in value:
-                        return float(value.replace('m', '')) 
+                        return float(value.replace('m', ''))
                     elif 'k' in value:
-                        return float(value.replace('k', '')) /1000  
+                        return float(value.replace('k', '')) / 1000
 
-                df["value"] = df["value"].apply(clean_value)
-                
-                # Datum konvertieren
-                df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y")
+                df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
+                df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
 
-                # Daten sortieren (falls nötig)
+        # Prüfe auf ungültige Werte
+                if df['date'].isna().any():
+                    st.warning("Some dates could not be parsed. Check the data format.")
+
                 df = df.sort_values(by='date')
 
-                # Line Chart darstellen
-                st.subheader("Market Value Development (in Mio. EUR)")
-                st.line_chart(df[['date', 'value']].set_index('date'))
+                if df.empty or df['value'].isna().all():
+                    st.warning("No valid data to display.")
+                else:
+            # Line Chart darstellen
+                    st.subheader("Market Value Development (in Mio. EUR)")
+                    st.line_chart(df[['date', 'value']].set_index('date'))
 
-        except:
-                st.warning("Line Chart not available.")
+        except Exception as e:
+            st.warning(f"Line Chart not available: {e}")
+
 
