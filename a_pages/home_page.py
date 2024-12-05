@@ -16,7 +16,7 @@ def home_page():
         st.title("Name der App")
         st.subheader("Guess. Compete. Celebrate! (find a better slogan)")
     with col2:
-        st.image("images/logo.svg.png", use_column_width=True)
+        st.image("a_pages.pictures/logo.svg.png", use_column_width=True)
     with col3:
         # Bouton Log In stylisé
         if st.button("Log In"):
