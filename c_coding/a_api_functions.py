@@ -1,5 +1,4 @@
 import requests
-import streamlit as st
 
 def get_stadium_name(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
@@ -62,6 +61,9 @@ def get_player_name_user_input(player_name):
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
 # player_name als string
+
+print(get_player_name_user_input("lskdjfl")[0])
+print(get_player_name_user_input("Kane"))
 
 def get_league(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
