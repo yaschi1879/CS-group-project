@@ -58,11 +58,10 @@ def get_player_name_user_input(player_name):
     if not players:
         return ["n.a.", "n.a."]
     else:
-        st.write("not correct")
         return [players[0]["id"], players[0]["name"]]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
-# club_name als string
+# player_name als string
 
 def get_league(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
