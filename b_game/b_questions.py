@@ -4,8 +4,17 @@ import streamlit as st
 def handle_question_selection(question_template, col1, col2):
     
     league_codes = {
-    "Premier League": "GB1"
-    # !!!!!!!!!!!!! hier noch vervollständigen !!!!!!!!!!!!!!!!!!!!!!!!!
+    "Premier League": "GB1",
+    "Bundesliga": "L1", 
+    "Serie A": "IT1", 
+    "La Liga": "ES1", 
+    "Ligue 1": "FR1", 
+    "Scottish Premiership": "SC1",
+    "Liga Portugal": "PO1",
+    "Eredivisie": "NL1", 
+    "Jupiler Pro League": "BE1", # Belgische Liga
+    "Chance Liga": "TS1", # Tschechische Liga
+    "SuperSport HNL": "KR1", # Kroatische Liga
     }
     
     
