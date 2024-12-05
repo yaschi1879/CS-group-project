@@ -48,7 +48,6 @@ def searchbar():
                         - *Club:* {player['club_name']}
                         - *League:* {player['league_name']}
                         - *Past Clubs:* {', '.join(player['old_clubs_name'])}
-                        - *Old Stadium:* {player['old_stadium']}
                         """)
 
                     # Positionen und Erfolge als separate Abschnitte
@@ -74,7 +73,7 @@ def searchbar():
                 df["value"] = df["value"].apply(clean_value)
                 
                 # Datum konvertieren
-                df['date'] = pd.to_datetime(df['date'])
+                df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y")
 
                 # Daten sortieren (falls nötig)
                 df = df.sort_values(by='date')

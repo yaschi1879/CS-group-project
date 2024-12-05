@@ -85,8 +85,7 @@ def get_marketvalue_history(player_id):
 def get_transfer_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/transfers"
     response = requests.get(url)
-    transfers = response.json()
-    return transfers["transfers"]
+    return response.json()["transfers"]
 # gibt liste der transfers zurück
 
 def get_stats(player_id):
@@ -97,5 +96,4 @@ def get_stats(player_id):
 def get_achievements(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
     response = requests.get(url)
-    achievements = response.json()
-    return achievements["achievements"]
+    return response.json()["achievements"]
