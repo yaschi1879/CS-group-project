@@ -57,5 +57,4 @@ def who_am_i():
     
     if st.session_state.game_started == True:
         # Spielseite
-        st.title("Game in progress")
         play_game()

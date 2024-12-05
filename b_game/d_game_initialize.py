@@ -30,6 +30,8 @@ def initialize_game_variables():
     st.session_state.player_data = {}
     st.session_state.questions = []
     st.session_state.question_procedure = False
+    st.session_state.show_solution = False
+    st.session_state.change_difficulty = False
     
 def initialize_question_variables():
     st.session_state.selected = []
@@ -38,10 +40,3 @@ def initialize_question_variables():
     st.session_state.question_state = {}
     st.session_state.confirmed = False
     st.session_state.user_input = []
-    
-    
-    
-    
-    
-
-
