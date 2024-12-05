@@ -57,6 +57,8 @@ def play_game():
         st.subheader(f"Lives: {lives_display}")
     with col2:
         st.subheader(f"Points left: {st.session_state.points}")
+    st.write("")
+    st.write("")
 
     
     
