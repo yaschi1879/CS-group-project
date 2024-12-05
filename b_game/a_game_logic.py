@@ -196,7 +196,7 @@ def play_game():
     st.write("")
     st.write("")
     st.write("")
-    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])     
+    col1, col2, col3, col4 = st.columns([1, 1.1, 1, 0.75])     
     with col1:
         # Button zum Verlassen des Spiels
         if st.button("Exit the Game"):
