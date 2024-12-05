@@ -14,7 +14,7 @@ def searchbar():
         search_button = st.button("Search")
         
     if search_button:
-            player_id = get_player_name_user_input(user_input)
+            player_id = get_player_name_user_input(user_input)[0]
             player = player_dictionary(player_id)
             st.write(f"Suchergebnisse für: {user_input}")
 
