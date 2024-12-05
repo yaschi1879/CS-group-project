@@ -44,7 +44,7 @@ def get_club_name_user_input(club_name):
     response = requests.get(url)
     clubs = response.json()["results"]
     if not clubs:
-        return "n.a."
+        return ["n.a.", "n.a."]
     return [clubs[0]["id"], clubs[0]["name"]]
 # item 0 gibt die korrekte club id zurück
 # item 1 gibt den korrekten club namen zurück
@@ -55,7 +55,7 @@ def get_player_name_user_input(player_name):
     response = requests.get(url)
     players = response.json()["results"]
     if not players:
-        return "n.a."
+        return ["n.a.", "n.a."]
     return [players[0]["id"], players[0]["name"]]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
