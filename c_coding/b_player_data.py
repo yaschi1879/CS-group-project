@@ -50,6 +50,7 @@ def player_dictionary(player_id):
     player_dictionary = {}
     profile = get_profile(player_id)
     league = get_league(profile["club"]["id"])
+    old_clubs = get_transfer_history(player_id)
     
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
@@ -68,8 +69,10 @@ def player_dictionary(player_id):
     player_dictionary["club_name"] = profile["club"]["name"]
     player_dictionary["league_id"] = league[0]
     player_dictionary["league_name"] = league[1]
-    player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
+    player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in old_clubs]
     # gibt die club id's aller ehemaligen clubs als liste zurück
+    player_dictionary["old_clubs_name"] = [i["from"]["clubName"] for i in old_clubs]
+    # gibt die club namen aller ehemaligen clubs als liste zurück
     player_dictionary["titels"] = sort_titles(player_id)
     
     player_dictionary["old_stadium"] = stadium_name(player_id)

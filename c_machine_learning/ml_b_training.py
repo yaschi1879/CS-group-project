@@ -17,7 +17,7 @@ for club in club_id:
 
 # lenght of playerlist = 1084
 # -------------------------------------------------------------------------------
-# jetzt kommt die erstellung der daten für 271 spiler (etwa 20min)
+# jetzt kommt die erstellung der daten für 271 spieler (etwa 20min)
 player_sample = random.sample(player_list, 271)
 player_list = [player for player in player_list if player not in player_sample]
 

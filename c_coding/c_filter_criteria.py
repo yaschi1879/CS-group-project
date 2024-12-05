@@ -10,7 +10,7 @@ def check_player_criteria(player_id):
     market_value = info[0]
     age = info[1]
     
-    if market_value == "not_availabe":
+    if market_value == "n.a.":
         return False
     
     elif difficulty == "None":

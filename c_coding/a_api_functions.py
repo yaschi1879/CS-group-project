@@ -4,7 +4,7 @@ def get_stadium_name(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
     club_info = response.json()
-    stadium_name = club_info.get("stadiumName", False)
+    stadium_name = club_info.get("stadiumName", "n.a.")
     return stadium_name
 # gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
 
@@ -31,7 +31,7 @@ def get_filter_criteria(player_id):
         elif "k" in market_value:
             market_value = float(market_value.replace("k", "")) / 1000
     else:
-        market_value = "not_available"
+        market_value = "n.a."
     age = int(player_profile["age"])
     return [market_value, age]
 # gibt Markwert in mio als float zurück z.B. 10.34, Markwert ist in Euro
@@ -42,8 +42,10 @@ def get_filter_criteria(player_id):
 def get_club_name_user_input(club_name):
     url = f"https://transfermarkt-api.fly.dev/clubs/search/{club_name}"
     response = requests.get(url)
-    clubs = response.json()
-    return [clubs["results"][0]["id"], clubs["results"][0]["name"]]
+    clubs = response.json()["results"]
+    if not clubs:
+        return "n.a."
+    return [clubs[0]["id"], clubs[0]["name"]]
 # item 0 gibt die korrekte club id zurück
 # item 1 gibt den korrekten club namen zurück
 # club_name als string
@@ -51,22 +53,13 @@ def get_club_name_user_input(club_name):
 def get_player_name_user_input(player_name):
     url = f"https://transfermarkt-api.fly.dev/players/search/{player_name}"
     response = requests.get(url)
-    players = response.json()
-    return [players["results"][0]["id"], players["results"][0]["name"]]
+    players = response.json()["results"]
+    if not players:
+        return "n.a."
+    return [players[0]["id"], players[0]["name"]]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
 # club_name als string
-
-def get_league_name_user_input(competition_name):
-    url = f"https://transfermarkt-api.fly.dev/competitions/search/{competition_name}"
-    response = requests.get(url)
-    league = response.json()
-    if not league["results"]:
-        return False
-    country_id_mapping = {i["country"]: i["id"] for i in league["results"]}
-    return country_id_mapping
-# achtung: gibt eine liste aller liga id's als value zurück, mit den entsprechenden ländern als key   
-# competintion_name als string
 
 def get_league(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"

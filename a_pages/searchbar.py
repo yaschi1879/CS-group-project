@@ -15,8 +15,11 @@ def searchbar():
         
     if search_button:
             player_id = get_player_name_user_input(user_input)[0]
-            player = player_dictionary(player_id)
-            st.write(f"Suchergebnisse für: {user_input}")
+            if player_id == "n.a.":
+                st.warning(f"no player found for: {user_input}")
+            else:
+                player = player_dictionary(player_id)
+                st.write(f"search result for: {user_input}")
 
             if isinstance(player, dict): 
                 # If the `player` dictionary itself represents the result
@@ -43,7 +46,7 @@ def searchbar():
                         st.markdown(f"""
                         - *Club:* {player['club_name']}
                         - *League:* {player['league_name']}
-                        - *Past Clubs:* {', '.join(player['old_clubs_ids'])}
+                        - *Past Clubs:* {', '.join(player['old_clubs_name'])}
                         - *Old Stadium:* {player['old_stadium']}
                         """)
 
