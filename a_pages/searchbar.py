@@ -5,16 +5,15 @@ from c_coding.a_api_functions import get_player_name_user_input, get_marketvalue
 
 def searchbar():
     st.header("Search Engine")
-
     col1, col2 = st.columns([3,1])
 
     with col1:
         user_input = st.text_input ("Geben Sie ein, wonach Sie suchen möchten:", label_visibility="collapsed", placeholder="Type something...")
     with col2:
         search_button = st.button("Search")
-        
+      
     if search_button:
-        with st.spinner("Searching for player... ⚽"):
+        with st.spinner ("Searching for player... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
         if player_id == "n.a.":
             st.warning(f"no player found for: {user_input}")
@@ -23,17 +22,17 @@ def searchbar():
                 player = player_dictionary(player_id)
                 st.write(f"search result for: {user_input}")
 
-        if isinstance(player, dict):
+            if isinstance(player, dict):
                 # If the `player` dictionary itself represents the result
-            if player_id in player.get("id", ""):  # Safely check if the ID matches
+                if player_id in player.get("id", ""):  # Safely check if the ID matches
                     # Spielerinfo als Überschrift und Bild
-                st.title(f"{player['name']} - {player['classified_position']}")
-                st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
+                    st.title(f"{player['name']} - {player['classified_position']}")
+                    st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
 
                     # Informationen in zwei Spalten aufteilen
-                col1, col2 = st.columns(2)
+                    col1, col2 = st.columns(2)
 
-                with col1:
+                    with col1:
                         st.subheader("Personal Details:")
                         st.markdown(f"""
                         - *Age:* {player['age']}
@@ -43,7 +42,7 @@ def searchbar():
                         - *Joined the club:* {player['joined_date']}
                         """)
 
-                with col2:
+                    with col2:
                         st.subheader("Club and League:")
                         st.markdown(f"""
                         - *Club:* {player['club_name']}
@@ -52,20 +51,20 @@ def searchbar():
                         """)
 
                     # Positionen und Erfolge als separate Abschnitte
-                st.subheader("Position:")
-                st.markdown(", ".join(player["position"]))
+                    st.subheader("Position:")
+                    st.markdown(", ".join(player["position"]))
 
-                st.subheader("Achievements:")
-                st.markdown(", ".join(player["titels"]))
+                    st.subheader("Achievements:")
+                    st.markdown(", ".join(player["titels"]))
 
         try:
             market_value = get_marketvalue_history(player_id)
     
-    # Prüfe, ob Daten vorhanden sind
+            # Prüfe, ob Daten vorhanden sind
             if not market_value or len(market_value) == 0:
                 st.warning("No market value data available.")
             else:
-        # Daten in ein DataFrame umwandeln
+                # Daten in ein DataFrame umwandeln
                 df = pd.DataFrame(market_value)
 
                 def clean_value(value):
@@ -78,7 +77,7 @@ def searchbar():
                 df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
                 df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
 
-        # Prüfe auf ungültige Werte
+                # Prüfe auf ungültige Werte
                 if df['date'].isna().any():
                     st.warning("Some dates could not be parsed. Check the data format.")
 
