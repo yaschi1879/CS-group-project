@@ -11,7 +11,7 @@ from c_coding.c_filter_criteria import check_player_criteria
 
 
 def play_game():
-    with st.spinner("Searching for a player ⚽"):
+    with st.spinner("Searching for a player... ⚽"):
         while not st.session_state.selected_player:
             player = random.choice(st.session_state.current_player_list)
             if check_player_criteria(player):
@@ -21,11 +21,16 @@ def play_game():
     
     if not st.session_state.player_data:
         try:
-            with st.spinner("Gathering data for the selected player"):
+            with st.spinner("Gathering data for the selected player... ⚽"):
                 st.session_state.player_data = player_dictionary(st.session_state.selected_player)
         except:
             st.session_state.selected_player = []
             st.rerun()
+    
+    # hier funktion die den user bestimmt
+    # speichern von user in st.session_state.player turn        
+    st.title(f"Lars, it's your turn")
+    st.write("")
     
     col1, col2 = st.columns([1, 3])
     if st.session_state.show_solution == False:
@@ -38,16 +43,19 @@ def play_game():
             st.image(st.session_state.player_data["image"], caption=f"I am {st.session_state.player_data['name']}", width=150)
     
     with col2:
-        st.subheader("Hints")
-        st.write(f"I am {st.session_state.player_data["foot"]} footed") 
-        st.markdown(f"I joined my current club on {st.session_state.player_data["joined_date"]}")
-        st.markdown(f"For one of my former clubs I played in this stadium: {st.session_state.player_data["old_stadium"]}")
+        with st.container():
+            st.subheader("Hints")
+            st.write(f"I am {st.session_state.player_data["foot"]} footed") 
+            st.markdown(f"I joined my current club on {st.session_state.player_data["joined_date"]}")
+            st.markdown(f"For one of my former clubs I played in this stadium: {st.session_state.player_data["old_stadium"]}")
     
-    col1, col2, col3 = st.columns([1, 1, 3])
+    col1, col2, col3 = st.columns([1, 1, 0.5])
     with col1:
-        st.write("lives:", "⚽" * st.session_state.lives, "❌ " * (3 - st.session_state.lives))
+        lives_display = "⚽" * st.session_state.lives + "❌ " * (3 - st.session_state.lives)
+        st.subheader(f"Lives: {lives_display}")
     with col2:
-        st.write(f"points: {st.session_state.points}")
+        st.subheader(f"Points: {st.session_state.points}")
+
     
     
     col1, col2 = st.columns([4, 1]) 
@@ -142,8 +150,9 @@ def play_game():
     
         
     if guess_button:
-        guessed_player_id = get_player_name_user_input(user_input)[0]
-        guessed_player_name = get_player_name_user_input(user_input)[1]
+        with st.spinner("Checking your answer... ⚽"):
+            guessed_player_id = get_player_name_user_input(user_input)[0]
+            guessed_player_name = get_player_name_user_input(user_input)[1]
         if guessed_player_id is None:
             st.warning("Player not found, Please try again.")
         elif st.session_state.lives > 0:
@@ -160,9 +169,9 @@ def play_game():
                     col1, col2 = st.columns([4,1])
                     with col1:
                         if st.session_state.lives > 1:
-                            st.error(f"❌ Wrong guess! You have {st.session_state.lives} lives left")
+                            st.error(f"❌ Wrong guess! {st.session_state.lives} lives left")
                         if st.session_state.lives == 1:
-                            st.error(f"❌ Wrong guess! You have {st.session_state.lives} live left")
+                            st.error(f"❌ Wrong guess! {st.session_state.lives} live left")
                         time.sleep(3)
                         st.rerun()
                         
@@ -170,17 +179,17 @@ def play_game():
                         #st.button("Continue")
                 else:
                    st.session_state.show_solution = True
+                   st.rerun()
                    
         elif st.session_state.lives == 0:
             st.session_state.show_solution = True
+            st.rerun()
             
-            
-    st.write("")
-    st.write("")
-    st.write("")
-    st.write("")
     if st.session_state.show_solution == True:
-        st.error("❌ Game over! Select one of the options below")
+        st.error("❌ Game over! Select one of the options below")        
+    
+    st.write("")
+    st.write("")
     st.write("")
     col1, col2, col3, col4 = st.columns([1, 1, 1, 1])     
     with col1:
@@ -197,6 +206,7 @@ def play_game():
     
     with col3:
         if st.button("Show Solution"):
+            st.session_state.lives = 0
             st.session_state.show_solution = True
             st.rerun()
 

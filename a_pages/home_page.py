@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 from b_game.d_game_initialize import initialize_original_player_list
+import time
 
 def home_page():
     # Initialisation de l'état pour gérer la connexion
@@ -57,7 +58,7 @@ def home_page():
     # Sous-titre "Concept" et description
     col1, col2, col3 = st.columns([2, 0.5, 1])
     with col1: 
-        st.title("Concept of the game")
+        st.title("Game Concept")
         st.write("""
         Welcome to Who Am I? – Football Edition, the ultimate online guessing game for true football fans! 
         Test your knowledge of players from all leagues, eras, and nations. With every clue, the mystery deepens – will you crack the code before time runs out? 
@@ -88,6 +89,28 @@ def home_page():
         st.write("")
 
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
+    
+    col1, col2, = st.columns([3, 1]) 
+    
+    with col1:    
+        st.title("Players")
+    
+    if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
+        with st.spinner("Add players once the game set up has been completed... ⚽"):
+            initialize_original_player_list()
+        st.success("🎉 Game Set up completed")
+        time.sleep(3)
+        st.rerun()
+    
+    if st.session_state.original_player_list:
+    # !!!!!!!!!!!!!!!!!!!! Mathieu, hier bitte irgend ein Feld, wo man die Spieler eingeben kann !!!!!!!!!!!!!!!!!!!!!!!
+    # Spieler sollen als Dictionary in st.session_state.users abgespeichert werden
+    # key = Zahlen, je nach dem wie viele users
+    # value = Namen von Usern
+        st.write("...")
+    
+    st.write("")    
+    st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Formulaire de contact
     st.subheader("Contact")
@@ -116,10 +139,7 @@ def home_page():
     with col3:
         st.write("")
     
-    if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
-            with st.spinner("Generating player list... ⚽"):
-                initialize_original_player_list()
-            st.success("🎉 Player list successfully generated!")
+    
 # Appeler la fonction
 
 

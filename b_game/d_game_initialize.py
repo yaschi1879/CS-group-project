@@ -32,6 +32,8 @@ def initialize_game_variables():
     st.session_state.question_procedure = False
     st.session_state.show_solution = False
     st.session_state.change_difficulty = False
+    #st.session_state.user_index = ...
+    #st.session_state.user_name ...
     
 def initialize_question_variables():
     st.session_state.selected = []
