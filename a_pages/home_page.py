@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from b_game.d_game_initialize import initialize_original_player_list
 
 def home_page():
@@ -16,7 +17,9 @@ def home_page():
         st.title("Name der App")
         st.subheader("Guess. Compete. Celebrate! (find a better slogan)")
     with col2:
-        st.image("images/logo.svg.png", use_column_width=True)
+        image_path = os.path.join("a_pages", "pictures", "logo.png")
+        st.image(image_path, width=200)
+       
     with col3:
         # Bouton Log In stylisé
         if st.button("Log In"):
@@ -61,7 +64,8 @@ def home_page():
         Compete with friends or challenge yourself to climb the leaderboard. Are you ready to show the world you're the ultimate football expert? Let’s play!""")
     
     with col2:
-        st.image("images/ampoule.png", use_column_width=True)
+        image_path = os.path.join("a_pages", "pictures", "ampoule.png")
+        st.image(image_path, width=200)
     with col3:
         st.write("")
 
@@ -78,7 +82,8 @@ def home_page():
         3. Rule 3 : Description...
         """)
     with col2:
-        st.image("images/sifflet.webp", use_column_width=True)
+        image_path = os.path.join("a_pages", "pictures", "sifflet.webp")
+        st.image(image_path, width=200)
     with col3:
         st.write("")
 

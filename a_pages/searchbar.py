@@ -82,6 +82,3 @@ def searchbar():
             except:
                 st.warning("Line Chart not available.")
 
-# Hier muss der Output dann noch schön dargestellt werden
-# Und evtl. Grafik mit Marktwert Entwicklung
-
