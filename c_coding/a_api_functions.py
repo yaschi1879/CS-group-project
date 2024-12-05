@@ -56,7 +56,8 @@ def get_player_name_user_input(player_name):
     players = response.json()["results"]
     if not players:
         return ["n.a.", "n.a."]
-    return [players[0]["id"], players[0]["name"]]
+    else:
+        return [players[0]["id"], players[0]["name"]]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
 # club_name als string
