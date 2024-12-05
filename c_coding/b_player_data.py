@@ -35,7 +35,7 @@ def sort_titles(player_id):
 
 def stadium_name(player_id):
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
-    while not stadium_name and len(old_clubs) > 0:
+    while len(old_clubs) > 0:
         random_club = random.choice(old_clubs)
         old_clubs.remove(random_club)
         stadium_name = get_stadium_name(random_club)
