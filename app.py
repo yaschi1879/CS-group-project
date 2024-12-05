@@ -20,6 +20,6 @@ if page == "Home":
 elif page == "Game":
     a_pages.who_am_i.who_am_i()
 elif page == "Leaderboard":
-    a_pages.leaderboard.stats()
+    a_pages.leaderboard.leaderboard()
 elif page == "Search":
     a_pages.searchbar.searchbar()
