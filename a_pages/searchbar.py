@@ -26,8 +26,8 @@ def searchbar():
                 # If the `player` dictionary itself represents the result
                 if player_id in player.get("id", ""):  # Safely check if the ID matches
                     # Spielerinfo als Überschrift und Bild
-                    st.title(f"{player['name']} - {player['classified_position']}")
-                    st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
+                    st.title(player["name"])
+                    st.image(player["image"], caption=f"{player['name']} ({player['classified_position']})", width=250)
 
                     # Informationen in zwei Spalten aufteilen
                     col1, col2 = st.columns(2)
@@ -35,27 +35,34 @@ def searchbar():
                     with col1:
                         st.subheader("Personal Details:")
                         st.markdown(f"""
+                        - *Nationality:* {player['country']}
                         - *Age:* {player['age']}
                         - *Height:* {player['height']} cm
                         - *Foot:* {player['foot']}
-                        - *Shirt Number:* {player['shirt_number']}
-                        - *Joined the club:* {player['joined_date']}
                         """)
 
                     with col2:
                         st.subheader("Club and League:")
                         st.markdown(f"""
                         - *Club:* {player['club_name']}
+                        - *Joined the club:* {player['joined_date']}
+                        - *Shirt Number:* {player['shirt_number']}
                         - *League:* {player['league_name']}
-                        - *Past Clubs:* {', '.join(player['old_clubs_name'])}
                         """)
 
                     # Positionen und Erfolge als separate Abschnitte
                     st.subheader("Position:")
                     st.markdown(", ".join(player["position"]))
 
-                    st.subheader("Achievements:")
+                    st.subheader("Titels:")
                     st.markdown(", ".join(player["titels"]))
+
+                    st.subheader("Former Clubs:")
+                    old_clubs_name_unique = []
+                    for club in player["old_clubs_name"]:
+                        if club not in old_clubs_name_unique:
+                            old_clubs_name_unique.append(club)
+                    st.markdown(", ".join(old_clubs_name_unique))
 
         try:
             market_value = get_marketvalue_history(player_id)

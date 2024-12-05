@@ -23,15 +23,17 @@ def sort_titles(player_id):
             titles.append("European Championship")
         elif title == "Champions League winner":
             titles.append("Champions League")
-        elif "spanish champion" or "italian champion" or "english champion" or "german champion" or "french champion" in title.lower():
+        elif any(league in title.lower() for league in ["spanish champion", "italian champion", "english champion", "german champion", "french champion"]):
             titles.append("Top 5 League")
     if not titles:
-        return "none"
+        return ["none"]
     return list(set(titles))
 # geht durch alle Titel durch und retourniert eine Liste mit folgenden Titeln (falls diese gewonnen wurden)
 # [WC, EC, CL, league]
 # mit league ist der Titel in einer Top 5 Liga gemeint, aber nicht spezifiziert in welcher Liga
 # falls keiner dieser Titel gwonnen wurde, wird "none" retourniert
+
+print(sort_titles(132098))
 
 def stadium_name(player_id):
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
