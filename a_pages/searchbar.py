@@ -14,15 +14,16 @@ def searchbar():
         search_button = st.button("Search")
         
     if search_button:
-        with st.spinner("Gathering data... ⚽"):
+        with st.spinner("Searching for player... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
-            if player_id == "n.a.":
-                st.warning(f"no player found for: {user_input}")
-            else:
+        if player_id == "n.a.":
+            st.warning(f"no player found for: {user_input}")
+        else:
+            with st.spinner ("Gathering data... ⚽"):
                 player = player_dictionary(player_id)
                 st.write(f"search result for: {user_input}")
 
-    if isinstance(player, dict): 
+        if isinstance(player, dict):
                 # If the `player` dictionary itself represents the result
             if player_id in player.get("id", ""):  # Safely check if the ID matches
                     # Spielerinfo als Überschrift und Bild
@@ -57,7 +58,7 @@ def searchbar():
                 st.subheader("Achievements:")
                 st.markdown(", ".join(player["titels"]))
 
-    try:
+        try:
             market_value = get_marketvalue_history(player_id)
     
     # Prüfe, ob Daten vorhanden sind
@@ -90,7 +91,7 @@ def searchbar():
                     st.subheader("Market Value Development (in Mio. EUR)")
                     st.line_chart(df[['date', 'value']].set_index('date'))
 
-    except Exception as e:
+        except Exception as e:
             st.warning(f"Line Chart not available: {e}")
 
 
