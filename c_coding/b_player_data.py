@@ -35,15 +35,15 @@ def sort_titles(player_id):
 
 def stadium_name(player_id):
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
-    random_club = random.choice(old_clubs)
-    stadium_name = get_stadium_name(random_club)
     while not stadium_name and len(old_clubs) != 0:
-        old_clubs.remove(random_club)
         random_club = random.choice(old_clubs)
+        old_clubs.remove(random_club)
         stadium_name = get_stadium_name(random_club)
+        if stadium_name != "n.a.":
+            return stadium_name
     if len(old_clubs) == 0:
         return "no old stadium"
-    return stadium_name
+    
 # gibt den stadion namen eines zufälligen alten clubs zurück
 
 def player_dictionary(player_id):
