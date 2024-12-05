@@ -16,7 +16,7 @@ def searchbar():
         with st.spinner ("Searching for player... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
         if player_id == "n.a.":
-            st.warning(f"no player found for: {user_input}")
+            st.warning(f"no active player found for: {user_input}")
         else:
             with st.spinner ("Gathering data... ⚽"):
                 player = player_dictionary(player_id)

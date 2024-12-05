@@ -45,6 +45,7 @@ def get_club_name_user_input(club_name):
     clubs = response.json()["results"]
     if not clubs:
         return ["n.a.", "n.a."]
+    
     return [clubs[0]["id"], clubs[0]["name"]]
 # item 0 gibt die korrekte club id zurück
 # item 1 gibt den korrekten club namen zurück
@@ -56,8 +57,13 @@ def get_player_name_user_input(player_name):
     players = response.json()["results"]
     if not players:
         return ["n.a.", "n.a."]
+    while len(players) > 0:
+        current_player = players.pop(0)
+        club_name = current_player["club"]["name"]
+        if club_name != "Retired":
+            return [current_player["id"], current_player["name"]]
     else:
-        return [players[0]["id"], players[0]["name"]]
+        return ["n.a.", "n.a."]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
 # player_name als string
