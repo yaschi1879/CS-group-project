@@ -14,24 +14,25 @@ def searchbar():
         search_button = st.button("Search")
         
     if search_button:
+        with st.spinner("Generating player list... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
-            if player_id == "n.a.":
-                st.warning(f"no player found for: {user_input}")
-            else:
-                player = player_dictionary(player_id)
-                st.write(f"search result for: {user_input}")
+        if player_id == "n.a.":
+            st.warning(f"no player found for: {user_input}")
+        else:
+            player = player_dictionary(player_id)
+            st.write(f"search result for: {user_input}")
 
-            if isinstance(player, dict): 
+        if isinstance(player, dict): 
                 # If the `player` dictionary itself represents the result
-                if player_id in player.get("id", ""):  # Safely check if the ID matches
+            if player_id in player.get("id", ""):  # Safely check if the ID matches
                     # Spielerinfo als Überschrift und Bild
-                    st.title(f"{player['name']} - {player['classified_position']}")
-                    st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
+                st.title(f"{player['name']} - {player['classified_position']}")
+                st.image(player["image"], caption=f"{player['name']} ({player['country']})", width=250)
 
                     # Informationen in zwei Spalten aufteilen
-                    col1, col2 = st.columns(2)
+                col1, col2 = st.columns(2)
 
-                    with col1:
+                with col1:
                         st.subheader("Personal Details:")
                         st.markdown(f"""
                         - *Age:* {player['age']}
@@ -41,7 +42,7 @@ def searchbar():
                         - *Joined the club:* {player['joined_date']}
                         """)
 
-                    with col2:
+                with col2:
                         st.subheader("Club and League:")
                         st.markdown(f"""
                         - *Club:* {player['club_name']}
@@ -51,14 +52,14 @@ def searchbar():
                         """)
 
                     # Positionen und Erfolge als separate Abschnitte
-                    st.subheader("Position:")
-                    st.markdown(", ".join(player["position"]))
+                st.subheader("Position:")
+                st.markdown(", ".join(player["position"]))
 
-                    st.subheader("Achievements:")
-                    st.markdown(", ".join(player["titels"]))
-            else:
-                st.write("No results found")
-            try:
+                st.subheader("Achievements:")
+                st.markdown(", ".join(player["titels"]))
+        else:
+            st.write("No results found")
+        try:
                 market_value = get_marketvalue_history(player_id)
                 # Daten in ein DataFrame umwandeln
                 df = pd.DataFrame(market_value)
@@ -82,6 +83,6 @@ def searchbar():
                 st.subheader("Market Value Development (in Mio. EUR)")
                 st.line_chart(df[['date', 'value']].set_index('date'))
 
-            except:
+        except:
                 st.warning("Line Chart not available.")
 
