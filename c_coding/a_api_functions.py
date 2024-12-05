@@ -57,6 +57,7 @@ def get_player_name_user_input(player_name):
     if not players:
         return ["n.a.", "n.a."]
     else:
+        print("not correct")
         return [players[0]["id"], players[0]["name"]]
 # item 0 gibt die korrekte player id zurück
 # item 1 gibt den korrekten player namen zurück
