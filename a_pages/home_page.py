@@ -61,7 +61,7 @@ def home_page():
         Compete with friends or challenge yourself to climb the leaderboard. Are you ready to show the world you're the ultimate football expert? Let’s play!""")
     
     with col2:
-        st.image("images/ampoule.png", use_column_width=True)
+        st.image("a_pages.pictures/ampoule.png", use_column_width=True)
     with col3:
         st.write("")
 
@@ -78,7 +78,7 @@ def home_page():
         3. Rule 3 : Description...
         """)
     with col2:
-        st.image("images/sifflet.webp", use_column_width=True)
+        st.image("a_pages.pictures/sifflet.webp", use_column_width=True)
     with col3:
         st.write("")
 
