@@ -44,17 +44,19 @@ def play_game():
     
     with col2:
         with st.container():
-            st.subheader("Hints")
-            st.write(f"I am {st.session_state.player_data["foot"]} footed") 
-            st.markdown(f"I joined my current club on {st.session_state.player_data["joined_date"]}")
-            st.markdown(f"For one of my former clubs I played in this stadium: {st.session_state.player_data["old_stadium"]}")
+            st.subheader("Hints:")
+            st.markdown(f"""
+                        - I am {st.session_state.player_data["foot"]} footed
+                        - I joined my current club on {st.session_state.player_data["joined_date"]}
+                        - I have played in this stadium: {st.session_state.player_data["old_stadium"]}
+                        """)
     
     col1, col2, col3 = st.columns([1, 1, 0.5])
     with col1:
         lives_display = "⚽" * st.session_state.lives + "❌ " * (3 - st.session_state.lives)
         st.subheader(f"Lives: {lives_display}")
     with col2:
-        st.subheader(f"Points: {st.session_state.points}")
+        st.subheader(f"Points left: {st.session_state.points}")
 
     
     
@@ -186,6 +188,9 @@ def play_game():
             st.rerun()
             
     if st.session_state.show_solution == True:
+        if st.session_state.points > 0:
+            st.session_state.points = 0
+            st.rerun()
         st.error("❌ Game over! Select one of the options below")        
     
     st.write("")
@@ -207,6 +212,7 @@ def play_game():
     with col3:
         if st.button("Show Solution"):
             st.session_state.lives = 0
+            st.session_state.points = 0
             st.session_state.show_solution = True
             st.rerun()
 
