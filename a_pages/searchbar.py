@@ -16,6 +16,7 @@ def searchbar():
     if search_button:
         with st.spinner("Gathering data... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
+            st.write(player_id)
             if player_id == "n.a.":
                 st.warning(f"no player found for: {user_input}")
             else:
@@ -56,8 +57,7 @@ def searchbar():
 
                 st.subheader("Achievements:")
                 st.markdown(", ".join(player["titels"]))
-        else:
-            st.write("No results found")
+
         try:
             market_value = get_marketvalue_history(player_id)
     
