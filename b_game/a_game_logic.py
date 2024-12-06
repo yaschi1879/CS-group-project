@@ -110,6 +110,9 @@ def play_game():
                 match_found = True
             else:
                 match_found = False
+        st.write(selected)
+        st.write(st.session_state.player_data[index])
+        time.sleep(10)
         
         if st.session_state.points > 0 and st.session_state.lives > 0:
             if match_found == True:
