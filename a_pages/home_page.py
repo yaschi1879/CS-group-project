@@ -117,7 +117,7 @@ def home_page():
         st.write("...")
 
     st.title("Log In to start the game !")
-    st.subheaders("Choose your username and show your skills !")
+    st.subheader("Choose your username and show your skills !")
 
     # Input field for username
     username = st.text_input("Enter your username:")

@@ -102,14 +102,16 @@ def play_game():
         match_found = None
         
         for answer in selected:
-                if isinstance(st.session_state.player_data[index], list):
-                    if answer in st.session_state.player_data[index]:
-                        match_found = True   
-                elif answer == st.session_state.player_data[index]:
-                    match_found = True
-                else:
-                    match_found = False
+            if isinstance(st.session_state.player_data[index], list):
+                if answer in st.session_state.player_data[index]:
+                    match_found = True   
+            elif answer == st.session_state.player_data[index]:
+                match_found = True
+            else:
+                match_found = False
         
+        st.write(match_found)
+        st.write(selected)
         if st.session_state.points > 0 and st.session_state.lives > 0:
             if match_found == True:
                 st.session_state.points -= 1

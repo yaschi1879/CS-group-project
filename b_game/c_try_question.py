@@ -30,7 +30,7 @@ def handle_question_selection(question_template):
         if enter:
             if st.session_state.user_input:  # Prüfen, ob Eingabe existiert
                 # gibt club id als liste zurück
-                st.session_state.selected = list(get_club_name_user_input(st.session_state.user_input)[0])
+                st.session_state.selected = [get_club_name_user_input(st.session_state.user_input)[0]]
                 # gibt club namen zurück
                 st.session_state.exact_input = get_club_name_user_input(st.session_state.user_input)[1]
                 st.session_state.index = "club_id"
@@ -100,7 +100,7 @@ def handle_question_selection(question_template):
         if enter:
             if st.session_state.user_input:
                 # gibt alte club id als liste zurück
-                st.session_state.selected = list(get_club_name_user_input(st.session_state.user_input)[0])
+                st.session_state.selected = [get_club_name_user_input(st.session_state.user_input)[0]]
                 # gibt alten club namen zurück
                 st.session_state.exact_input = get_club_name_user_input(st.session_state.user_input)[1]
                 st.session_state.index = "old_clubs_ids"
@@ -147,7 +147,7 @@ def handle_question_selection(question_template):
             enter = st.button("Confirm")
         if enter:
             if st.session_state.user_input:
-                st.session_state.selected = [age_list]
+                st.session_state.selected = age_list
                 if st.session_state.user_input[0] == st.session_state.user_input[1]:
                     st.session_state.exact_input = str(st.session_state.user_input[0])
                 else:
