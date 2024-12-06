@@ -101,8 +101,52 @@ def home_page():
         st.success("🎉 Game Set up completed")
         time.sleep(3)
         st.rerun()
+
+
+    # Initialize session_state to store users and their game data
+    if "users" not in st.session_state:
+        st.session_state["users"] = {}
+    if "points" not in st.session_state:
+        st.session_state["points"] = {}
+    if "points_history" not in st.session_state:
+        st.session_state["points_history"] = {}
+    if "rounds" not in st.session_state:
+        st.session_state["rounds"] = {}
     
     if st.session_state.original_player_list:
+
+        st.title("Log In to start the game !")
+        st.subheaders("Choose your username and show your skills !")
+
+    # Input field for username
+    username = st.text_input("Enter your username:")
+
+    # Button to save the username
+    if st.button("Add user"):
+        if username:  # Check if the input field is not empty
+            # Generate a new ID for the user
+            new_id = len(st.session_state["users"]) + 1
+            if new_id not in st.session_state["users"]:
+                # Add the new user to the dictionary
+                st.session_state["users"][new_id] = username
+                # Initialize their points, points history, and rounds
+                st.session_state["points"][new_id] = 0
+                st.session_state["points_history"][new_id] = []
+                st.session_state["rounds"][new_id] = 0
+                st.success(f"User {username} added successfully!")
+            else:
+                st.error("User ID already exists!")
+        else:
+            st.error("Please enter a username.")
+
+    # Display the list of registered users
+    st.subheader("List of registered users:")
+    if st.session_state["users"]:
+        for user_id, name in st.session_state["users"].items():
+            st.write(f"User {user_id}: {name}")
+    else:
+        st.write("No users registered yet.")
+
     # !!!!!!!!!!!!!!!!!!!! Mathieu, hier bitte irgend ein Feld, wo man die Spieler eingeben kann !!!!!!!!!!!!!!!!!!!!!!!
     # Spieler sollen als Dictionary in st.session_state.users abgespeichert werden
     # key = Zahlen, je nach dem wie viele users -> ist für alle dictionarys (users, points, rounds der selbe)
