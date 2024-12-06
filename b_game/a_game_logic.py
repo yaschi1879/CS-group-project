@@ -112,6 +112,7 @@ def play_game():
         
         st.write(match_found)
         st.write(selected)
+        st.write(st.session_state.selected)
         if st.session_state.points > 0 and st.session_state.lives > 0:
             if match_found == True:
                 st.session_state.points -= 1
