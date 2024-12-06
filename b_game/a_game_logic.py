@@ -27,8 +27,8 @@ def play_game():
             st.session_state.selected_player = []
             st.rerun()
     
-    # hier funktion die den user bestimmt
-    # speichern von user in st.session_state.player turn        
+    # hier funktion die den user bestimmt -> nur hier nicht auch noch auf Home Page
+    # speichern von user in st.session_state.player turn
     st.title(f"Lars, it's your turn")
     st.write("")
     
@@ -60,8 +60,6 @@ def play_game():
     st.write("")
     st.write("")
 
-    
-    
     col1, col2 = st.columns([4, 1]) 
     with col1:
         question_template = st.selectbox(
@@ -77,68 +75,61 @@ def play_game():
         "Do you currently wear the shirt number ...?", 
         "Are you ...cm tall?"]
         )
-    st.session_state.question_template = question_template
+    st.session_state.question_chosen = question_template
     
     with col2:
         st.write("")
         st.write("")
         question_button = st.button("Select Question")
     
+    # bis hier hin nur anzeige
+    # --------------------------------------------------------------------------------------------------
     if question_button:
-        if st.session_state.question_template:
+        if st.session_state.question_chosen:
             st.session_state.question_procedure = True
-            
-    if st.session_state.user_input and not st.session_state.question_procedure:
-        st.write("scheisse man")
     
     if st.session_state.question_procedure == True:
-        col1, col2 = st.columns([1, 1])
-        handle_question_selection(st.session_state.question_template, col1, col2)
+        # wechsel auf b_questions file
+        handle_question_selection(st.session_state.question_chosen)
         
-    
     match_found = None
-    if st.session_state.exact_input:
+    if st.session_state.check == True:
         index = st.session_state.index
         selected = st.session_state.selected
         exact_input = st.session_state.exact_input
-        
-        st.write("inizialiserung oke")
             
-        full_question = question_template.replace("...", str(exact_input))
-        st.session_state.questions.append(full_question)
+        #st.session_state.questions.append = st.session_state.question_chosen.replace("...", str(exact_input))
         
-        st.write("frage hinzugefügt")
-                
+        #with st.spinner("Checking your answer... ⚽"):
         for answer in selected:
-            if isinstance(st.session_state.player_data[index], list):
-                if answer in st.session_state.player_data[index]:
+                if isinstance(st.session_state.player_data[index], list):
+                    if answer in st.session_state.player_data[index]:
+                        match_found = True
+                        break    
+                elif answer == st.session_state.player_data[index]:
                     match_found = True
-                    break
-                    
-            elif answer == st.session_state.player_data[index]:
-                match_found = True
-            else:
-                match_found = False
-            
-            st.write("true oder false")
-        else:
-            st.warning("Please provide an additional input to complete the question!")
+                else:
+                    match_found = False
+            #time.sleep(3)
                         
-    if st.session_state.points > 0 and st.session_state.lives > 0:
+    if match_found != None and st.session_state.points > 0 and st.session_state.lives > 0:
         if match_found == True:
             st.session_state.points -= 1
-            st.success(f"Yes, this question is correct. You have lost only 1 Point")
+            #st.success(f"Correct! You have lost only 1 Point")
             
         elif match_found == False:
             st.session_state.points -= 2
-            st.warning(f"No, this question is incorrect. You have lost 2 Points")
+            #st.warning(f"Wrong. You have lost 2 Points")
+        st.session_state.check = False
+        st.rerun()
 
     st.write("")
     st.write("")
     st.write("")
     st.subheader("Questions asked so far:")
+    # schauen, dass nicht jedes mal alles immer geschrieben wird
     for i, question in enumerate(st.session_state.questions, start=1):
-            st.write(f"{i}. {question}")
+            st.write(f"{i}. {question}") # hier muss antwort noch angezeigt werden
     
     st.write("")
     st.write("")
@@ -151,7 +142,6 @@ def play_game():
     
     with col2:
         guess_button = st.button("Enter Guess")
-    
         
     if guess_button:
         with st.spinner("Checking your answer... ⚽"):

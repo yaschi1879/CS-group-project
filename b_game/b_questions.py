@@ -1,4 +1,4 @@
-from c_coding.a_api_functions import get_club_name_user_input
+from c_support.a_api_functions import get_club_name_user_input
 import streamlit as st
 
 def handle_question_selection(question_template, col1, col2):
@@ -22,16 +22,8 @@ def handle_question_selection(question_template, col1, col2):
     
     if question_template == "Are you currently playing for ...?":
         st.session_state.user_input = col1.text_input("Enter my club name:")
-        st.write("ja")
         st.session_state.question_state["current_club"] = current_club
-        st.write(current_club)
         # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        with col2:
-            st.write("")
-            st.write("")
-            if st.button("Confirm Club"):
-                st.session_state.confirmed = True
-            
         if current_club:
             st.write("if passt")
             st.session_state.question_state["current_club"] = current_club

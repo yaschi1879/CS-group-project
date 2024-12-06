@@ -14,6 +14,7 @@ def generate_player_list(list):
         players = get_club_players(club)
         player_list.extend(players)
     return player_list
+    
 
 def initialize_original_player_list():
     st.session_state.original_player_list = generate_player_list(club_list_test)
@@ -29,7 +30,6 @@ def initialize_game_variables():
     st.session_state.players_guessed_so_far = []
     st.session_state.player_data = {}
     st.session_state.questions = []
-    st.session_state.question_procedure = False
     st.session_state.show_solution = False
     st.session_state.change_difficulty = False
     #st.session_state.user_index = ...
@@ -40,5 +40,6 @@ def initialize_question_variables():
     st.session_state.index = []
     st.session_state.exact_input = []
     st.session_state.question_state = {}
-    st.session_state.confirmed = False
     st.session_state.user_input = []
+    st.session_state.check = False # brauch ich
+    st.session_state.question_procedure = False # brauch ich
