@@ -102,7 +102,7 @@ def play_game():
         match_found = None
         
         for answer in selected:
-            if isinstance(st.session_state.player_data[index], list):
+            if st.session_state.player_data[index] == list:
                 if answer in st.session_state.player_data[index]:
                     match_found = True
                     break
