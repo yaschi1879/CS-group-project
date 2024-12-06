@@ -159,5 +159,4 @@ def leaderboard():
 
 
 # Exécuter la page Leaderboard
-if __name__ == "__main__":
-    leaderboard()
+
