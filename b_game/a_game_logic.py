@@ -84,6 +84,8 @@ def play_game():
     
     # bis hier hin nur anzeige
     # --------------------------------------------------------------------------------------------------
+    # ab hier game logik
+    
     if question_button:
         if st.session_state.question_chosen:
             st.session_state.question_procedure = True
@@ -92,15 +94,12 @@ def play_game():
         # wechsel auf b_questions file
         handle_question_selection(st.session_state.question_chosen)
         
-    match_found = None
     if st.session_state.check == True:
         index = st.session_state.index
         selected = st.session_state.selected
         exact_input = st.session_state.exact_input
-            
-        #st.session_state.questions.append = st.session_state.question_chosen.replace("...", str(exact_input))
+        match_found = None
         
-        #with st.spinner("Checking your answer... ⚽"):
         for answer in selected:
                 if isinstance(st.session_state.player_data[index], list):
                     if answer in st.session_state.player_data[index]:
@@ -110,26 +109,33 @@ def play_game():
                     match_found = True
                 else:
                     match_found = False
-            #time.sleep(3)
-                        
-    if match_found != None and st.session_state.points > 0 and st.session_state.lives > 0:
-        if match_found == True:
-            st.session_state.points -= 1
-            #st.success(f"Correct! You have lost only 1 Point")
+        
+        if st.session_state.points > 0 and st.session_state.lives > 0:
+            if match_found == True:
+                st.session_state.points -= 1
+                answer_text = f"<span style='color:green;'>Yes</span>"
+            elif match_found == False:
+                st.session_state.points -= 2
+                answer_text = f"<span style='color:red;'>No</span>"
+        
+        if st.session_state.points == 0 or st.session_state.lives == 0:
+            st.session_state.show_solution = True
             
-        elif match_found == False:
-            st.session_state.points -= 2
-            #st.warning(f"Wrong. You have lost 2 Points")
+        formatted_question = st.session_state.question_chosen.replace("...", str(exact_input))
+     
+        st.session_state.questions.append(f"{formatted_question} - {answer_text}")
         st.session_state.check = False
         st.rerun()
 
     st.write("")
     st.write("")
     st.write("")
-    st.subheader("Questions asked so far:")
-    # schauen, dass nicht jedes mal alles immer geschrieben wird
-    for i, question in enumerate(st.session_state.questions, start=1):
-            st.write(f"{i}. {question}") # hier muss antwort noch angezeigt werden
+    st.subheader("Questions asked so far:")  # Subheader verwenden
+    if st.session_state.questions:
+        questions_list = "\n".join(
+        [f"{i}. {question}" for i, question in enumerate(st.session_state.questions, start=1)]
+        )
+        st.markdown(questions_list, unsafe_allow_html=True)
     
     st.write("")
     st.write("")
