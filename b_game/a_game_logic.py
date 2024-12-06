@@ -104,7 +104,8 @@ def play_game():
         for answer in selected:
             if isinstance(st.session_state.player_data[index], list):
                 if answer in st.session_state.player_data[index]:
-                    match_found = True   
+                    match_found = True
+                    break
             elif answer == st.session_state.player_data[index]:
                 match_found = True
             else:
