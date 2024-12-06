@@ -114,9 +114,10 @@ def home_page():
         st.session_state["rounds"] = {}
     
     if st.session_state.original_player_list:
+        st.write("...")
 
-        st.title("Log In to start the game !")
-        st.subheaders("Choose your username and show your skills !")
+    st.title("Log In to start the game !")
+    st.subheaders("Choose your username and show your skills !")
 
     # Input field for username
     username = st.text_input("Enter your username:")
