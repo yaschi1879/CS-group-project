@@ -2,7 +2,7 @@ import streamlit as st
 import random
 import os
 import time
-from b_game.c_try_question import handle_question_selection
+from b_game.c_question import handle_question_selection
 from b_game.d_game_initialize import initialize_game_variables
 from c_support.a_api_functions import get_player_name_user_input
 from c_support.b_player_data import player_dictionary
@@ -135,7 +135,7 @@ def play_game():
     st.subheader("Questions asked so far:")  # Subheader verwenden
     if st.session_state.questions:
         questions_list = "\n".join(
-        [f"{i}. {question}" for i, question in enumerate(st.session_state.questions, start=1)]
+        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.questions, start=1))]
         )
         st.markdown(questions_list, unsafe_allow_html=True)
     

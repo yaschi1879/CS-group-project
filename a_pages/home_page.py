@@ -90,10 +90,7 @@ def home_page():
 
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
     
-    col1, col2, = st.columns([3, 1]) 
-    
-    with col1:    
-        st.title("Players")
+    col1, col2, = st.columns([3, 1])
     
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
         with st.spinner("Add players once the game set up has been completed... ⚽"):

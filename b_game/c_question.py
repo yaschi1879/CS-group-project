@@ -161,7 +161,7 @@ def handle_question_selection(question_template):
                 with col1:
                     st.warning("Please enter an input before confirming.")
                 
-    elif question_template == "Is you position...?":
+    elif question_template == "Is your position...?":
         st.session_state.user_input = False
         with col1:
             st.session_state.user_input = col1.selectbox(
