@@ -99,17 +99,19 @@ def play_game():
         index = st.session_state.index
         selected = st.session_state.selected
         exact_input = st.session_state.exact_input
-        match_found = None
+        match_found = False
         
-        for answer in selected:
-            if st.session_state.player_data[index] == list:
+        if st.session_state.player_data[index] == list:
+            for answer in selected:
                 if answer in st.session_state.player_data[index]:
                     match_found = True
                     break
-            elif answer == st.session_state.player_data[index]:
-                match_found = True
-            else:
-                match_found = False
+        else:
+            for answer in selected:
+                if answer == st.session_state.player_data[index]:
+                    match_found = True   
+                    break
+        
         st.write(selected)
         st.write(st.session_state.player_data[index])
         time.sleep(10)
