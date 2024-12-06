@@ -105,8 +105,10 @@ def home_page():
     if st.session_state.original_player_list:
     # !!!!!!!!!!!!!!!!!!!! Mathieu, hier bitte irgend ein Feld, wo man die Spieler eingeben kann !!!!!!!!!!!!!!!!!!!!!!!
     # Spieler sollen als Dictionary in st.session_state.users abgespeichert werden
-    # key = Zahlen, je nach dem wie viele users
+    # key = Zahlen, je nach dem wie viele users -> ist für alle dictionarys (users, points, rounds der selbe)
     # value = Namen von Usern
+    # zusätzlich funktion die checked ob alle user im dictionary users einen points value im dictionary points haben, falls nicht, diesen auf 0 setzen
+    # zusätzlich funktion die checked ob aller user im dictionary users einen rounds value im dictionary rounds haben, falls nicht, diesen auf 0 setzen
         st.write("...")
     
     st.write("")    
