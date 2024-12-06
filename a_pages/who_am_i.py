@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from b_game.d_game_initialize import initialize_original_player_list, initialize_game_variables, initialize_question_variables
+from b_game.d_game_initialize import initialize_original_player_list, initialize_game_variables
 from b_game.a_game_logic import play_game
 
 def who_am_i():
@@ -50,7 +50,6 @@ def who_am_i():
         if st.button("Lets play the game?"):
             # Setze den Zustand, dass das Spiel gestartet wurde
             initialize_game_variables()
-            initialize_question_variables()
             st.session_state.game_started = True
             # aktualisieren der seite
             st.rerun()

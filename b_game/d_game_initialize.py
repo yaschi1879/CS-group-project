@@ -30,16 +30,15 @@ def initialize_game_variables():
     st.session_state.players_guessed_so_far = []
     st.session_state.player_data = {}
     st.session_state.questions = []
+    st.session_state.question_selected = False
     st.session_state.show_solution = False
     st.session_state.change_difficulty = False
-    #st.session_state.user_index = ...
-    #st.session_state.user_name ...
-    
-def initialize_question_variables():
     st.session_state.selected = []
     st.session_state.index = []
     st.session_state.exact_input = []
-    st.session_state.question_state = {}
     st.session_state.user_input = []
+    st.session_state.user_optional_input = []
     st.session_state.check = False # brauch ich
     st.session_state.question_procedure = False # brauch ich
+    #st.session_state.user_index = ...
+    #st.session_state.user_name ...

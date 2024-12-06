@@ -3,7 +3,7 @@ import random
 import os
 import time
 from b_game.c_try_question import handle_question_selection
-from b_game.d_game_initialize import initialize_game_variables, initialize_question_variables
+from b_game.d_game_initialize import initialize_game_variables
 from c_support.a_api_functions import get_player_name_user_input
 from c_support.b_player_data import player_dictionary
 from c_support.c_filter_criteria import check_player_criteria
@@ -52,13 +52,15 @@ def play_game():
                         """)
     
     col1, col2, col3 = st.columns([1, 1, 0.5])
-    with col1:
-        lives_display = "⚽" * st.session_state.lives + "❌ " * (3 - st.session_state.lives)
-        st.subheader(f"Lives: {lives_display}")
-    with col2:
-        st.subheader(f"Points left: {st.session_state.points}")
-    st.write("")
-    st.write("")
+    
+    with st.container():
+        with col1:
+            lives_display = "⚽" * st.session_state.lives + "❌ " * (3 - st.session_state.lives)
+            st.subheader(f"Lives: {lives_display}")
+        with col2:
+            st.subheader(f"Points left: {st.session_state.points}")
+        st.write("")
+        st.write("")
 
     col1, col2 = st.columns([4, 1]) 
     with col1:
@@ -71,24 +73,23 @@ def play_game():
         "Did you use to play for ...?", 
         "Are you a ... winner?", 
         "Are you ... years old?", 
-        "Do you play as a ...?", 
+        "Is your position...?", 
         "Do you currently wear the shirt number ...?", 
         "Are you ...cm tall?"]
         )
     st.session_state.question_chosen = question_template
     
-    with col2:
-        st.write("")
-        st.write("")
-        question_button = st.button("Select Question")
-    
     # bis hier hin nur anzeige
     # --------------------------------------------------------------------------------------------------
     # ab hier game logik
     
-    if question_button:
-        if st.session_state.question_chosen:
-            st.session_state.question_procedure = True
+    #if question_button:
+    
+    if st.session_state.question_chosen:
+        st.session_state.question_selected = True
+        
+    if st.session_state.question_selected:
+        st.session_state.question_procedure = True
     
     if st.session_state.question_procedure == True:
         # wechsel auf b_questions file
@@ -103,8 +104,7 @@ def play_game():
         for answer in selected:
                 if isinstance(st.session_state.player_data[index], list):
                     if answer in st.session_state.player_data[index]:
-                        match_found = True
-                        break    
+                        match_found = True   
                 elif answer == st.session_state.player_data[index]:
                     match_found = True
                 else:
@@ -123,7 +123,7 @@ def play_game():
             
         formatted_question = st.session_state.question_chosen.replace("...", str(exact_input))
      
-        st.session_state.questions.append(f"{formatted_question} - {answer_text}")
+        st.session_state.questions.append(f"{formatted_question} \xa0 {answer_text}")
         st.session_state.check = False
         st.rerun()
 

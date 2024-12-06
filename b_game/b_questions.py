@@ -95,38 +95,6 @@ def handle_question_selection(question_template, col1, col2):
         index = "classified_position"
         selected = [main_position]
         exact_input = main_position
-        
-        # Schritt 2: Spezialisierung basierend auf der Hauptposition
-        if main_position == "Defender":
-            specific_position = col2.selectbox(
-                "Optional: Choose a specific position for Defender:",
-                ["", "Left Back", "Center Back", "Right Back"]
-            )
-            if specific_position:
-                index = "position"
-                selected = [specific_position]
-                exact_input = specific_position
-
-        elif main_position == "Midfielder":
-            specific_position = col2.selectbox(
-                "Optional: Choose a specific position for Midfielder:",
-                ["", "Defensive Midfielder", "Offensive Midfielder", "Right Midfielder", "Left Midfielder"]
-            )
-            if specific_position:
-                index = "position"
-                selected = [specific_position]
-                exact_input = specific_position
-
-        elif main_position == "Striker":
-            specific_position = col2.selectbox(
-                "Optional: Choose a specific position for Striker:",
-                ["", "Left Wing", "Right Wing", "Center Forward"]
-            )
-            if specific_position:
-                index = "position"
-                selected = [specific_position]
-                exact_input = specific_position
-        # !!!!!!! muss noch mit API abgestimmt werden !!!!!!!!
 
     elif question_template == "Do you currently wear the shirt number ...?":
         shirt_number = col1.text_input("Enter the shirt number")
@@ -140,5 +108,3 @@ def handle_question_selection(question_template, col1, col2):
         selected = height_list
         index = "height"
         exact_input = f"between {height_range[0]} and {height_range[1]}"
-    
-    
