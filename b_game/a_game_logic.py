@@ -4,9 +4,9 @@ import os
 import time
 from b_game.c_try_question import handle_question_selection
 from b_game.d_game_initialize import initialize_game_variables, initialize_question_variables
-from c_coding.a_api_functions import get_player_name_user_input
-from c_coding.b_player_data import player_dictionary
-from c_coding.c_filter_criteria import check_player_criteria
+from c_support.a_api_functions import get_player_name_user_input
+from c_support.b_player_data import player_dictionary
+from c_support.c_filter_criteria import check_player_criteria
 
 
 

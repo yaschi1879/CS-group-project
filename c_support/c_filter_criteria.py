@@ -1,4 +1,4 @@
-from c_coding.a_api_functions import get_filter_criteria
+from c_support.a_api_functions import get_filter_criteria
 import streamlit as st
 
 # diese funktion checkt, ob der spieler die kriterien für den schwierigkeitsgrad erfüllt
