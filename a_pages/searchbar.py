@@ -66,37 +66,37 @@ def searchbar():
                     st.markdown(", ".join(old_clubs_name_unique))
 
     try:
-                market_value = get_marketvalue_history(player_id)
-        
-                # Prüfe, ob Daten vorhanden sind
-                if not market_value or len(market_value) == 0:
-                    st.warning("No market value data available.")
-                else:
-                    # Daten in ein DataFrame umwandeln
-                    df = pd.DataFrame(market_value)
+        market_value = get_marketvalue_history(player_id)
 
-                    def clean_value(value):
-                        value = value.replace('€', '').replace(',', '')
-                        if 'm' in value:
-                            return float(value.replace('m', ''))
-                        elif 'k' in value:
-                            return float(value.replace('k', '')) / 1000
+        # Prüfe, ob Daten vorhanden sind
+        if not market_value or len(market_value) == 0:
+            st.warning("No market value data available.")
+        else:
+            # Daten in ein DataFrame umwandeln
+            df = pd.DataFrame(market_value)
 
-                    df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
-                    df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
+            def clean_value(value):
+                value = value.replace('€', '').replace(',', '')
+                if 'm' in value:
+                    return float(value.replace('m', ''))
+                elif 'k' in value:
+                    return float(value.replace('k', '')) / 1000
 
-                    # Prüfe auf ungültige Werte
-                    if df['date'].isna().any():
-                        st.warning("Some dates could not be parsed. Check the data format.")
+            df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
+            df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
 
-                    df = df.sort_values(by='date')
+            # Prüfe auf ungültige Werte
+            if df['date'].isna().any():
+                st.warning("Some dates could not be parsed. Check the data format.")
 
-                    if df.empty or df['value'].isna().all():
-                        st.warning("No valid data to display.")
-                    else:
-                # Line Chart darstellen
-                        st.subheader("Market Value Development (in Mio. EUR)")
-                        st.line_chart(df[['date', 'value']].set_index('date'))
+            df = df.sort_values(by='date')
+
+            if df.empty or df['value'].isna().all():
+                st.warning("No valid data to display.")
+            else:
+        # Line Chart darstellen
+                st.subheader("Market Value Development (in Mio. EUR)")
+                st.line_chart(df[['date', 'value']].set_index('date'))
 
     except Exception as e:
         if player_id != "n.a.":
