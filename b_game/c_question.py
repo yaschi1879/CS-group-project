@@ -176,7 +176,7 @@ def handle_question_selection(question_template):
             if st.session_state.user_input:
                 st.session_state.selected = [st.session_state.user_input]
                 st.session_state.exact_input = st.session_state.user_input
-                st.session_state.index = "main_position"
+                st.session_state.index = "classified_position"
                 st.session_state.question_procedure = False
                 st.session_state.question_selected = False
                 st.session_state.check = True
