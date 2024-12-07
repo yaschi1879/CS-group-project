@@ -148,18 +148,18 @@ def play_game():
     st.write("")
     st.subheader("Guess the Player")
     
-    if st.session_state.players_guessed:
-        player_list = "\n".join(
-        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_display), start=1)]
-        )
-        st.markdown(player_list, unsafe_allow_html=True)
-    
     col1, col2 = st.columns([4, 1])
     with col1:
         user_input = st.text_input("Enter Player Name", placeholder="Type Player here...", label_visibility="collapsed")
     
     with col2:
         guess_button = st.button("Enter Guess")
+    
+    if st.session_state.players_guessed:
+        player_list = "\n".join(
+        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_display), start=1)]
+        )
+        st.markdown(player_list, unsafe_allow_html=True)
         
     if guess_button:
         with st.spinner("Checking your answer... ⚽"):
