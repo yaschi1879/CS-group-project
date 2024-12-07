@@ -3,7 +3,7 @@ import random
 import os
 import time
 from b_game.c_question import handle_question_selection
-from b_game.d_game_initialize import initialize_game_variables
+from b_game.d_game_initialize import initialize_game_variables, determine_next_turn
 from c_support.a_api_functions import get_player_name_user_input
 from c_support.b_player_data import player_dictionary
 from c_support.c_filter_criteria import check_player_criteria
@@ -27,9 +27,9 @@ def play_game():
             st.session_state.selected_player = []
             st.rerun()
     
-    # hier funktion die den user bestimmt -> nur hier nicht auch noch auf Home Page
+    # hier funktion die den user bestimmt
     # speichern von user in st.session_state.player turn
-    st.title(f"Lars, it's your turn")
+    st.title((f"{st.session_state.users[st.session_state.player_turn]}, it's your turn!"))
     st.write("")
     
     col1, col2 = st.columns([1, 3])
@@ -199,31 +199,33 @@ def play_game():
     st.write("")
     st.write("")
     st.write("")
-    col1, col2, col3, col4 = st.columns([1, 1.1, 1, 0.75])     
-    with col1:
-        # Button zum Verlassen des Spiels
-        if st.button("Exit the Game"):
-            st.session_state.game_started = False
-            st.rerun()
+    with st.container():
+        col1, col2, col3, col4 = st.columns([1, 1.1, 1, 0.75])     
+        with col1:
+            # Button zum Verlassen des Spiels
+            if st.button("Exit the Game"):
+                st.session_state.game_started = False
+                st.rerun()
 
-    with col2:
-        # Button zum Wechseln der Schwierigkeit
-        if st.button("Change Difficulty"):
-            st.session_state.change_difficulty = True
-            st.rerun()
-    
-    with col3:
-        if st.button("Show Solution"):
-            st.session_state.lives = 0
-            st.session_state.points = 0
-            st.session_state.show_solution = True
-            st.rerun()
+        with col2:
+            # Button zum Wechseln der Schwierigkeit
+            if st.button("Change Difficulty"):
+                st.session_state.change_difficulty = True
+                st.rerun()
+        
+        with col3:
+            if st.button("Show Solution"):
+                st.session_state.lives = 0
+                st.session_state.points = 0
+                st.session_state.show_solution = True
+                st.rerun()
 
-    with col4:
-        # Button für die nächste Runde
-        if st.button("Next Round"):
-            initialize_game_variables()
-            st.rerun()
+        with col4:
+            # Button für die nächste Runde
+            if st.button("Next Round"):
+                initialize_game_variables()
+                determine_next_turn()
+                st.rerun()
             
     if st.session_state.change_difficulty == True:
         difficulty = st.selectbox(

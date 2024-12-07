@@ -33,9 +33,15 @@ def initialize_game_variables():
     st.session_state.index = []
     st.session_state.exact_input = []
     st.session_state.user_input = []
-    st.session_state.user_optional_input = []
-    st.session_state.check = False # brauch ich
-    st.session_state.question_procedure = False # brauch ich
+    st.session_state.check = False
+    st.session_state.question_procedure = False
     st.session_state.solution_true = False
-    #st.session_state.user_index = ...
-    #st.session_state.user_name ...
+    
+def determine_next_turn():
+    st.session_state.turn_order = list(st.session_state.users.keys())
+    # Setze den nächsten Spieler basierend auf dem aktuellen Index
+    next_index = st.session_state.current_turn_index % len(st.session_state.turn_order)
+    st.session_state.player_turn = st.session_state.turn_order[next_index]
+    
+    # Aktualisiere den Index für die nächste Runde
+    st.session_state.current_turn_index += 1

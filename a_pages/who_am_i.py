@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from b_game.d_game_initialize import initialize_original_player_list, initialize_game_variables
+from b_game.d_game_initialize import initialize_original_player_list, initialize_game_variables, determine_next_turn
 from b_game.a_game_logic import play_game
 
 def who_am_i():
@@ -49,7 +49,9 @@ def who_am_i():
         # Überprüfe, ob der Button gedrückt wurde
         if st.button("Lets play the game?"):
             # Setze den Zustand, dass das Spiel gestartet wurde
+            st.session_state.current_turn_index = 0
             initialize_game_variables()
+            determine_next_turn()
             st.session_state.game_started = True
             # aktualisieren der seite
             st.rerun()

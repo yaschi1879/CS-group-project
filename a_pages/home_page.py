@@ -102,16 +102,19 @@ def home_page():
 
     # Initialize session_state to store users and their game data
     if "users" not in st.session_state:
-        st.session_state["users"] = {}
-    if "points" not in st.session_state:
-        st.session_state["points"] = {}
+        st.session_state.users = {}
+    if "points_total" not in st.session_state:
+        st.session_state.points_total = {}
     if "points_history" not in st.session_state:
-        st.session_state["points_history"] = {}
+        st.session_state.points_history = {}
     if "rounds" not in st.session_state:
-        st.session_state["rounds"] = {}
-    
-    if st.session_state.original_player_list:
-        st.write("...")
+        st.session_state.rounds = {}
+    if "player_turn" not in st.session_state:
+        st.session_state.player_turn = None
+    if "current_turn_index" not in st.session_state:
+        st.session_state.current_turn_index = 0
+    if "turn_order" not in st.session_state:
+        st.session_state.turn_order = []
 
     st.title("Log In to start the game !")
     st.subheader("Choose your username and show your skills !")
@@ -128,14 +131,15 @@ def home_page():
                 # Add the new user to the dictionary
                 st.session_state["users"][new_id] = username
                 # Initialize their points, points history, and rounds
-                st.session_state["points"][new_id] = 0
+                st.session_state["points_total"][new_id] = 0
                 st.session_state["points_history"][new_id] = []
                 st.session_state["rounds"][new_id] = 0
+                st.session_state.turn_order = list(st.session_state.users.keys())
                 st.success(f"User {username} added successfully!")
             else:
                 st.error("User ID already exists!")
         else:
-            st.error("Please enter a username.")
+            st.error("Please enter a username")
 
     # Display the list of registered users
     st.subheader("List of registered users:")
@@ -143,15 +147,7 @@ def home_page():
         for user_id, name in st.session_state["users"].items():
             st.write(f"User {user_id}: {name}")
     else:
-        st.write("No users registered yet.")
-
-    # !!!!!!!!!!!!!!!!!!!! Mathieu, hier bitte irgend ein Feld, wo man die Spieler eingeben kann !!!!!!!!!!!!!!!!!!!!!!!
-    # Spieler sollen als Dictionary in st.session_state.users abgespeichert werden
-    # key = Zahlen, je nach dem wie viele users -> ist für alle dictionarys (users, points, rounds der selbe)
-    # value = Namen von Usern
-    # zusätzlich funktion die checked ob alle user im dictionary users einen points value im dictionary points haben, falls nicht, diesen auf 0 setzen
-    # zusätzlich funktion die checked ob aller user im dictionary users einen rounds value im dictionary rounds haben, falls nicht, diesen auf 0 setzen
-        st.write("...")
+        st.write("No users registered yet")
     
     st.write("")    
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)

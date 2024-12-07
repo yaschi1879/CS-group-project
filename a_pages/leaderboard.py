@@ -5,28 +5,29 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 
 
 # Initialisation des dictionnaires pour les points, l'historique et les parties jouées
-def initialize_game_data():
-    if "users" in st.session_state:
-        if "points" not in st.session_state:
-            st.session_state.points = {user_id: 0 for user_id in st.session_state.users}
-        if "points_history" not in st.session_state:
-            st.session_state.points_history = {user_id: [] for user_id in st.session_state.users}
-        if "rounds" not in st.session_state:
-            st.session_state.rounds = {user_id: 0 for user_id in st.session_state.users}
+#def initialize_game_data():
+    #if "users" in st.session_state:
+        #if "points" not in st.session_state:
+            #st.session_state.points = {user_id: 0 for user_id in st.session_state.users}
+        #if "points_history" not in st.session_state:
+            #st.session_state.points_history = {user_id: [] for user_id in st.session_state.users}
+        #if "rounds" not in st.session_state:
+            #st.session_state.rounds = {user_id: 0 for user_id in st.session_state.users}
+# nicht nötig, da ja auf home page alles schon initzialisiert
 
 
 
 # Afficher les utilisateurs et leurs points dans un tableau interactif avec Rank
 def display_leaderboard():
     st.subheader("Ranking based on AVG Points")
-    if "users" in st.session_state and "points" in st.session_state and "rounds" in st.session_state:
+    if "users" in st.session_state and "points_total" in st.session_state and "rounds" in st.session_state:
         # Créer un DataFrame des utilisateurs, points et AVG Points
         data = {
             "Username": list(st.session_state.users.values()),
-            "Points": [st.session_state.points[user_id] for user_id in st.session_state.users.keys()],
+            "Points": [st.session_state.points_total[user_id] for user_id in st.session_state.users.keys()],
             "Games Played": [st.session_state.rounds[user_id] for user_id in st.session_state.users.keys()],
             "AVG Points": [
-                st.session_state.points[user_id] / st.session_state.rounds[user_id]
+                st.session_state.points_total[user_id] / st.session_state.rounds[user_id]
                 if st.session_state.rounds[user_id] > 0 else 0
                 for user_id in st.session_state.users.keys()
             ],
@@ -63,7 +64,7 @@ def display_leaderboard():
 # Mettre à jour les points et les parties jouées pour un utilisateur
 def update_user_points():
     st.subheader("Update Points and Games Played")
-    if "users" in st.session_state and "points" in st.session_state and "points_history" in st.session_state and "rounds" in st.session_state:
+    if "users" in st.session_state and "points_total" in st.session_state and "points_history" in st.session_state and "rounds" in st.session_state:
         # Liste des noms d'utilisateurs pour le sélecteur
         user_names = list(st.session_state.users.values())
         selected_user_name = st.selectbox("Select User to Update", options=user_names)
@@ -76,13 +77,13 @@ def update_user_points():
 
         if st.button("Update"):
             # Ajouter des points
-            st.session_state.points[user_id] += points_to_add
+            st.session_state.points_total[user_id] += points_to_add
             # Ajouter à l'historique des points
             st.session_state.points_history[user_id].append(st.session_state.points[user_id])
             # Mettre à jour le nombre de parties jouées
             st.session_state.rounds[user_id] += games_to_add
             st.success(
-                f"Updated! {selected_user_name} now has {st.session_state.points[user_id]} points "
+                f"Updated! {selected_user_name} now has {st.session_state.points_total[user_id]} points "
                 f"over {st.session_state.rounds[user_id]} games."
             )
     else:
@@ -142,7 +143,7 @@ def leaderboard():
     st.title("Leaderboard")
 
     # Initialiser les données de jeu
-    initialize_game_data()  # Assure que tous les dictionnaires sont synchronisés avec les utilisateurs
+    #initialize_game_data()  # Assure que tous les dictionnaires sont synchronisés avec les utilisateurs
 
     # Afficher le leaderboard
     display_leaderboard()
