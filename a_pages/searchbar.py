@@ -65,6 +65,7 @@ def searchbar():
                             old_clubs_name_unique.append(club)
                     st.markdown(", ".join(old_clubs_name_unique))
 
+def display_market_value_with_forecast(player_id):
     try:
         market_value = get_marketvalue_history(player_id)
 
@@ -116,3 +117,7 @@ def searchbar():
         if player_id != "n.a.":
             st.warning(f"Line Chart not available: {e}")
 
+# Markthistorie und Forecast anzeigen
+            display_market_value_with_forecast(player_id)
+
+searchbar()
