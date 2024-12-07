@@ -139,7 +139,7 @@ def play_game():
     st.subheader("Questions asked so far:")  # Subheader verwenden
     if st.session_state.questions:
         questions_list = "\n".join(
-        [f"{len(st.session_state.questions) - (i)}. {question}" for i, question in enumerate(reversed(st.session_state.questions), start=1)]
+        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.questions), start=1)]
         )
         st.markdown(questions_list, unsafe_allow_html=True)
     
