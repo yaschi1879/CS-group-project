@@ -69,7 +69,7 @@ def searchbar():
             market_value = get_marketvalue_history(player_id)
             forecast_value = forecast(player_id)
             extended_value = market_value + forecast_value
-            st.write(extended_value)
+        
 
             # Prüfe, ob Daten vorhanden sind
             if not extended_value or len(extended_value) == 0:
@@ -104,4 +104,5 @@ def searchbar():
         except Exception as e:
             if player_id != "n.a.":
                 st.warning(f"Line Chart not available: {e}")
+                st.write(extended_value)
 
