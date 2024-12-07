@@ -56,7 +56,7 @@ def searchbar():
 
                     st.subheader("Titels:")
                     st.subheader("Titles:")
-                    st.markdown(", ".join(player["titels"]))
+                    st.markdown(", ".join(player["titles"]))
 
                     st.subheader("Former Clubs:")
                     old_clubs_name_unique = []
