@@ -148,7 +148,7 @@ def play_game():
     st.write("")
     st.subheader("Guess the Player")
     
-    if st.session_state.players_guessed_so_far:
+    if st.session_state.players_guessed:
         player_list = "\n".join(
         [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_display), start=1)]
         )
