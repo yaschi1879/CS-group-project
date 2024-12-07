@@ -20,9 +20,6 @@ def initialize_original_player_list():
     st.session_state.original_player_list = generate_player_list(club_list_test)
 # wichtig: momentan erst die test liste
     
-def initialize_current_player_list():
-    st.session_state.current_player_list = st.session_state.original_player_list.copy()
-    
 def initialize_game_variables():
     st.session_state.selected_player = []
     st.session_state.lives = 3
@@ -40,5 +37,6 @@ def initialize_game_variables():
     st.session_state.user_optional_input = []
     st.session_state.check = False # brauch ich
     st.session_state.question_procedure = False # brauch ich
+    st.session_state.solution_true = False
     #st.session_state.user_index = ...
     #st.session_state.user_name ...

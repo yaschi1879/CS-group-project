@@ -42,6 +42,10 @@ def play_game():
         with col1:
             st.image(st.session_state.player_data["image"], caption=f"I am {st.session_state.player_data['name']}", width=150)
     
+    if st.session_state.solution_true == True:
+        with col1:
+            st.image(st.session_state.player_data["image"], caption=f"I am {st.session_state.player_data['name']}", width=150)
+    
     with col2:
         with st.container():
             st.subheader("Hints:")
@@ -160,7 +164,7 @@ def play_game():
         elif st.session_state.lives > 0:
             if guessed_player_id == st.session_state.player_data["id"]:
                 # Spieler korrekt erraten
-                st.success(f"🎉 Congratulations, I am indeed {guessed_player_name}")
+                st.session_state.solution_true = True
                 st.rerun()
                 
             elif guessed_player_id in st.session_state.players_guessed_so_far:
@@ -188,6 +192,10 @@ def play_game():
         elif st.session_state.lives == 0:
             st.session_state.show_solution = True
             st.rerun()
+    
+    if st.session_state.solution_true == True:
+        st.success(f"🎉 Congratulations, I am indeed {guessed_player_name}")
+        st.balloons()
             
     if st.session_state.show_solution == True:
         if st.session_state.points > 0:
