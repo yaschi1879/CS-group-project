@@ -161,9 +161,11 @@ def play_game():
             if guessed_player_id == st.session_state.player_data["id"]:
                 # Spieler korrekt erraten
                 st.success(f"🎉 Congratulations, I am indeed {guessed_player_name}")
+                st.rerun()
                 
             elif guessed_player_id in st.session_state.players_guessed_so_far:
                 st.warning("You have already tried this player!")
+                st.rerun()
             else:
                 # Spieler nicht korrekt erraten
                 st.session_state.lives -= 1
