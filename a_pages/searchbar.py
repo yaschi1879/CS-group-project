@@ -65,54 +65,54 @@ def searchbar():
                             old_clubs_name_unique.append(club)
                     st.markdown(", ".join(old_clubs_name_unique))
 
-        try:
-            market_value = get_marketvalue_history(player_id)
+    try:
+        market_value = get_marketvalue_history(player_id)
 
-            # Prüfe, ob Daten vorhanden sind
-            if not market_value or len(market_value) == 0:
-                st.warning("No market value data available.")
+        # Prüfe, ob Daten vorhanden sind
+        if not market_value or len(market_value) == 0:
+            st.warning("No market value data available.")
+        else:
+            # Daten in ein DataFrame umwandeln
+            df = pd.DataFrame(market_value)
+
+            def clean_value(value):
+                value = value.replace('€', '').replace(',', '')
+                if 'm' in value:
+                    return float(value.replace('m', ''))
+                elif 'k' in value:
+                    return float(value.replace('k', '')) / 1000
+
+            df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
+            df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
+
+            # Prüfe auf ungültige Werte
+            if df['date'].isna().any():
+                st.warning("Some dates could not be parsed. Check the data format.")
+
+            df = df.sort_values(by='date')
+
+            if df.empty or df['value'].isna().all():
+                st.warning("No valid data to display.")
             else:
-                # Daten in ein DataFrame umwandeln
-                df = pd.DataFrame(market_value)
+                # Forecast-Daten berechnen
+                forecast_data = forecast(player_id)
+                forecast_df = pd.DataFrame(forecast_data)
+                forecast_df["date"] = pd.to_datetime(forecast_df["date"], format="%b %d, %Y")
 
-                def clean_value(value):
-                    value = value.replace('€', '').replace(',', '')
-                    if 'm' in value:
-                        return float(value.replace('m', ''))
-                    elif 'k' in value:
-                        return float(value.replace('k', '')) / 1000
+                # Historische Daten und Forecast kombinieren und Forecast-Typ markieren
+                forecast_df["type"] = "Forecast"
+                df["type"] = "History"
+                combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
 
-                df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
-                df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
+            # Line Chart darstellen
+                st.subheader("Market Value Development (in Mio. EUR)")
+                st.line_chart(combined_df.set_index('date')["value"])
 
-                # Prüfe auf ungültige Werte
-                if df['date'].isna().any():
-                    st.warning("Some dates could not be parsed. Check the data format.")
+                # Tabelle mit Typ zur Übersicht darstellen
+                st.subheader("Detailed Market Value Data")
+                st.dataframe(combined_df)
 
-                df = df.sort_values(by='date')
-
-                if df.empty or df['value'].isna().all():
-                    st.warning("No valid data to display.")
-                else:
-                    # Forecast-Daten berechnen
-                    forecast_data = forecast(player_id)
-                    forecast_df = pd.DataFrame(forecast_data)
-                    forecast_df["date"] = pd.to_datetime(forecast_df["date"], format="%b %d, %Y")
-
-                    # Historische Daten und Forecast kombinieren und Forecast-Typ markieren
-                    forecast_df["type"] = "Forecast"
-                    df["type"] = "History"
-                    combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
-
-                # Line Chart darstellen
-                    st.subheader("Market Value Development (in Mio. EUR)")
-                    st.line_chart(combined_df.set_index('date')["value"])
-
-                    # Tabelle mit Typ zur Übersicht darstellen
-                    st.subheader("Detailed Market Value Data")
-                    st.dataframe(combined_df)
-
-        except Exception as e:
-            if player_id != "n.a.":
-                st.warning(f"Line Chart not available: {e}")
+    except Exception as e:
+        if player_id != "n.a.":
+            st.warning(f"Line Chart not available: {e}")
 
