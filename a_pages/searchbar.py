@@ -72,11 +72,11 @@ def searchbar():
         
 
             # Prüfe, ob Daten vorhanden sind
-            if not extended_value or len(extended_value) == 0:
+            if not market_value or len(market_value) == 0:
                 st.warning("No market value data available.")
             else:
                 # Daten in ein DataFrame umwandeln
-                df = pd.DataFrame(extended_value)
+                df = pd.DataFrame(market_value)
 
                 def clean_value(value):
                     value = value.replace('€', '').replace(',', '')

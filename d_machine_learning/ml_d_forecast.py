@@ -24,13 +24,13 @@ def forecast(player_id):
     forecast_2 = intercept_2 + value_21
     forecast_3 = intercept_3 + value_31
 
-    forecast_1_str = str(forecast_1)
-    forecast_2_str = str(forecast_2)
-    forecast_3_str = str(forecast_3)
+    #forecast_1_str = str(forecast_1)
+    #forecast_2_str = str(forecast_2)
+    #forecast_3_str = str(forecast_3)
     
-    item_1 = {"date": date_1, "value": forecast_1_str}
-    item_2 = {"date": date_2, "value": forecast_2_str}
-    item_3 = {"date": date_3, "value": forecast_3_str}
+    item_1 = {"date": date_1, "value": forecast_1}
+    item_2 = {"date": date_2, "value": forecast_2}
+    item_3 = {"date": date_3, "value": forecast_3}
     
     return [item_1, item_2, item_3]
     
