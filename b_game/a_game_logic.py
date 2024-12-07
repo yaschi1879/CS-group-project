@@ -33,7 +33,7 @@ def play_game():
     st.write("")
     
     col1, col2 = st.columns([1, 3])
-    if st.session_state.show_solution == False:
+    if st.session_state.show_solution == False and st.session_state.solution_true == False:
         with col1:
             image_path = os.path.join("b_game", "Fragezeichen.png")
             st.image(image_path, caption="Who am I?", width=150)
@@ -148,6 +148,12 @@ def play_game():
     st.write("")
     st.subheader("Guess the Player")
     
+    if st.session_state.players_guessed_so_far:
+        player_list = "\n".join(
+        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_so_far), start=1)]
+        )
+        st.markdown(player_list, unsafe_allow_html=True)
+    
     col1, col2 = st.columns([4, 1])
     with col1:
         user_input = st.text_input("Enter Player Name", placeholder="Type Player here...", label_visibility="collapsed")
@@ -166,12 +172,13 @@ def play_game():
                 # Spieler korrekt erraten
                 st.session_state.solution_true = True
                 st.rerun()
-                
+            
             elif guessed_player_id in st.session_state.players_guessed_so_far:
                 st.warning("You have already tried this player!")
                 st.rerun()
             else:
                 # Spieler nicht korrekt erraten
+                st.session_state.players_guessed_so_far.append(guessed_player_id)
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
                     col1, col2 = st.columns([4,1])
@@ -182,19 +189,16 @@ def play_game():
                             st.error(f"❌ Wrong guess! {st.session_state.lives} live left")
                         time.sleep(3)
                         st.rerun()
-                        
-                    #with col2:
-                        #st.button("Continue")
                 else:
                    st.session_state.show_solution = True
                    st.rerun()
-                   
+        
         elif st.session_state.lives == 0:
             st.session_state.show_solution = True
             st.rerun()
     
     if st.session_state.solution_true == True:
-        st.success(f"🎉 Congratulations, I am indeed {guessed_player_name}")
+        st.success(f"🎉 Congratulations, I am indeed {st.session_state.player_data["name"]}")
         st.balloons()
             
     if st.session_state.show_solution == True:
