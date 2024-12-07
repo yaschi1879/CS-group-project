@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
+from d_machine_learning.ml_d_forecast import forecast
 
 def searchbar():
     st.header("Search Engine")
@@ -66,7 +67,7 @@ def searchbar():
 
         try:
             market_value = get_marketvalue_history(player_id)
-    
+
             # Prüfe, ob Daten vorhanden sind
             if not market_value or len(market_value) == 0:
                 st.warning("No market value data available.")
@@ -93,12 +94,25 @@ def searchbar():
                 if df.empty or df['value'].isna().all():
                     st.warning("No valid data to display.")
                 else:
-            # Line Chart darstellen
+                    # Forecast-Daten berechnen
+                    forecast_data = forecast(player_id)
+                    forecast_df = pd.DataFrame(forecast_data)
+                    forecast_df["date"] = pd.to_datetime(forecast_df["date"], format="%b %d, %Y")
+
+                    # Historische Daten und Forecast kombinieren und Forecast-Typ markieren
+                    forecast_df["type"] = "Forecast"
+                    df["type"] = "History"
+                    combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
+
+                # Line Chart darstellen
                     st.subheader("Market Value Development (in Mio. EUR)")
-                    st.line_chart(df[['date', 'value']].set_index('date'))
+                    st.line_chart(combined_df.set_index('date')["value"])
+
+                    # Tabelle mit Typ zur Übersicht darstellen
+                    st.subheader("Detailed Market Value Data")
+                    st.dataframe(combined_df)
 
         except Exception as e:
             if player_id != "n.a.":
                 st.warning(f"Line Chart not available: {e}")
-
 
