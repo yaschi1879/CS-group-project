@@ -1,32 +1,86 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
+from d_machine_learning.ml_a_data import forecast_dictionary
+from d_machine_learning.ml_d_forecast import forecast
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
 
+# Hauptlogik
+def display_market_value_with_forecast(player_id):
+    try:
+        market_value = get_marketvalue_history(player_id)
 
+        # Prüfe, ob Daten vorhanden sind
+        if not market_value or len(market_value) == 0:
+            st.warning("No market value data available.")
+        else:
+            # Daten in ein DataFrame umwandeln
+            df = pd.DataFrame(market_value)
+
+            def clean_value(value):
+                value = value.replace('€', '').replace(',', '')
+                if 'm' in value:
+                    return float(value.replace('m', ''))
+                elif 'k' in value:
+                    return float(value.replace('k', '')) / 1000
+
+            df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
+            df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
+
+            # Prüfe auf ungültige Werte
+            if df['date'].isna().any():
+                st.warning("Some dates could not be parsed. Check the data format.")
+
+            df = df.sort_values(by='date')
+
+            if df.empty or df['value'].isna().all():
+                st.warning("No valid data to display.")
+            else:
+                # Forecast-Daten berechnen
+                forecast_data = forecast(player_id)
+                forecast_df = pd.DataFrame(forecast_data)
+                forecast_df["date"] = pd.to_datetime(forecast_df["date"], format="%b %d, %Y")
+
+                # Historische Daten und Forecast kombinieren und Forecast-Typ markieren
+                forecast_df["type"] = "Forecast"
+                df["type"] = "History"
+                combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
+
+                # Line Chart darstellen
+                st.subheader("Market Value Development (in Mio. EUR)")
+                st.line_chart(combined_df.set_index('date')["value"])
+
+                # Tabelle mit Typ zur Übersicht darstellen
+                st.subheader("Detailed Market Value Data")
+                st.dataframe(combined_df)
+
+    except Exception as e:
+        if player_id != "n.a.":
+            st.warning(f"Line Chart not available: {e}")
+
+# Suchleiste
 def searchbar():
     st.header("Search Engine")
-    col1, col2 = st.columns([3,1])
+    col1, col2 = st.columns([3, 1])
 
     with col1:
-        user_input = st.text_input ("Geben Sie ein, wonach Sie suchen möchten:", label_visibility="collapsed", placeholder="Type something...")
+        user_input = st.text_input("Geben Sie ein, wonach Sie suchen möchten:", label_visibility="collapsed", placeholder="Type something...")
     with col2:
         search_button = st.button("Search")
-      
+
     if search_button:
-        with st.spinner ("Searching for player... ⚽"):
+        with st.spinner("Searching for player... ⚽"):
             player_id = get_player_name_user_input(user_input)[0]
         if player_id == "n.a.":
-            st.warning(f"no active player found for: {user_input}")
+            st.warning(f"No active player found for: {user_input}")
         else:
-            with st.spinner ("Gathering data... ⚽"):
+            with st.spinner("Gathering data... ⚽"):
                 player = player_dictionary(player_id)
-                st.write(f"search result for: {user_input}")
+                st.write(f"Search result for: {user_input}")
 
             if isinstance(player, dict):
-                # If the `player` dictionary itself represents the result
-                if player_id in player.get("id", ""):  # Safely check if the ID matches
-                    # Spielerinfo als Überschrift und Bild
+                # Spielerinfo als Überschrift und Bild
+                if player_id in player.get("id", ""):
                     st.title(player["name"])
                     st.image(player["image"], caption=f"{player['name']} ({player['classified_position']})", width=250)
 
@@ -65,39 +119,8 @@ def searchbar():
                             old_clubs_name_unique.append(club)
                     st.markdown(", ".join(old_clubs_name_unique))
 
-    try:
-        market_value = get_marketvalue_history(player_id)
+            # Markthistorie und Forecast anzeigen
+            display_market_value_with_forecast(player_id)
 
-        # Prüfe, ob Daten vorhanden sind
-        if not market_value or len(market_value) == 0:
-            st.warning("No market value data available.")
-        else:
-            # Daten in ein DataFrame umwandeln
-            df = pd.DataFrame(market_value)
-
-            def clean_value(value):
-                value = value.replace('€', '').replace(',', '')
-                if 'm' in value:
-                    return float(value.replace('m', ''))
-                elif 'k' in value:
-                    return float(value.replace('k', '')) / 1000
-
-            df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
-            df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
-
-            # Prüfe auf ungültige Werte
-            if df['date'].isna().any():
-                st.warning("Some dates could not be parsed. Check the data format.")
-
-            df = df.sort_values(by='date')
-
-            if df.empty or df['value'].isna().all():
-                st.warning("No valid data to display.")
-            else:
-        # Line Chart darstellen
-                st.subheader("Market Value Development (in Mio. EUR)")
-                st.line_chart(df[['date', 'value']].set_index('date'))
-
-    except Exception as e:
-        if player_id != "n.a.":
-            st.warning(f"Line Chart not available: {e}")
+# Beispielaufruf der Suchleiste
+searchbar()
