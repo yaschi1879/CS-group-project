@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
+from d_machine_learning.ml_d_forecast import forecast
 
 def searchbar():
     st.header("Search Engine")
@@ -66,13 +67,15 @@ def searchbar():
 
         try:
             market_value = get_marketvalue_history(player_id)
+            forecast_value = forecast(player_id)
+            extended_value = market_value + forecast_value
 
             # Prüfe, ob Daten vorhanden sind
-            if not market_value or len(market_value) == 0:
+            if not extended_value or len(extended_value) == 0:
                 st.warning("No market value data available.")
             else:
                 # Daten in ein DataFrame umwandeln
-                df = pd.DataFrame(market_value)
+                df = pd.DataFrame(extended_value)
 
                 def clean_value(value):
                     value = value.replace('€', '').replace(',', '')
