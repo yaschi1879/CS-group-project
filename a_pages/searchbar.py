@@ -54,7 +54,7 @@ def searchbar():
                     st.subheader("Position:")
                     st.markdown(", ".join(player["position"]))
 
-                    st.subheader("Titels:")
+                    st.subheader("Titles:")
                     st.markdown(", ".join(player["titels"]))
 
                     st.subheader("Former Clubs:")

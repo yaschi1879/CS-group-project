@@ -75,7 +75,7 @@ def player_dictionary(player_id):
     # gibt die club id's aller ehemaligen clubs als liste zurück
     player_dictionary["old_clubs_name"] = [i["from"]["clubName"] for i in old_clubs]
     # gibt die club namen aller ehemaligen clubs als liste zurück
-    player_dictionary["titels"] = sort_titles(player_id)
+    player_dictionary["titles"] = sort_titles(player_id)
     
     player_dictionary["old_stadium"] = stadium_name(player_id)
     player_dictionary["foot"] = profile["foot"]

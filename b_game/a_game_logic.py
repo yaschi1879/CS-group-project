@@ -77,7 +77,7 @@ def play_game():
         "Did you use to play for ...?", 
         "Are you a ... winner?", 
         "Are you ... years old?", 
-        "Is your position...?", 
+        "Is your position ...?", 
         "Do you currently wear the shirt number ...?", 
         "Are you ...cm tall?"]
         )
@@ -105,7 +105,7 @@ def play_game():
         exact_input = st.session_state.exact_input
         match_found = False
         
-        if st.session_state.player_data[index] == list:
+        if isinstance(st.session_state.player_data[index], list):
             for answer in selected:
                 if answer in st.session_state.player_data[index]:
                     match_found = True

@@ -127,7 +127,7 @@ def handle_question_selection(question_template):
             if st.session_state.user_input:
                 st.session_state.selected = [st.session_state.user_input]
                 st.session_state.exact_input = st.session_state.user_input
-                st.session_state.index = "titels"
+                st.session_state.index = "titles"
                 st.session_state.question_procedure = False
                 st.session_state.question_selected = False
                 st.session_state.check = True
@@ -161,7 +161,7 @@ def handle_question_selection(question_template):
                 with col1:
                     st.warning("Please enter an input before confirming.")
                 
-    elif question_template == "Is your position...?":
+    elif question_template == "Is your position ...?":
         st.session_state.user_input = False
         with col1:
             st.session_state.user_input = col1.selectbox(
