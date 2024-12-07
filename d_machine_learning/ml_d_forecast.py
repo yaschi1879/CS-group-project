@@ -20,9 +20,9 @@ def forecast(player_id):
     value_21 = data["market_value_t"] * coefficient_21
     value_31 = data["market_value_t"] * coefficient_31
     
-    forecast_1 = sum(intercept_1, value_11)
-    forecast_2 = sum(intercept_2, value_21)
-    forecast_3 = sum(intercept_3, value_31)
+    forecast_1 = str(sum(intercept_1, value_11))
+    forecast_2 = str(sum(intercept_2, value_21))
+    forecast_3 = str(sum(intercept_3, value_31))
     
     item_1 = {"date": date_1, "value": forecast_1}
     item_2 = {"date": date_2, "value": forecast_2}
