@@ -24,7 +24,8 @@ def initialize_game_variables():
     st.session_state.selected_player = []
     st.session_state.lives = 3
     st.session_state.points = 50
-    st.session_state.players_guessed_so_far = []
+    st.session_state.players_guessed = []
+    st.session_state.players_guessed_display = []
     st.session_state.player_data = {}
     st.session_state.questions = []
     st.session_state.question_selected = False

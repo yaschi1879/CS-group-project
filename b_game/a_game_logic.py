@@ -150,7 +150,7 @@ def play_game():
     
     if st.session_state.players_guessed_so_far:
         player_list = "\n".join(
-        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_so_far), start=1)]
+        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_display), start=1)]
         )
         st.markdown(player_list, unsafe_allow_html=True)
     
@@ -173,12 +173,13 @@ def play_game():
                 st.session_state.solution_true = True
                 st.rerun()
             
-            elif guessed_player_id in st.session_state.players_guessed_so_far:
+            elif guessed_player_id in st.session_state.players_guessed:
                 st.warning("You have already tried this player!")
                 st.rerun()
             else:
                 # Spieler nicht korrekt erraten
-                st.session_state.players_guessed_so_far.append(guessed_player_id)
+                st.session_state.players_guessed.append(guessed_player_name)
+                st.session_state.players_guessed_display.append(f"I am not \xa0 {guessed_player_name}")
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
                     col1, col2 = st.columns([4,1])
