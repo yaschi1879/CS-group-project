@@ -187,7 +187,7 @@ def play_game():
             st.rerun()
     
     if st.session_state.solution_true == True:
-        st.success(f"🎉 Congratulations, I am indeed {st.session_state.player_data["name"]}! Select one of the options below")
+        st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Select one of the options below")
         st.balloons()
             
     if st.session_state.show_solution == True:
