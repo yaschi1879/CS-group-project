@@ -154,17 +154,10 @@ def play_game():
     
     with col2:
         guess_button = st.button("Enter Guess")
-    
-    if st.session_state.players_guessed:
-        player_list = "\n".join(
-        [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.players_guessed_display), start=1)]
-        )
-        st.markdown(player_list, unsafe_allow_html=True)
         
     if guess_button:
         with st.spinner("Checking your answer... ⚽"):
             guessed_player_id = get_player_name_user_input(user_input)[0]
-            guessed_player_name = get_player_name_user_input(user_input)[1]
         if guessed_player_id is None:
             st.warning("Player not found, Please try again.")
         elif st.session_state.lives > 0:
@@ -173,14 +166,8 @@ def play_game():
                 st.session_state.solution_true = True
                 st.rerun()
             
-            elif guessed_player_id in st.session_state.players_guessed:
-                st.warning("You have already tried this player!")
-                st.rerun()
             else:
                 # Spieler nicht korrekt erraten
-                st.session_state.players_guessed.append(guessed_player_name)
-                formatted = f'<p style="color:red;">I am not {guessed_player_name}</p>'
-                st.session_state.players_guessed_display.append(formatted)
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
                     col1, col2 = st.columns([4,1])
