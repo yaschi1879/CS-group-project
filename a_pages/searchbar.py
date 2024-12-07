@@ -104,5 +104,4 @@ def searchbar():
         except Exception as e:
             if player_id != "n.a.":
                 st.warning(f"Line Chart not available: {e}")
-                st.write(extended_value)
 
