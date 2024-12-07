@@ -47,7 +47,7 @@ def handle_question_selection(question_template):
         with col1:
             st.session_state.user_input = col1.selectbox(
             "Choose a league:",
-            ["", "Premier League", "Bundesliga", "Seria A", 
+            ["", "Premier League", "Bundesliga", "Serie A", 
              "La Liga", "Ligue 1", "Scottish Premiership", 
              "Liga Portugal", "Eredivisie (Netherlands)", "Jupiler Pro League (Belgium)",
              "Chance Liga (Czech Rupublic)", "SuperSport HNL (Croatia)"])
