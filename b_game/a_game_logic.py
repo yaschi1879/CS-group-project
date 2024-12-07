@@ -198,14 +198,14 @@ def play_game():
             st.rerun()
     
     if st.session_state.solution_true == True:
-        st.success(f"🎉 Congratulations, I am indeed {st.session_state.player_data["name"]}")
+        st.success(f"🎉 Congratulations, I am indeed {st.session_state.player_data["name"]}! Select one of the options below")
         st.balloons()
             
     if st.session_state.show_solution == True:
         if st.session_state.points > 0:
             st.session_state.points = 0
             st.rerun()
-        st.error("❌ Game over! Select one of the options below")        
+        st.error("❌ Game over! Select one of the options below to")        
     
     st.write("")
     st.write("")
