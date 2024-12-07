@@ -179,7 +179,7 @@ def play_game():
             else:
                 # Spieler nicht korrekt erraten
                 st.session_state.players_guessed.append(guessed_player_name)
-                st.session_state.players_guessed_display.append(f"I am not \xa0 {guessed_player_name}")
+                st.session_state.players_guessed_display.append(f'<p style="color:red;">I am not {guessed_player_name}</p>', unsafe_allow_html=True)
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
                     col1, col2 = st.columns([4,1])
