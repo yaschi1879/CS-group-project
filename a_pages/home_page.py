@@ -66,7 +66,7 @@ def home_page():
             </style>
         """, unsafe_allow_html=True)
 
-        st.title("⚽ Game Rules 🎮")
+        st.title("Game Rules")
 
         st.subheader("1. Create Your Username 🎮")
         st.markdown("Pick a cool username and get ready to shine!")
