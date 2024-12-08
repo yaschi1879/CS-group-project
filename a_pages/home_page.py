@@ -24,7 +24,7 @@ def home_page():
     with col1: 
         st.title("Game Concept")
         st.write("""
-                 # Welcome to Who Am I? – Football Edition ⚽🔥
+                Welcome to Who Am I? – Football Edition ⚽🔥
 
                 Think you know football? Prove it in the ultimate online guessing game for fans who live and breathe the beautiful game!  
                 From legendary icons to rising stars across all leagues, eras, and nations, every clue brings you closer to uncovering the mystery player.  
