@@ -24,9 +24,18 @@ def home_page():
     with col1: 
         st.title("Game Concept")
         st.write("""
-        Welcome to Who Am I? – Football Edition, the ultimate online guessing game for true football fans! 
-        Test your knowledge of players from all leagues, eras, and nations. With every clue, the mystery deepens – will you crack the code before time runs out? 
-        Compete with friends or challenge yourself to climb the leaderboard. Are you ready to show the world you're the ultimate football expert? Let’s play!""")
+                 # Welcome to Who Am I? – Football Edition ⚽🔥
+
+                Think you know football? Prove it in the ultimate online guessing game for fans who live and breathe the beautiful game!  
+                From legendary icons to rising stars across all leagues, eras, and nations, every clue brings you closer to uncovering the mystery player.  
+
+                **Can you guess who it is with fewer questions and rack up the most points?**  
+                Challenge yourself, take on your friends, and rise to the top of the leaderboard.  
+
+                It's time to flex your football IQ and claim your title as the ultimate football mastermind.  
+
+                **Ready to play? The pitch is yours!** 🎮⚡
+                """)
     
     with col2:
         image_path = os.path.join("a_pages", "pictures", "ampoule.png")
