@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from c_support.a_api_functions import get_filter_criteria
 import streamlit as st
 

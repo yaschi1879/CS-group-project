@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import random
 from c_support.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 

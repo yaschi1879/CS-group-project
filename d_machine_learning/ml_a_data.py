@@ -1,6 +1,10 @@
-from c_support.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+#from c_support.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
+#from datetime import datetime
+#from dateutil.relativedelta import relativedelta
 
 def time_left(contract, reference_date):
     if not contract:
@@ -72,4 +76,9 @@ def forecast_dictionary(player_id):
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
     dict["market_value_t"] = last_market_value(values, reference_date)
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
+    return dict
+
+def forecast_dictionary_test():
+    dict = {}
+    dict["market_value_t"] = 30
     return dict

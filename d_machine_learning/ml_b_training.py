@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # dieser part ist für die erstellung der player_list, dauert ca 1min
 # zuerst ausführen
 import random

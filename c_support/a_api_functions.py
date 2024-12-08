@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 
 def get_stadium_name(club_id):
@@ -6,6 +10,8 @@ def get_stadium_name(club_id):
     club_info = response.json()
     stadium_name = club_info.get("stadiumName", "n.a.")
     return stadium_name
+
+print(get_stadium_name(31))
 # gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
 
 def get_club_players(club_id, season_id="2024"):
