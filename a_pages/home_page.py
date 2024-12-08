@@ -4,53 +4,17 @@ from b_game.d_game_initialize import initialize_original_player_list
 import time
 
 def home_page():
-    # Initialisation de l'état pour gérer la connexion
-    if "show_login" not in st.session_state:
-        st.session_state.show_login = False
-    if "logged_in" not in st.session_state:
-        st.session_state.logged_in = False
-    if "username" not in st.session_state:
-        st.session_state.username = ""
-
     # Titre et logo
     col1, col2, col3 = st.columns([2, 1, 1])  # Trois colonnes : titre, logo, bouton
     with col1:
-        st.title("Name der App")
-        st.subheader("Guess. Compete. Celebrate! (find a better slogan)")
+        st.title("Who am I ?")
+        st.subheader("Guess. Compete. Celebrate!")
     with col2:
         image_path = os.path.join("a_pages", "pictures", "logo.png")
         st.image(image_path, width=200)
        
     with col3:
-        # Bouton Log In stylisé
-        if st.button("Log In"):
-            st.session_state.show_login = True
-
-    # Affichage des champs pour la connexion si le bouton "Log In" est cliqué
-    if st.session_state.show_login and not st.session_state.logged_in:
-        with st.form("login_form"):
-            username = st.text_input("Username", key="login_username")
-            password = st.text_input("Password", type="password", key="login_password")
-
-        # Ajouter les deux boutons côte à côte
-            col1, col2 = st.columns([0.1, 1])
-            with col1:
-                confirm_button = st.form_submit_button("Confirm")
-            with col2:
-                close_button = st.form_submit_button("Close")
-
-        # Validation des identifiants
-            if confirm_button:
-                if username == "mathieu" and password == "1234":
-                    st.session_state.logged_in = True
-                    st.session_state.username = username
-                    st.success(f"Welcome {username}!")
-                else:
-                    st.error("Invalid username or password!")
-
-        # Si l'utilisateur clique sur "Close"
-            if close_button:
-                st.session_state.show_login = False
+        st.write("")
 
     # Séparation visuelle
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
