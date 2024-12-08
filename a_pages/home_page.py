@@ -34,7 +34,7 @@ def home_page():
 
                 It's time to flex your football IQ and claim your title as the ultimate football mastermind.  
 
-                **Ready to play? The pitch is yours!** 🎮⚡
+                **Ready to play? The pitch is yours!** 🏟️⚡
                 """)
     
     with col2:
@@ -49,27 +49,44 @@ def home_page():
     # Sous-titre "Rules" et description
     col1, col2, col3 = st.columns([2, 0.5, 1])
     with col1: 
-        st.title("Game Rules")
+        st.markdown("""
+            <style>
+                .block-container {
+                    padding: 1rem 3rem;
+                }
+                .stMarkdown {
+                    line-height: 1.5;
+                }
+                h2 {
+                    margin-bottom: 0.5rem;
+                }
+                p {
+                    margin-bottom: 1rem;
+                }
+            </style>
+        """, unsafe_allow_html=True)
+
+        st.title("⚽ Game Rules 🎮")
 
         st.subheader("1. Create Your Username 🎮")
-        st.write("Pick a cool username and get ready to shine!")
+        st.markdown("Pick a cool username and get ready to shine!")
 
         st.subheader("2. Choose Your Level ⚽")
-        st.write("Feeling bold? Choose **Easy**, **Medium**, or **Hard** – your call, your challenge!")
+        st.markdown("Feeling bold? Choose **Easy**, **Medium**, or **Hard** – your call, your challenge!")
 
         st.subheader("3. Guess the Football Star 🕵️")
-        st.write("Use the hints to figure out the mystery player. Think fast and guess smart! 🕶️")
+        st.markdown("Use the hints to figure out the mystery player. Think fast and guess smart! 🕶️")
 
         st.subheader("4. Fewer Questions, More Points 🔥")
-        st.write("The fewer questions you ask, the higher your score. Keep it sharp! ")
+        st.markdown("The fewer questions you ask, the higher your score. Keep it sharp!")
 
         st.subheader("5. Check the Leaderboard 📊")
-        st.write("See how your score compares with your friends. Who’s the real football whiz? ")
+        st.markdown("See how your score compares with your friends. Who’s the real football whiz?")
 
         st.subheader("6. Crown the Champ 🏆")
-        st.write("The player with the highest average points takes home the bragging rights! 🏅")
+        st.markdown("The player with the highest average points takes home the bragging rights! 🏅")
 
-        st.write("Let the games begin – show off your football knowledge and crush it! ⚡⚽")
+        st.markdown("Let the games begin – show off your football knowledge and crush it! ⚡⚽")
     with col2:
         image_path = os.path.join("a_pages", "pictures", "sifflet.webp")
         st.image(image_path, width=200)
