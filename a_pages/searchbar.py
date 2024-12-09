@@ -71,7 +71,7 @@ def searchbar():
 
         try:
             market_value = get_marketvalue_history(player_id) 
-            last_market_value = reversed(get_marketvalue_history(player_id))[0]["value"]
+            last_market_value = market_value[len(market_value)]["value"]
             market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
             # Prüfe, ob Daten vorhanden sind

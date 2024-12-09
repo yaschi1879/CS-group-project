@@ -32,8 +32,8 @@ def forecast(player_id):
     value_21 = data["market_value_t"] * coefficient_21
     value_31 = data["market_value_t"] * coefficient_31
     
-    current = clean_value(reversed(get_marketvalue_history(player_id))[0]["value"])
-
+    value_list = get_marketvalue_history(player_id)
+    current = clean_value(value_list[len(value_list)]["value"])
 
     forecast_1 = intercept_1 + value_11
     forecast_2 = intercept_2 + value_21
