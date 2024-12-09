@@ -16,8 +16,7 @@ def home_page():
         st.subheader("Guess. Compete. Celebrate!")
     with col2:
         image_path = os.path.join("a_pages", "pictures", "logo.png")
-        st.image(image_path, width=200)
-       
+        st.image(image_path, width=200)  
     with col3:
         st.write("")
 
@@ -25,7 +24,7 @@ def home_page():
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Sous-titre "Concept" et description
-    col1, col2, col3 = st.columns([2, 0.5, 1])
+    col1, col2, = st.columns([2, 1])
     with col1: 
         st.title("Game Concept")
         st.write("""
@@ -43,9 +42,6 @@ def home_page():
                 """)
     
     with col2:
-        image_path = os.path.join("a_pages", "pictures", "ampoule.png")
-        st.image(image_path, width=200)
-    with col3:
         st.write("")
 
     # Séparation visuelle
