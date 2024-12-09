@@ -8,6 +8,7 @@ import time
 def home_page():
     st.write("")
     st.write("")
+    st.write("")
     # Titre et logo
     col1, col2, col3 = st.columns([2, 1, 1])  # Trois colonnes : titre, logo, bouton
     with col1:
