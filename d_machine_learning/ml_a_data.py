@@ -110,12 +110,13 @@ def forecast_dictionary(player_id):
     sec_reference_date = "2023-12-01"
     last_value = last_market_value(values, reference_date)
     dict = {}
-    dict["u26"] = max(0, 26 - calculate_age(profile["dateOfBirth"], reference_date))
-    dict["o30notGK"] = max(0, calculate_age(profile["dateOfBirth"], reference_date) - 30)
-    dict["GKo30"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and profile["position"]["main"] == "Goalkeeper"
-    dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
+    dict["u26"] = u26(profile, reference_date, last_value)
+    dict["o29"] = o29(profile, reference_date, last_value)
+    #dict["GKo30"] = GKo30(profile, reference_date, last_value)
+    #dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date, last_value)
     dict["market_value_t"] = last_value
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
+    dict["huge_difference"] = huge_difference(values, reference_date, sec_reference_date, last_value)
     return dict
 
 club_id = [281, 418, 27, 31, 12, 583, 16, 631, 46, 1050, 15, 985, 131, 294, 720, 
