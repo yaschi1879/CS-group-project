@@ -24,7 +24,7 @@ def home_page():
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Sous-titre "Concept" et description
-    col1, col2, = st.columns([2, 1])
+    col1, col2 = st.columns([2, 1])
     with col1: 
         st.title("Game Concept")
         st.write("""
@@ -48,7 +48,7 @@ def home_page():
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Sous-titre "Rules" et description
-    col1, col2, col3 = st.columns([2, 0.5, 1])
+    col1, col2 = st.columns([2, 1])
     with col1: 
         st.markdown("""
             <style>
@@ -89,9 +89,6 @@ def home_page():
 
         st.markdown("Let the games begin – show off your football knowledge and crush it! ⚡⚽")
     with col2:
-        image_path = os.path.join("a_pages", "pictures", "sifflet.webp")
-        st.image(image_path, width=200)
-    with col3:
         st.write("")
 
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
