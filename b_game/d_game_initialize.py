@@ -21,10 +21,9 @@ def generate_player_list(list):
     
 
 def initialize_original_player_list():
-    st.session_state.original_player_list = generate_player_list(club_list_test)
+    #st.session_state.original_player_list = generate_player_list(club_list_test)
+    [581678, 42205]
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # momentan einfach eine Teilliste
-    # für Video Recording: -> Player ID von Trent Alexander Arnol (easy), Yan Sommer (medium)
     
     
 def initialize_game_variables():
