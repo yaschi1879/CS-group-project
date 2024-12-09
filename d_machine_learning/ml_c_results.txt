@@ -1,0 +1,6 @@
+Regression R^2 = 0.911
+Random Forest R^2 = 0.814
+-> Usage of linear Regression
+
+
+
