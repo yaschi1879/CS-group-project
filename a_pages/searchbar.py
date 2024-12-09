@@ -68,7 +68,8 @@ def searchbar():
                         if club not in old_clubs_name_unique:
                             old_clubs_name_unique.append(club)
                     st.markdown(", ".join(old_clubs_name_unique))
-
+        
+        st.subheader("Market Value")
         try:
             market_value = get_marketvalue_history(player_id) 
             last_market_value = market_value[len(market_value)-1]["value"]
@@ -105,7 +106,6 @@ def searchbar():
                     forecast_df = pd.DataFrame(forecast_value)
                     forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
 
-                    combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
                     # Diagramm erstellen mit Plotly
                     fig = go.Figure()
 
