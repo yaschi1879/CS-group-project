@@ -87,7 +87,7 @@ def home_page():
         st.subheader("6. Crown the Champ 🏆")
         st.markdown("The player with the highest average points takes home the bragging rights! 🏅")
 
-        st.markdown("Let the games begin – show off your football knowledge and crush it! ⚡⚽")
+        st.markdown("**Let the games begin – show off your football knowledge and crush it!** ⚡⚽")
     with col2:
         st.write("")
 
