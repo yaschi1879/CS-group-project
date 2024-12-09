@@ -11,6 +11,7 @@ from b_game.d_game_initialize import initialize_game_variables, determine_next_t
 from c_support.a_api_functions import get_player_name_user_input
 from c_support.b_player_data import player_dictionary
 from c_support.c_filter_criteria import check_player_criteria
+from d_machine_learning.ml_d_forecast import forecast
 
 
 
@@ -87,16 +88,7 @@ def play_game():
         )
     st.session_state.question_chosen = question_template
     
-    # bis hier hin nur anzeige
-    # --------------------------------------------------------------------------------------------------
-    # ab hier game logik
-    
-    #if question_button:
-    
     if st.session_state.question_chosen:
-        st.session_state.question_selected = True
-        
-    if st.session_state.question_selected:
         st.session_state.question_procedure = True
     
     if st.session_state.question_procedure == True:
@@ -191,14 +183,44 @@ def play_game():
             st.rerun()
     
     if st.session_state.solution_true == True:
-        st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Select one of the options below")
+        st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Continue with guessing the future market value")
         st.balloons()
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
+        with col2:
+            ml_clicked = st.button("Guess")
             
     if st.session_state.show_solution == True:
         if st.session_state.points > 0:
             st.session_state.points = 0
             st.rerun()
-        st.error("❌ Game over! Select one of the options below to")        
+        st.error("❌ Game over! Continue with guessing the future market value")
+        col1, col2 = st.columns([4, 1]) 
+        with col1:
+            st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
+        with col2:
+            ml_clicked = st.button("Guess")
+        
+    if ml_clicked:
+        if st.session_state.ml_question:
+            solution = forecast(st.session_state.selected_player)
+            tolerance = 0.25 * solution
+            lower_bound = solution - tolerance
+            upper_bound = solution + tolerance
+            if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
+                points_total = st.session_state.points + 10
+                st.success(f"🎉 Congratulations, my estimated market value three years ahead is €{solution}m")
+            else:
+                points_total = st.session_state.points
+                st.error(f"❌ Wrong, my estimated market value three years ahead is €{solution}m")
+            st.success(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round")
+            st.session_state.points_total[st.session_state.player_turn] += points_total
+            st.session_state.rounds[st.session_state.player_turn] += 1
+            st.session_state.points_history[st.session_state.player_turn].append(points_total)
+        else:
+            with col1:
+                    st.warning("Please enter an input before guessing.")
     
     st.write("")
     st.write("")
@@ -207,7 +229,7 @@ def play_game():
         col1, col2, col3, col4 = st.columns([1, 1.1, 1, 0.75])     
         with col1:
             # Button zum Verlassen des Spiels
-            if st.button("Exit the Game"):
+            if st.button("Reset the Game"):
                 st.session_state.game_started = False
                 st.rerun()
 

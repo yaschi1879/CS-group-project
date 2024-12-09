@@ -1,5 +1,7 @@
-import streamlit as st
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import streamlit as st
 from b_game.d_game_initialize import initialize_original_player_list, initialize_game_variables, determine_next_turn
 from b_game.a_game_logic import play_game
 
@@ -28,9 +30,10 @@ def who_am_i():
             
         if "current_player_list" not in st.session_state:
             st.session_state.current_player_list = st.session_state.original_player_list.copy()
-        
-        if "points_achieved" not in st.session_state:
-            st.session_state.points_achieved = 0
+    
+        st.session_state.points_total = {key: 0 for key in st.session_state.points_total}
+        st.session_state.points_history = {key: [] for key in st.session_state.points_total}
+        st.session_state.rounds = {key: 0 for key in st.session_state.points_total}
         
         # Schwierigkeitsauswahl
         difficulty = st.selectbox(
@@ -38,7 +41,7 @@ def who_am_i():
             ("Select Difficulty...", "None", "Easy", "Medium", "Hard"),
             index=0,
             placeholder="Select a difficulty level...",
-        )
+            )
 
         if difficulty == "Select Difficulty...":
             st.warning("Please select a difficulty level to proceed.")

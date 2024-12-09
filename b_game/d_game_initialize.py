@@ -22,24 +22,28 @@ def generate_player_list(list):
 
 def initialize_original_player_list():
     st.session_state.original_player_list = generate_player_list(club_list_test)
-# wichtig: momentan erst die test liste
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # momentan einfach eine Teilliste
+    # für Video Recording: -> Player ID von Trent Alexander Arnol (easy), Yan Sommer (medium)
+    
     
 def initialize_game_variables():
-    st.session_state.selected_player = []
-    st.session_state.lives = 3
-    st.session_state.points = 50
-    st.session_state.player_data = {}
-    st.session_state.questions = []
-    st.session_state.question_selected = False
     st.session_state.show_solution = False
     st.session_state.change_difficulty = False
+    st.session_state.check = False
+    st.session_state.question_procedure = False
+    st.session_state.solution_true = False
+    st.session_state.ml_question = False
+    st.session_state.lives = 3
+    st.session_state.points = 50
+    st.session_state.selected_player = []
+    st.session_state.player_data = {}
+    st.session_state.questions = []
     st.session_state.selected = []
     st.session_state.index = []
     st.session_state.exact_input = []
     st.session_state.user_input = []
-    st.session_state.check = False
-    st.session_state.question_procedure = False
-    st.session_state.solution_true = False
+  
     
 def determine_next_turn():
     st.session_state.turn_order = list(st.session_state.users.keys())

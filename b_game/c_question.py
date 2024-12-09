@@ -235,6 +235,4 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         

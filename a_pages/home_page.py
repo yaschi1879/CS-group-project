@@ -1,5 +1,7 @@
-import streamlit as st
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import streamlit as st
 from b_game.d_game_initialize import initialize_original_player_list
 import time
 
@@ -121,8 +123,8 @@ def home_page():
     if "turn_order" not in st.session_state:
         st.session_state.turn_order = []
 
-    st.title("Log In to start the game !")
-    st.subheader("Choose your username and show your skills !")
+    st.title("Log In to start the game!")
+    st.subheader("Choose your username and show your skills!")
 
     # Input field for username
     username = st.text_input("Enter your username:")
@@ -181,12 +183,3 @@ def home_page():
                     st.success("Thank you for your message! We'll get back to you soon.")
                 else:
                     st.error("Please fill out all the fields before sending.")
-    with col3:
-        st.write("")
-    
-    
-# Appeler la fonction
-
-
-
-

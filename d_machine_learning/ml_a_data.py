@@ -56,9 +56,9 @@ def training_dictionary(player_id):
     dict = {}
     print(player_id)
     dict["market_value_t+1"] = get_filter_criteria(player_id)[0]
-    dict["u25"] = calculate_age(profile["dateOfBirth"], reference_date) <= 25
-    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) >= 30 and not profile["position"]["main"] == "Goalkeeper"
-    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) >= 34 and profile["position"]["main"] == "Goalkeeper"
+    dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
+    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and not profile["position"]["main"] == "Goalkeeper"
+    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) > 34 and profile["position"]["main"] == "Goalkeeper"
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
     dict["market_value_t"] = last_market_value(values, reference_date)
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
