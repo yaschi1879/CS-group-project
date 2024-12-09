@@ -1,8 +1,9 @@
 import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import pandas as pd
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
 from d_machine_learning.ml_d_forecast import forecast
@@ -69,10 +70,9 @@ def searchbar():
                     st.markdown(", ".join(old_clubs_name_unique))
 
         try:
-            market_value = get_marketvalue_history(player_id)
-            
-            #forecast_value = forecast(player_id)
-            #extended_value = market_value + forecast_value
+            market_value = get_marketvalue_history(player_id) 
+            last_market_value = market_value[len(market_value)-1]["value"]
+            market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
             # Prüfe, ob Daten vorhanden sind
             if not market_value or len(market_value) == 0:
@@ -100,17 +100,43 @@ def searchbar():
                 if df.empty or df['value'].isna().all():
                     st.warning("No valid data to display.")
                 else:
-                    # Forecast-Daten abrufen
+                    # Forecast-Daten vorbereiten
                     forecast_value = forecast(player_id)
                     forecast_df = pd.DataFrame(forecast_value)
                     forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
 
-                    # Kombinieren der historischen Daten und des Forecasts
                     combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
+                    # Diagramm erstellen mit Plotly
+                    fig = go.Figure()
 
-                    # Line Chart darstellen
-                    st.subheader("Market Value Development (in Mio. EUR)")
-                    st.line_chart(combined_df[['date', 'value']].set_index('date'))
+                    # Historische Daten hinzufügen
+                    fig.add_trace(go.Scatter(
+                        x=df['date'],
+                        y=df['value'],
+                        mode='lines',
+                        name='Market Value History',
+                        line=dict(color='blue', width=2)
+                    ))
+
+                    # Prognose-Daten hinzufügen
+                    fig.add_trace(go.Scatter(
+                        x=forecast_df['date'],
+                        y=forecast_df['value'],
+                        mode='lines',
+                        name='Forecast',
+                        line=dict(color='red', width=2, dash='dot')  # Punktierte Linie für Prognosen
+                    ))
+
+                    # Layout anpassen
+                    fig.update_layout(
+                        title="Market Value Development (in Mio. EUR)",
+                        xaxis_title="Date",
+                        yaxis_title="Value (in Mio. EUR)",
+                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                    )
+
+                    # Diagramm anzeigen
+                    st.plotly_chart(fig, use_container_width=True)
 
         except Exception as e:
             if player_id != "n.a.":
