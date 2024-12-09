@@ -204,7 +204,7 @@ def play_game():
         
     if ml_clicked:
         if st.session_state.ml_question:
-            solution = forecast(st.session_state.selected_player)
+            solution = forecast(st.session_state.selected_player)[2]["value"]
             tolerance = 0.25 * solution
             lower_bound = solution - tolerance
             upper_bound = solution + tolerance
