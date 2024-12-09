@@ -34,6 +34,7 @@ def initialize_game_variables():
     st.session_state.question_procedure = False
     st.session_state.solution_true = False
     st.session_state.ml_question = False
+    st.session_state.ml_clicked = False
     st.session_state.lives = 3
     st.session_state.points = 50
     st.session_state.selected_player = []

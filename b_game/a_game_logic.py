@@ -185,24 +185,34 @@ def play_game():
     if st.session_state.solution_true == True:
         st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Continue with guessing the future market value")
         st.balloons()
+        st.write("")
+        st.write("")
+        st.write("")
+        st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1])
         with col1:
             st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
         with col2:
-            ml_clicked = st.button("Guess")
+            st.write("")
+            st.write("")
+            st.session_state.ml_clicked = st.button("Guess")
             
     if st.session_state.show_solution == True:
+        st.error("❌ Game over! Continue with guessing the future market value")
         if st.session_state.points > 0:
             st.session_state.points = 0
             st.rerun()
-        st.error("❌ Game over! Continue with guessing the future market value")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1]) 
         with col1:
             st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
         with col2:
-            ml_clicked = st.button("Guess")
+            st.session_state.ml_clicked = st.button("Guess")
         
-    if ml_clicked:
+    if st.session_state.ml_clicked:
         if st.session_state.ml_question:
             solution = forecast(st.session_state.selected_player)[2]["value"]
             tolerance = 0.25 * solution
@@ -214,7 +224,7 @@ def play_game():
             else:
                 points_total = st.session_state.points
                 st.error(f"❌ Wrong, my estimated market value three years ahead is €{solution}m")
-            st.success(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round")
+            st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
             st.session_state.points_total[st.session_state.player_turn] += points_total
             st.session_state.rounds[st.session_state.player_turn] += 1
             st.session_state.points_history[st.session_state.player_turn].append(points_total)

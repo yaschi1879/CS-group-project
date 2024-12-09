@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from d_machine_learning.ml_a_data import forecast_dictionary_test
+from d_machine_learning.ml_a_data import forecast_dictionary
 
 # Regression data
 date_1 = "Dec 1, 2025"
@@ -17,8 +17,8 @@ date_3 = "Dec 1, 2027"
 intercept_3 = 0
 coefficient_31 = 1
     
-def forecast():#player_id):
-    data = forecast_dictionary_test()#player_id)
+def forecast(player_id):
+    data = forecast_dictionary(player_id)
     
     value_11 = data["market_value_t"] * coefficient_11
     value_21 = data["market_value_t"] * coefficient_21

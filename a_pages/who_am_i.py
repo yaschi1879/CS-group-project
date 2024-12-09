@@ -6,7 +6,21 @@ from b_game.d_game_initialize import initialize_original_player_list, initialize
 from b_game.a_game_logic import play_game
 
 def who_am_i():
- 
+    if "users" not in st.session_state:
+        st.session_state.users = {}
+    if "points_total" not in st.session_state:
+        st.session_state.points_total = {}
+    if "points_history" not in st.session_state:
+        st.session_state.points_history = {}
+    if "rounds" not in st.session_state:
+        st.session_state.rounds = {}
+    if "player_turn" not in st.session_state:
+        st.session_state.player_turn = None
+    if "current_turn_index" not in st.session_state:
+        st.session_state.current_turn_index = 0
+    if "turn_order" not in st.session_state:
+        st.session_state.turn_order = []
+
     if "game_started" not in st.session_state:
         st.session_state.game_started = False
         
@@ -35,6 +49,7 @@ def who_am_i():
         st.session_state.points_history = {key: [] for key in st.session_state.points_total}
         st.session_state.rounds = {key: 0 for key in st.session_state.points_total}
         
+        
         # Schwierigkeitsauswahl
         difficulty = st.selectbox(
             "Select Difficulty:",
@@ -43,6 +58,9 @@ def who_am_i():
             placeholder="Select a difficulty level...",
             )
 
+        if not st.session_state.users:
+            st.warning("Please add users on the home page to proceed")
+            
         if difficulty == "Select Difficulty...":
             st.warning("Please select a difficulty level to proceed.")
         else:
@@ -50,7 +68,7 @@ def who_am_i():
             st.session_state.difficulty = difficulty
         
         # Überprüfe, ob der Button gedrückt wurde
-        if st.button("Lets play the game?"):
+        if st.button("Lets play the game?") and difficulty != "Select Difficulty..." and st.session_state.users:
             # Setze den Zustand, dass das Spiel gestartet wurde
             st.session_state.current_turn_index = 0
             initialize_game_variables()
@@ -58,6 +76,7 @@ def who_am_i():
             st.session_state.game_started = True
             # aktualisieren der seite
             st.rerun()
+    
     
     if st.session_state.game_started == True:
         # Spielseite

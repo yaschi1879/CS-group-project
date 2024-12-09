@@ -2,9 +2,9 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-#from c_support.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
-#from datetime import datetime
-#from dateutil.relativedelta import relativedelta
+from c_support.a_api_functions import get_profile, get_marketvalue_history, get_filter_criteria
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 def time_left(contract, reference_date):
     if not contract:
@@ -66,7 +66,7 @@ def training_dictionary(player_id):
     
 def forecast_dictionary(player_id):
     profile = get_profile(player_id)
-    values = get_marketvalue_history(player_id)["marketValueHistory"]
+    values = get_marketvalue_history(player_id)
     reference_date = "2024-12-01"
     sec_reference_date = "2023-12-01"
     dict = {}
