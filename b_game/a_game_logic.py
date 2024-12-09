@@ -194,7 +194,7 @@ def play_game():
         st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1])
         with col1:
-            st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
+            st.session_state.ml_question = col1.text_input("Guess my estimated market value (+/- 25%) for Dec 1, 2027 (in € and millions)", placeholder="80")
         with col2:
             st.write("")
             st.write("")
@@ -211,7 +211,7 @@ def play_game():
         st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1]) 
         with col1:
-            st.session_state.ml_question = col1.text_input("Guess my estimated market value for December 2017 (in € and millions):")
+            st.session_state.ml_question = col1.text_input("Guess my estimated market value for Dec 1, 2027 (in € and millions):")
         with col2:
             st.session_state.ml_clicked = st.button("Guess")
         
@@ -221,12 +221,13 @@ def play_game():
             tolerance = 0.25 * solution
             lower_bound = solution - tolerance
             upper_bound = solution + tolerance
+            percent_off = abs(int(st.session_state.ml_question) - solution) / solution * 100
             if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                 points_total = st.session_state.points + 10
-                st.success(f"🎉 Congratulations, my estimated market value for December 2027 is €{solution}m")
+                st.success(f"🎉 Congratulations! My estimated market value for December 2027 is €{solution}m, you were {percent_off}% off")
             else:
                 points_total = st.session_state.points
-                st.error(f"❌ Wrong, my estimated market value for December 2027 is €{solution}m")
+                st.error(f"❌ Wrong! My estimated market value for December 2027 is €{solution}m, you were {percent_off}% off")
             st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
             st.session_state.points_total[st.session_state.player_turn] += points_total
             st.session_state.rounds[st.session_state.player_turn] += 1
