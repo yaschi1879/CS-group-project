@@ -109,22 +109,13 @@ def searchbar():
                     # Diagramm erstellen mit Plotly
                     fig = go.Figure()
 
-                    # Historische Daten hinzufügen
+                    # Kombinierte Daten hinzufügen
                     fig.add_trace(go.Scatter(
-                        x=df['date'],
-                        y=df['value'],
+                        x=combined_df['date'],
+                        y=combined_df['value'],
                         mode='lines',
-                        name='Market Value History',
+                        name='Market Value (History + Forecast)',
                         line=dict(color='blue', width=2)
-                    ))
-
-                    # Prognose-Daten hinzufügen
-                    fig.add_trace(go.Scatter(
-                        x=forecast_df['date'],
-                        y=forecast_df['value'],
-                        mode='lines',
-                        name='Forecast',
-                        line=dict(color='orange', width=2, dash='dot')  # Punktierte Linie für Prognosen
                     ))
 
                     # Layout anpassen
