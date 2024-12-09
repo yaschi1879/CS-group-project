@@ -71,7 +71,7 @@ def searchbar():
         st.write("")
         st.write("")
         st.write("")
-        st.subheader("Market Value")
+        st.subheader("Market Value:")
         try:
             market_value = get_marketvalue_history(player_id) 
             last_market_value = market_value[len(market_value)-1]["value"]
