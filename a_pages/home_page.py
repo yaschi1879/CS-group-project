@@ -16,8 +16,7 @@ def home_page():
         st.subheader("Guess. Compete. Celebrate!")
     with col2:
         image_path = os.path.join("a_pages", "pictures", "logo.png")
-        st.image(image_path, width=200)
-       
+        st.image(image_path, width=200)  
     with col3:
         st.write("")
 
@@ -25,7 +24,7 @@ def home_page():
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Sous-titre "Concept" et description
-    col1, col2, col3 = st.columns([2, 0.5, 1])
+    col1, col2 = st.columns([2, 1])
     with col1: 
         st.title("Game Concept")
         st.write("""
@@ -33,7 +32,10 @@ def home_page():
 
                 Think you know football? Prove it in the ultimate online guessing game for fans who live and breathe the beautiful game!  
                 From legendary icons to rising stars across all leagues, eras, and nations, every clue brings you closer to uncovering the mystery player.  
-
+                Here's a hint: all players come from the 40 best clubs across the top 5 leagues – only the elite make the cut!
+                But that’s not all – we’ve implemented a Machine Learning system that predicts the market value of each player 
+                for the next 3 years.
+                 
                 **Can you guess who it is with fewer questions and rack up the most points?**  
                 Challenge yourself, take on your friends, and rise to the top of the leaderboard.  
 
@@ -43,16 +45,13 @@ def home_page():
                 """)
     
     with col2:
-        image_path = os.path.join("a_pages", "pictures", "ampoule.png")
-        st.image(image_path, width=200)
-    with col3:
         st.write("")
 
     # Séparation visuelle
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Sous-titre "Rules" et description
-    col1, col2, col3 = st.columns([2, 0.5, 1])
+    col1, col2 = st.columns([2, 1])
     with col1: 
         st.markdown("""
             <style>
@@ -85,17 +84,21 @@ def home_page():
         st.subheader("4. Fewer Questions, More Points 🔥")
         st.markdown("The fewer questions you ask, the higher your score. Keep it sharp!")
 
-        st.subheader("5. Check the Leaderboard 📊")
+        st.subheader("5. Watch Out for Penalties! ⚠️")
+        st.markdown("""
+                    - You **lose 2 points** for every question you ask.  
+                    - You have **3 lives**. Each time you guess a player and it's wrong, you lose **1 life**.  
+                    - Use your guesses wisely to stay in the game!
+                    """)
+
+        st.subheader("6. Check the Leaderboard 📊")
         st.markdown("See how your score compares with your friends. Who’s the real football whiz?")
 
-        st.subheader("6. Crown the Champ 🏆")
+        st.subheader("7. Crown the Champ 🏆")
         st.markdown("The player with the highest average points takes home the bragging rights! 🏅")
 
-        st.markdown("Let the games begin – show off your football knowledge and crush it! ⚡⚽")
+        st.markdown("**Let the games begin – show off your football knowledge and crush it!** ⚡⚽")
     with col2:
-        image_path = os.path.join("a_pages", "pictures", "sifflet.webp")
-        st.image(image_path, width=200)
-    with col3:
         st.write("")
 
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
