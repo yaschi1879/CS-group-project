@@ -68,7 +68,9 @@ def searchbar():
                         if club not in old_clubs_name_unique:
                             old_clubs_name_unique.append(club)
                     st.markdown(", ".join(old_clubs_name_unique))
-        
+        st.write("")
+        st.write("")
+        st.write("")
         st.subheader("Market Value")
         try:
             market_value = get_marketvalue_history(player_id) 
