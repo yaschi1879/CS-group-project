@@ -227,7 +227,7 @@ def play_game():
                 st.success(f"🎉 Congratulations! My estimated market value for December 2027 is €{solution}m, you were {percent_off}% off")
             else:
                 points_total = st.session_state.points
-                st.error(f"❌ Wrong! My estimated market value for December 2027 is €{solution}m, you were {percent_off}% off")
+                st.error(f"❌ Wrong! My estimated market value for December 2027 is €{solution}m, you were off by {percent_off}%")
             st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
             st.session_state.points_total[st.session_state.player_turn] += points_total
             st.session_state.rounds[st.session_state.player_turn] += 1
