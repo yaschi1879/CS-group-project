@@ -81,10 +81,17 @@ def home_page():
         st.subheader("4. Fewer Questions, More Points 🔥")
         st.markdown("The fewer questions you ask, the higher your score. Keep it sharp!")
 
-        st.subheader("5. Check the Leaderboard 📊")
+        st.subheader("5. Watch Out for Penalties! ⚠️")
+        st.markdown("""
+                    - You **lose 2 points** for every question you ask.  
+                    - You have **3 lives**. Each time you guess a player and it's wrong, you lose **1 life**.  
+                    - Use your guesses wisely to stay in the game!
+                    """)
+
+        st.subheader("6. Check the Leaderboard 📊")
         st.markdown("See how your score compares with your friends. Who’s the real football whiz?")
 
-        st.subheader("6. Crown the Champ 🏆")
+        st.subheader("7. Crown the Champ 🏆")
         st.markdown("The player with the highest average points takes home the bragging rights! 🏅")
 
         st.markdown("**Let the games begin – show off your football knowledge and crush it!** ⚡⚽")
