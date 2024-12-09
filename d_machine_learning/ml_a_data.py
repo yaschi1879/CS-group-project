@@ -72,7 +72,7 @@ def u26(profile, reference_date, last_value):
 
 def o29(profile, reference_date, last_value):
     try:
-        value = ((max(0, calculate_age(profile["dateOfBirth"], reference_date) - 29)))^2 * last_value
+        value = ((max(0, calculate_age(profile["dateOfBirth"], reference_date) - 29)))**2 * last_value
     except:
         value = "n.a."
     return value
