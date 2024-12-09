@@ -56,9 +56,9 @@ def training_dictionary(player_id):
     dict = {}
     print(player_id)
     dict["market_value_t+1"] = get_filter_criteria(player_id)[0]
-    dict["u26"] = calculate_age(profile["dateOfBirth"], reference_date) < 26
-    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and not profile["position"]["main"] == "Goalkeeper"
-    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) > 34 and profile["position"]["main"] == "Goalkeeper"
+    dict["u26"] = max(0, 26 - calculate_age(profile["dateOfBirth"], reference_date))
+    dict["o30GK"] = max(0, calculate_age(profile["dateOfBirth"], reference_date) - 30)
+    dict["GKo30"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and profile["position"]["main"] == "Goalkeeper"
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
     dict["market_value_t"] = last_market_value(values, reference_date)
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
@@ -70,15 +70,10 @@ def forecast_dictionary(player_id):
     reference_date = "2024-12-01"
     sec_reference_date = "2023-12-01"
     dict = {}
-    dict["u25"] = calculate_age(profile["dateOfBirth"], reference_date) <= 25
-    dict["o30notGK"] = calculate_age(profile["dateOfBirth"], reference_date) >= 30 and not profile["position"]["main"] == "Goalkeeper"
-    dict["GKo34"] = calculate_age(profile["dateOfBirth"], reference_date) >= 34 and profile["position"]["main"] == "Goalkeeper"
+    dict["u26"] = max(0, 26 - calculate_age(profile["dateOfBirth"], reference_date))
+    dict["o30notGK"] = max(0, calculate_age(profile["dateOfBirth"], reference_date) - 30)
+    dict["GKo30"] = calculate_age(profile["dateOfBirth"], reference_date) > 30 and profile["position"]["main"] == "Goalkeeper"
     dict["time_left"] = time_left(profile.get("club", {}).get("contractExpires"), reference_date)
     dict["market_value_t"] = last_market_value(values, reference_date)
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
-    return dict
-
-def forecast_dictionary_test():
-    dict = {}
-    dict["market_value_t"] = 30
     return dict

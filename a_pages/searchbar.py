@@ -75,7 +75,7 @@ def searchbar():
             market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
             # Prüfe, ob Daten vorhanden sind
-            if not market_value or len(market_value) == 0:
+            if market_value == "n.a.":
                 st.warning("No market value data available.")
             else:
                 # Daten in ein DataFrame umwandeln

@@ -22,6 +22,7 @@ for club in club_id:
 # lenght of playerlist = 1084
 # -------------------------------------------------------------------------------
 # jetzt kommt die erstellung der daten für 271 spieler (etwa 20min)
+
 player_sample = random.sample(player_list, 10)
 player_list = [player for player in player_list if player not in player_sample]
 
@@ -32,6 +33,7 @@ for player in player_sample:
     time.sleep(1)
 
 data_frame = pd.DataFrame(player_data)
+print(data_frame)
 # --------------------------------------------------------------------------------
 # jetzt kommt die erstellung der regression
 from sklearn.model_selection import train_test_split

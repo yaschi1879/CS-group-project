@@ -37,8 +37,6 @@ def sort_titles(player_id):
 # mit league ist der Titel in einer Top 5 Liga gemeint, aber nicht spezifiziert in welcher Liga
 # falls keiner dieser Titel gwonnen wurde, wird "none" retourniert
 
-print(sort_titles(132098))
-
 def stadium_name(player_id):
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
     while len(old_clubs) > 0:

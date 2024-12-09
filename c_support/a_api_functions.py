@@ -11,7 +11,6 @@ def get_stadium_name(club_id):
     stadium_name = club_info.get("stadiumName", "n.a.")
     return stadium_name
 
-print(get_stadium_name(31))
 # gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
 
 def get_club_players(club_id, season_id="2024"):
@@ -93,7 +92,12 @@ def get_profile(player_id):
 def get_marketvalue_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/market_value"
     response = requests.get(url)
-    return response.json()["marketValueHistory"]
+    history = response.json()
+    try:
+        values = history["marketValueHistory"]
+    except:
+        values = "n.a."
+    return values
 
 def get_transfer_history(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/transfers"
