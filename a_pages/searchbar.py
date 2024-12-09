@@ -102,7 +102,6 @@ def searchbar():
                     st.subheader("Market Value Development (in Mio. EUR)")
                     st.line_chart(df[['date', 'value']].set_index('date'))
 
-        except Exception as e:
-            if player_id != "n.a.":
-                st.warning(f"Line Chart not available: {e}")
+        except:
+            st.warning(f"Line Chart not available.")
 
