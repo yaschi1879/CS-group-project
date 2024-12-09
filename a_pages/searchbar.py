@@ -124,7 +124,7 @@ def searchbar():
                         y=forecast_df['value'],
                         mode='lines',
                         name='Forecast',
-                        line=dict(color='orange', width=2, dash='dot')  # Punktierte Linie für Prognosen
+                        line=dict(color='red', width=2, dash='dot')  # Punktierte Linie für Prognosen
                     ))
 
                     # Layout anpassen
