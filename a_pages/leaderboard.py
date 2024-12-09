@@ -8,15 +8,14 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 
 
 # Initialisation des dictionnaires pour les points, l'historique et les parties jouées
-#def initialize_game_data():
-    #if "users" in st.session_state:
-        #if "points" not in st.session_state:
-            #st.session_state.points = {user_id: 0 for user_id in st.session_state.users}
-        #if "points_history" not in st.session_state:
-            #st.session_state.points_history = {user_id: [] for user_id in st.session_state.users}
-        #if "rounds" not in st.session_state:
-            #st.session_state.rounds = {user_id: 0 for user_id in st.session_state.users}
-# nicht nötig, da ja auf home page alles schon initzialisiert
+def initialize_game_data():
+    if "users" in st.session_state:
+        if "points" not in st.session_state:
+            st.session_state.points = {user_id: 0 for user_id in st.session_state.users}
+        if "points_history" not in st.session_state:
+            st.session_state.points_history = {user_id: [] for user_id in st.session_state.users}
+        if "rounds" not in st.session_state:
+            st.session_state.rounds = {user_id: 0 for user_id in st.session_state.users}
 
 
 
@@ -62,36 +61,6 @@ def display_leaderboard():
         AgGrid(leaderboard_df, gridOptions=grid_options, height=400, fit_columns_on_grid_load=True)
     else:
         st.info("No users found. Please register users on the Home page.")
-
-
-# Mettre à jour les points et les parties jouées pour un utilisateur
-def update_user_points():
-    st.subheader("Update Points and Games Played")
-    if "users" in st.session_state and "points_total" in st.session_state and "points_history" in st.session_state and "rounds" in st.session_state:
-        # Liste des noms d'utilisateurs pour le sélecteur
-        user_names = list(st.session_state.users.values())
-        selected_user_name = st.selectbox("Select User to Update", options=user_names)
-
-        # Récupérer l'ID correspondant à l'utilisateur sélectionné
-        user_id = next(uid for uid, uname in st.session_state.users.items() if uname == selected_user_name)
-
-        points_to_add = st.number_input("Points to Add", min_value=0, value=0, step=1)
-        games_to_add = st.number_input("Games to Add", min_value=0, value=0, step=1)
-
-        if st.button("Update"):
-            # Ajouter des points
-            st.session_state.points_total[user_id] += points_to_add
-            # Ajouter à l'historique des points
-            st.session_state.points_history[user_id].append(st.session_state.points[user_id])
-            # Mettre à jour le nombre de parties jouées
-            st.session_state.rounds[user_id] += games_to_add
-            st.success(
-                f"Updated! {selected_user_name} now has {st.session_state.points_total[user_id]} points "
-                f"over {st.session_state.rounds[user_id]} games."
-            )
-    else:
-        st.error("No users found! Please register users on the Home page.")
-
 
 
 # Afficher l'évolution des points des joueurs
@@ -152,10 +121,7 @@ def leaderboard():
     display_leaderboard()
 
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
-
-    # Permettre la mise à jour des points et des parties jouées
-    update_user_points()
-
+    
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
     # Afficher l'évolution des points
