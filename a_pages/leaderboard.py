@@ -119,8 +119,6 @@ def leaderboard():
 
     # Afficher le leaderboard
     display_leaderboard()
-
-    st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
     
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
