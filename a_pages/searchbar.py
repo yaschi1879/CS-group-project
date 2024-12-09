@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pandas as pd
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
-from d_machine_learnung.ml_d_forecast import forecast
+from d_machine_learning.ml_d_forecast import forecast
 
 def searchbar():
     st.header("Search Engine")
