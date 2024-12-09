@@ -106,6 +106,7 @@ def searchbar():
                     forecast_df = pd.DataFrame(forecast_value)
                     forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
 
+                    combined_df = pd.concat([df, forecast_df]).sort_values(by='date')
                     # Diagramm erstellen mit Plotly
                     fig = go.Figure()
 
