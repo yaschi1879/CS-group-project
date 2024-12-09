@@ -22,7 +22,7 @@ def generate_player_list(list):
 
 def initialize_original_player_list():
     #st.session_state.original_player_list = generate_player_list(club_list_test)
-    [581678, 42205]
+    st.session_state.original_player_list = [581678, 42205]
     # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     

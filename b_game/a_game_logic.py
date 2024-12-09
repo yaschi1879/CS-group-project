@@ -21,6 +21,8 @@ def play_game():
             player = random.choice(st.session_state.current_player_list)
             if check_player_criteria(player):
                 st.session_state.selected_player = player
+                #st.session_state.current_player_list.remove(player)
+                #!!!!!!!!!!!!!!!!!!!!!!!!!!!!¨!!!!!!!!!!!!!!!!!!!!!!
             else:
                 st.session_state.current_player_list.remove(player)
     
@@ -159,6 +161,8 @@ def play_game():
         elif st.session_state.lives > 0:
             if guessed_player_id == st.session_state.player_data["id"]:
                 # Spieler korrekt erraten
+                st.balloons()
+                time.sleep(2)
                 st.session_state.solution_true = True
                 st.rerun()
             
@@ -183,8 +187,7 @@ def play_game():
             st.rerun()
     
     if st.session_state.solution_true == True:
-        st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Continue with guessing the future market value")
-        st.balloons()
+        st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Continue with guessing my future market value")
         st.write("")
         st.write("")
         st.write("")
@@ -208,22 +211,22 @@ def play_game():
         st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1]) 
         with col1:
-            st.session_state.ml_question = col1.text_input("Guess my market value three years ahead:")
+            st.session_state.ml_question = col1.text_input("Guess my estimated market value for December 2017 (in € and millions):")
         with col2:
             st.session_state.ml_clicked = st.button("Guess")
         
     if st.session_state.ml_clicked:
         if st.session_state.ml_question:
-            solution = forecast(st.session_state.selected_player)[2]["value"]
+            solution = forecast(st.session_state.selected_player)[3]["value"]
             tolerance = 0.25 * solution
             lower_bound = solution - tolerance
             upper_bound = solution + tolerance
             if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                 points_total = st.session_state.points + 10
-                st.success(f"🎉 Congratulations, my estimated market value three years ahead is €{solution}m")
+                st.success(f"🎉 Congratulations, my estimated market value for December 2027 is €{solution}m")
             else:
                 points_total = st.session_state.points
-                st.error(f"❌ Wrong, my estimated market value three years ahead is €{solution}m")
+                st.error(f"❌ Wrong, my estimated market value for December 2027 is €{solution}m")
             st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
             st.session_state.points_total[st.session_state.player_turn] += points_total
             st.session_state.rounds[st.session_state.player_turn] += 1
