@@ -4,7 +4,13 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from d_machine_learning.ml_a_data import forecast_dictionary
 from c_support.a_api_functions import get_marketvalue_history
-from a_pages.searchbar import clean_value
+
+def clean_value(value):
+    value = value.replace('€', '').replace(',', '')
+    if 'm' in value:
+        return float(value.replace('m', ''))
+    elif 'k' in value:
+        return float(value.replace('k', '')) / 1000
 
 # Regression data
 date_1 = "Dec 1, 2025"
