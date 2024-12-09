@@ -70,10 +70,9 @@ def searchbar():
                     st.markdown(", ".join(old_clubs_name_unique))
 
         try:
-            market_value = get_marketvalue_history(player_id)
-            
-            #forecast_value = forecast(player_id)
-            #extended_value = market_value + forecast_value
+            market_value = get_marketvalue_history(player_id) 
+            last_market_value = reversed(get_marketvalue_history(player_id))[0]["value"]
+            market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
             # Prüfe, ob Daten vorhanden sind
             if not market_value or len(market_value) == 0:
@@ -110,13 +109,22 @@ def searchbar():
                     # Diagramm erstellen mit Plotly
                     fig = go.Figure()
 
-                    # Kombinierte Daten hinzufügen
+                    # Historische Daten hinzufügen
                     fig.add_trace(go.Scatter(
-                        x=combined_df['date'],
-                        y=combined_df['value'],
+                        x=df['date'],
+                        y=df['value'],
                         mode='lines',
-                        name='Market Value (History + Forecast)',
+                        name='Market Value History',
                         line=dict(color='blue', width=2)
+                    ))
+
+                    # Prognose-Daten hinzufügen
+                    fig.add_trace(go.Scatter(
+                        x=forecast_df['date'],
+                        y=forecast_df['value'],
+                        mode='lines',
+                        name='Forecast',
+                        line=dict(color='orange', width=2, dash='dot')  # Punktierte Linie für Prognosen
                     ))
 
                     # Layout anpassen
