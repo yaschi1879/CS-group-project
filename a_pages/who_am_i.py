@@ -53,7 +53,7 @@ def who_am_i():
         # Schwierigkeitsauswahl
         difficulty = st.selectbox(
             "Select Difficulty:",
-            ("Select Difficulty...", "None", "Easy", "Medium", "Hard"),
+            ("Select difficulty...", "None", "Easy", "Medium", "Hard"),
             index=0,
             placeholder="Select a difficulty level...",
             )
@@ -68,7 +68,7 @@ def who_am_i():
             st.session_state.difficulty = difficulty
         
         # Überprüfe, ob der Button gedrückt wurde
-        if st.button("Lets play the game?") and difficulty != "Select Difficulty..." and st.session_state.users:
+        if st.button("Start Game?") and difficulty != "Select Difficulty..." and st.session_state.users:
             # Setze den Zustand, dass das Spiel gestartet wurde
             st.session_state.current_turn_index = 0
             initialize_game_variables()
