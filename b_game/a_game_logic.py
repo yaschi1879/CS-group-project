@@ -224,7 +224,7 @@ def play_game():
             percent_off = abs(int(st.session_state.ml_question) - solution) / solution * 100
             if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                 points_total = st.session_state.points + 10
-                st.success(f"🎉 Congratulations! My estimated market value for December 2027 is €{solution}m, you were {percent_off}% off")
+                st.success(f"🎉 Congratulations! My estimated market value for December 2027 is €{solution}m, you were off by {percent_off}%")
             else:
                 points_total = st.session_state.points
                 st.error(f"❌ Wrong! My estimated market value for December 2027 is €{solution}m, you were off by {percent_off}%")
