@@ -1,7 +1,6 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from d_machine_learning.ml_a_data import forecast_dictionary
 from c_support.a_api_functions import get_marketvalue_history
 
@@ -33,7 +32,7 @@ def forecast(player_id):
     value_31 = data["market_value_t"] * coefficient_31
     
     value_list = get_marketvalue_history(player_id)
-    current = clean_value(value_list[len(value_list)]["value"])
+    current = clean_value(value_list[len(value_list)-1]["value"])
 
     forecast_1 = intercept_1 + value_11
     forecast_2 = intercept_2 + value_21
