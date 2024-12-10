@@ -91,11 +91,10 @@ def forecast_dictionary(player_id):
     values = get_marketvalue_history(player_id)
     reference_date = "2024-12-01"
     sec_reference_date = "2023-12-01"
-    last_value = last_market_value(values, reference_date)
     dict = {}
-    dict["u26"] = u26(profile, reference_date)
-    dict["o29"] = o29(profile, reference_date)
-    dict["market_value_t"] = last_value
-    dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date, last_value)
-    dict["huge_difference"] = huge_difference(values, reference_date, sec_reference_date)
+    dict["market_value_t+1"] = value_t1(profile)
+    dict["u26"] = u25(profile, reference_date)
+    dict["o29"] = o30(profile, reference_date)
+    dict["market_value_t"] = last_market_value(values, reference_date)
+    dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
     return dict

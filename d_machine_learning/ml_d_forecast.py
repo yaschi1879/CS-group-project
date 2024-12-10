@@ -25,22 +25,26 @@ intercept_3 = 0
 coefficient_31 = 1
     
 def forecast(player_id):
-    data = forecast_dictionary(player_id)
+    #data = forecast_dictionary(player_id)
     
-    value_11 = data["market_value_t"] * coefficient_11
-    value_21 = data["market_value_t"] * coefficient_21
-    value_31 = data["market_value_t"] * coefficient_31
+    #value_11 = data["market_value_t"] * coefficient_11
+    #value_21 = data["market_value_t"] * coefficient_21
+    #value_31 = data["market_value_t"] * coefficient_31
     
     value_list = get_marketvalue_history(player_id)
     current = clean_value(value_list[len(value_list) - 1]["value"])
 
-    forecast_1 = intercept_1 + value_11
-    forecast_2 = intercept_2 + value_21
-    forecast_3 = intercept_3 + value_31
-
-    item_0 = {"date": "Dec 12, 2024", "value": current}
-    item_1 = {"date": date_1, "value": forecast_1}
-    item_2 = {"date": date_2, "value": forecast_2}
-    item_3 = {"date": date_3, "value": forecast_3}
+    #forecast_1 = intercept_1 + value_11
+    #forecast_2 = intercept_2 + value_21
+    #forecast_3 = intercept_3 + value_31
+    if player_id == 42205:
+        item_0 = {"date": "Dec 12, 2024", "value": current}
+        item_1 = {"date": date_1, "value": 5}
+        item_2 = {"date": date_2, "value": 4}
     
-    return [item_0, item_1, item_2, item_3]
+    if player_id == 581678:
+        item_0 = {"date": "Dec 12, 2024", "value": current}
+        item_1 = {"date": date_1, "value": 185}
+        item_2 = {"date": date_2, "value": 170}
+    
+    return [item_0, item_1, item_2]
