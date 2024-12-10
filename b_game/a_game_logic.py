@@ -221,7 +221,7 @@ def play_game():
                 tolerance = 0.25 * solution
                 lower_bound = solution - tolerance
                 upper_bound = solution + tolerance
-                percent_off = abs(int(st.session_state.ml_question) - solution) / solution * 100
+                percent_off = round(abs(int(st.session_state.ml_question) - solution) / solution * 100, 2)
                 if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                     points_total = st.session_state.points + 10
                     st.success(f"🎉 Congratulations! My estimated market value for December 2025 is €{solution}m, you were off by {percent_off}%")
