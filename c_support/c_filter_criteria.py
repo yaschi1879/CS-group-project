@@ -17,7 +17,7 @@ def check_player_criteria(player_id):
     if market_value == "n.a.":
         return False
     
-    elif difficulty == "None":
+    elif difficulty == "Random":
         if age < 26 and market_value < 10:
             return False
         elif 26 <= age < 30 and market_value < 5:
