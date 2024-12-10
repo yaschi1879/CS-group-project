@@ -21,6 +21,8 @@ player_list = []
 for club in club_id:
     player_list.extend(get_club_players(club))
 
+#test = random.sample(player_list, 15)
+
 player_data = []
 for player in player_list:
     player_dict = training_dictionary(player)

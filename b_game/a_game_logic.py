@@ -217,7 +217,7 @@ def play_game():
     if st.session_state.ml_clicked:
         if st.session_state.ml_question:
             with st.spinner("Checking your answer... ⚽"):
-                solution = forecast(st.session_state.selected_player)[1]["value"]
+                solution = forecast(str(st.session_state.selected_player))[1]["value"]
                 tolerance = 0.25 * solution
                 lower_bound = solution - tolerance
                 upper_bound = solution + tolerance

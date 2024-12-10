@@ -66,10 +66,20 @@ def diff_market_value(values, reference_date, sec_reference_date):
     try:
         market_value_1 = last_market_value(values, reference_date)
         market_value_2 = last_market_value(values, sec_reference_date)
-        value= (market_value_1 - market_value_2) / market_value_1
+        value = market_value_1 - market_value_2
         return value
     except:
         return "n.a."
+
+def huge_diff(values, reference_date, sec_reference_date, last_value):
+    try:
+        if abs(diff_market_value(values, reference_date, sec_reference_date) / last_value) > 0.3:
+            value = diff_market_value(values, reference_date, sec_reference_date)
+        else:
+            value = 0
+    except:
+        value = "n.a."
+    return value
 
 def training_dictionary(player_id):
     profile = get_profile(player_id)
@@ -77,13 +87,15 @@ def training_dictionary(player_id):
     # Beispiel für einen Forecast, der 1 Jahr in die zukunft prognostizieren soll
     reference_date = "2023-12-01" # immer 2024-12-01 minus die anzahl jahre
     sec_reference_date = "2022-12-01" # immer 2024-12-01 minus die anzahl jahre +1
+    last_value = last_market_value(values, reference_date)
     dict = {}
     print(player_id)
     dict["market_value_t+1"] = value_t1(profile)
     dict["u26"] = u25(profile, reference_date)
     dict["o29"] = o30(profile, reference_date)
-    dict["market_value_t"] = last_market_value(values, reference_date)
+    dict["market_value_t"] = last_value
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
+    dict["huge_diff"] = huge_diff(values, reference_date, sec_reference_date, last_value)
     return dict
     
 def forecast_dictionary(player_id):
@@ -91,10 +103,12 @@ def forecast_dictionary(player_id):
     values = get_marketvalue_history(player_id)
     reference_date = "2024-12-01"
     sec_reference_date = "2023-12-01"
+    last_value = last_market_value(values, reference_date)
     dict = {}
     dict["market_value_t+1"] = value_t1(profile)
     dict["u26"] = u25(profile, reference_date)
     dict["o29"] = o30(profile, reference_date)
-    dict["market_value_t"] = last_market_value(values, reference_date)
+    dict["market_value_t"] = last_value
     dict["diff_market_value"] = diff_market_value(values, reference_date, sec_reference_date)
+    dict["huge_diff"] = huge_diff(values, reference_date, sec_reference_date, last_value)
     return dict
