@@ -130,8 +130,8 @@ def home_page():
     if "turn_order" not in st.session_state:
         st.session_state.turn_order = []
 
-    st.title("Log In to start the game!")
-    st.subheader("Type your username and show your skills!")
+    st.title("Log In to Start the Game!")
+    st.subheader("Type Your Username and Show Your Skills!")
 
     # Input field for username
     username = st.text_input("Enter your username:")
@@ -156,7 +156,7 @@ def home_page():
             st.error("Please enter a username")
 
     # Display the list of registered users
-    st.subheader("List of registered users:")
+    st.subheader("List of Registered Users:")
     if st.session_state["users"]:
         for user_id, name in st.session_state["users"].items():
             st.write(f"User {user_id}: {name}")
