@@ -212,6 +212,8 @@ def play_game():
         with col1:
             st.session_state.ml_question = col1.text_input("Guess my estimated market value (+/- 25%) for Dec 1, 2025 (in € and millions):", placeholder="e.g. 80")
         with col2:
+            st.write("")
+            st.write("")
             st.session_state.ml_clicked = st.button("Guess")
         
     if st.session_state.ml_clicked:
