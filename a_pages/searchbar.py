@@ -73,72 +73,73 @@ def searchbar():
         st.write("")
         st.subheader("Market Value:")
         try:
-            market_value = get_marketvalue_history(player_id) 
-            last_market_value = market_value[len(market_value)-1]["value"]
-            market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
+            with st.spinner ("Loading market value ... ⚽"):
+                market_value = get_marketvalue_history(player_id) 
+                last_market_value = market_value[len(market_value)-1]["value"]
+                market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
-            # Prüfe, ob Daten vorhanden sind
-            if market_value == "n.a.":
-                st.warning("No market value data available.")
-            else:
-                # Daten in ein DataFrame umwandeln
-                df = pd.DataFrame(market_value)
-
-                def clean_value(value):
-                    value = value.replace('€', '').replace(',', '')
-                    if 'm' in value:
-                        return float(value.replace('m', ''))
-                    elif 'k' in value:
-                        return float(value.replace('k', '')) / 1000
-
-                df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
-                df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
-
-                # Prüfe auf ungültige Werte
-                if df['date'].isna().any():
-                    st.warning("Some dates could not be parsed. Check the data format.")
-
-                df = df.sort_values(by='date')
-
-                if df.empty or df['value'].isna().all():
-                    st.warning("No valid data to display.")
+                # Prüfe, ob Daten vorhanden sind
+                if market_value == "n.a.":
+                    st.warning("No market value data available.")
                 else:
-                    # Forecast-Daten vorbereiten
-                    forecast_value = forecast(player_id)
-                    forecast_df = pd.DataFrame(forecast_value)
-                    forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
+                    # Daten in ein DataFrame umwandeln
+                    df = pd.DataFrame(market_value)
 
-                    # Diagramm erstellen mit Plotly
-                    fig = go.Figure()
+                    def clean_value(value):
+                        value = value.replace('€', '').replace(',', '')
+                        if 'm' in value:
+                            return float(value.replace('m', ''))
+                        elif 'k' in value:
+                            return float(value.replace('k', '')) / 1000
 
-                    # Historische Daten hinzufügen
-                    fig.add_trace(go.Scatter(
-                        x=df['date'],
-                        y=df['value'],
-                        mode='lines',
-                        name='Market Value History',
-                        line=dict(color='blue', width=2)
-                    ))
+                    df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
+                    df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
 
-                    # Prognose-Daten hinzufügen
-                    fig.add_trace(go.Scatter(
-                        x=forecast_df['date'],
-                        y=forecast_df['value'],
-                        mode='lines',
-                        name='Forecast',
-                        line=dict(color='red', width=2, dash='dot')  # Punktierte Linie für Prognosen
-                    ))
+                    # Prüfe auf ungültige Werte
+                    if df['date'].isna().any():
+                        st.warning("Some dates could not be parsed. Check the data format.")
 
-                    # Layout anpassen
-                    fig.update_layout(
-                        title="Market Value Development (in Mio. EUR)",
-                        xaxis_title="Date",
-                        yaxis_title="Value (in Mio. EUR)",
-                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
-                    )
+                    df = df.sort_values(by='date')
 
-                    # Diagramm anzeigen
-                    st.plotly_chart(fig, use_container_width=True)
+                    if df.empty or df['value'].isna().all():
+                        st.warning("No valid data to display.")
+                    else:
+                        # Forecast-Daten vorbereiten
+                        forecast_value = forecast(player_id)
+                        forecast_df = pd.DataFrame(forecast_value)
+                        forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
+
+                        # Diagramm erstellen mit Plotly
+                        fig = go.Figure()
+
+                        # Historische Daten hinzufügen
+                        fig.add_trace(go.Scatter(
+                            x=df['date'],
+                            y=df['value'],
+                            mode='lines',
+                            name='Market Value History',
+                            line=dict(color='blue', width=2)
+                        ))
+
+                        # Prognose-Daten hinzufügen
+                        fig.add_trace(go.Scatter(
+                            x=forecast_df['date'],
+                            y=forecast_df['value'],
+                            mode='lines',
+                            name='Forecast',
+                            line=dict(color='red', width=2, dash='dot')  # Punktierte Linie für Prognosen
+                        ))
+
+                        # Layout anpassen
+                        fig.update_layout(
+                            title="Market Value Development (in Mio. EUR)",
+                            xaxis_title="Date",
+                            yaxis_title="Value (in Mio. EUR)",
+                            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                        )
+
+                        # Diagramm anzeigen
+                        st.plotly_chart(fig, use_container_width=True)
 
         except Exception as e:
             if player_id != "n.a.":
