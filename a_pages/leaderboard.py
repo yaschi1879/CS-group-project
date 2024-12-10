@@ -21,7 +21,7 @@ def initialize_game_data():
 
 # Afficher les utilisateurs et leurs points dans un tableau interactif avec Rank
 def display_leaderboard():
-    st.subheader("Ranking based on AVG Points")
+    st.subheader("Ranking Based on AVG Points")
     if "users" in st.session_state and "points_total" in st.session_state and "rounds" in st.session_state:
         # Créer un DataFrame des utilisateurs, points et AVG Points
         data = {

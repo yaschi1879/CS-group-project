@@ -77,7 +77,7 @@ def home_page():
         st.markdown("Pick a cool username and get ready to shine!")
 
         st.subheader("2. Choose Your Level ⚽")
-        st.markdown("Feeling bold? Choose **Easy**, **Medium**, or **Hard** – your call, your challenge!")
+        st.markdown("Feeling bold? Choose **Easy**, **Medium**, **Hard** or **Random** – your call, your challenge!")
 
         st.subheader("3. Guess the Football Star 🕵️")
         st.markdown("Use the hints to figure out the mystery player. Think fast and guess smart! 🕶️")
@@ -87,7 +87,7 @@ def home_page():
 
         st.subheader("5. Watch Out for Penalties! ⚠️")
         st.markdown("""
-                    - You **lose 2 points** for every question you ask.  
+                    - You start with **50 points** and you **lose 2 points** for every question you ask.  
                     - You have **3 lives**. Each time you guess a player and it's wrong, you lose **1 life**.  
                     - Use your guesses wisely to stay in the game!
                     """)
@@ -130,8 +130,8 @@ def home_page():
     if "turn_order" not in st.session_state:
         st.session_state.turn_order = []
 
-    st.title("Log In to start the game!")
-    st.subheader("Choose your username and show your skills!")
+    st.title("Log In to Start the Game!")
+    st.subheader("Type Your Username and Show Your Skills!")
 
     # Input field for username
     username = st.text_input("Enter your username:")
@@ -156,7 +156,7 @@ def home_page():
             st.error("Please enter a username")
 
     # Display the list of registered users
-    st.subheader("List of registered users:")
+    st.subheader("List of Registered Users:")
     if st.session_state["users"]:
         for user_id, name in st.session_state["users"].items():
             st.write(f"User {user_id}: {name}")
