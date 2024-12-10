@@ -34,7 +34,7 @@ def who_am_i():
             st.image(image_path, width=200)
             
         with col2:
-            st.title("Welcome to the game!")
+            st.title("Welcome to the Game!")
         
         # Spiel Initialisierung
         if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
@@ -68,7 +68,7 @@ def who_am_i():
             st.session_state.difficulty = difficulty
         
         # Überprüfe, ob der Button gedrückt wurde
-        if st.button("Start Game?") and difficulty != "Select Difficulty..." and st.session_state.users:
+        if st.button("Start Game") and difficulty != "Select Difficulty..." and st.session_state.users:
             # Setze den Zustand, dass das Spiel gestartet wurde
             st.session_state.current_turn_index = 0
             initialize_game_variables()

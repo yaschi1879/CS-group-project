@@ -150,13 +150,13 @@ def play_game():
         user_input = st.text_input("Enter Player Name", placeholder="Type Player here...", label_visibility="collapsed")
     
     with col2:
-        guess_button = st.button("Enter Guess")
+        guess_button = st.button("Enter")
         
     if guess_button:
         with st.spinner("Checking your answer... ⚽"):
             guessed_player_id = get_player_name_user_input(user_input)[0]
         if guessed_player_id is None:
-            st.warning("Player not found, Please try again.")
+            st.warning("No player found, please try again.")
         elif st.session_state.lives > 0:
             if guessed_player_id == st.session_state.player_data["id"]:
                 # Spieler korrekt erraten
@@ -215,8 +215,8 @@ def play_game():
             st.session_state.ml_clicked = st.button("Guess")
         
     if st.session_state.ml_clicked:
-        with st.spinner("Checking your answer... ⚽"):
-            if st.session_state.ml_question:
+        if st.session_state.ml_question:
+            with st.spinner("Checking your answer... ⚽"):
                 solution = forecast(st.session_state.selected_player)[3]["value"]
                 tolerance = 0.25 * solution
                 lower_bound = solution - tolerance
@@ -232,9 +232,9 @@ def play_game():
                 st.session_state.points_total[st.session_state.player_turn] += points_total
                 st.session_state.rounds[st.session_state.player_turn] += 1
                 st.session_state.points_history[st.session_state.player_turn].append(points_total)
-            else:
-                with col1:
-                        st.warning("Please enter an input before guessing.")
+        else:
+            with col1:
+                    st.warning("Please enter an input before guessing!")
     
     st.write("")
     st.write("")

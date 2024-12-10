@@ -130,7 +130,7 @@ for club in club_id:
     
 # -> lenght of playerlist = 1084 -> divide it in 4 samples
     
-sample_1 = random.sample(player_list, 271)
+sample_1 = random.sample(player_list, 542)
 player_list1 = [player for player in player_list if player not in sample_1]
 print("ok")
 

@@ -1,6 +1,8 @@
-Regression R^2 = 0.911
-Random Forest R^2 = 0.814
+Regression R^2 = 0.911 (N=200)
+Random Forest R^2 = 0.814 (N=200)
 -> Usage of linear Regression
+
+
 
 
 
