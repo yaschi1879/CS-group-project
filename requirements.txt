@@ -1,6 +1,5 @@
 streamlit
 requests
-python-dateutil
 pandas
 scikit-learn
 statsmodels

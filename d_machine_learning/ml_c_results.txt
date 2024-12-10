@@ -2,7 +2,60 @@ Regression R^2 = 0.911 (N=200)
 Random Forest R^2 = 0.814 (N=200)
 -> Usage of linear Regression
 
+[1082 rows x 6 columns]
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.866
+Model:                            OLS   Adj. R-squared:                  0.865
+Method:                 Least Squares   F-statistic:                     867.6
+Date:                Tue, 10 Dec 2024   Prob (F-statistic):          4.73e-290
+Time:                        12:04:21   Log-Likelihood:                -2454.4
+No. Observations:                 677   AIC:                             4921.
+Df Residuals:                     671   BIC:                             4948.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 2.8571      0.468      6.109      0.000       1.939       3.775
+u26                   0.0363      0.006      6.044      0.000       0.025       0.048
+o29                  -0.0141      0.005     -2.611      0.009      -0.025      -0.004
+market_value_t        0.8852      0.021     43.067      0.000       0.845       0.926
+diff_market_value     0.2297      0.048      4.806      0.000       0.136       0.323
+huge_difference      -0.1520      0.029     -5.277      0.000      -0.209      -0.095
+==============================================================================
+Omnibus:                      205.275   Durbin-Watson:                   1.994
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1127.344
+Skew:                           1.245   Prob(JB):                    1.59e-245
+Kurtosis:                       8.810   Cond. No.                         131.
+==============================================================================
 
 
-
+[1082 rows x 6 columns]
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.559
+Model:                            OLS   Adj. R-squared:                  0.556
+Method:                 Least Squares   F-statistic:                     170.5
+Date:                Tue, 10 Dec 2024   Prob (F-statistic):          5.89e-117
+Time:                        15:22:18   Log-Likelihood:                -910.20
+No. Observations:                 678   AIC:                             1832.
+Df Residuals:                     672   BIC:                             1860.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 1.6022      0.066     24.183      0.000       1.472       1.732
+u26                  -0.0191      0.017     -1.109      0.268      -0.053       0.015
+o29                  -0.0296      0.004     -8.100      0.000      -0.037      -0.022
+market_value_t        0.0396      0.002     24.901      0.000       0.036       0.043
+diff_market_value     0.3995      0.086      4.661      0.000       0.231       0.568
+huge_difference       0.0392      0.083      0.472      0.637      -0.124       0.202
+==============================================================================
+Omnibus:                      175.229   Durbin-Watson:                   1.952
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              426.904
+Skew:                          -1.338   Prob(JB):                     1.99e-93
+Kurtosis:                       5.819   Cond. No.                         77.9
+==============================================================================
 
