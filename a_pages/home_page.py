@@ -77,7 +77,7 @@ def home_page():
         st.markdown("Pick a cool username and get ready to shine!")
 
         st.subheader("2. Choose Your Level ⚽")
-        st.markdown("Feeling bold? Choose **Easy**, **Medium**, **Hard** or **None** – your call, your challenge!")
+        st.markdown("Feeling bold? Choose **Easy**, **Medium**, **Hard** or **Random** – your call, your challenge!")
 
         st.subheader("3. Guess the Football Star 🕵️")
         st.markdown("Use the hints to figure out the mystery player. Think fast and guess smart! 🕶️")
