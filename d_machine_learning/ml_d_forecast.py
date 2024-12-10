@@ -33,8 +33,6 @@ def forecast(player_id):
     
     value_list = get_marketvalue_history(player_id)
     current = clean_value(value_list[len(value_list) - 1]["value"])
-    print(current)
-
     #forecast_1 = intercept_1 + value_11
     #forecast_2 = intercept_2 + value_21
     #forecast_3 = intercept_3 + value_31
@@ -49,5 +47,3 @@ def forecast(player_id):
         item_2 = {"date": date_2, "value": 170}
     
     return [item_0, item_1, item_2]
-
-print(forecast(581678))
