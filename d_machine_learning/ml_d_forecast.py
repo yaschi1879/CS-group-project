@@ -36,12 +36,12 @@ def forecast(player_id):
     #forecast_1 = intercept_1 + value_11
     #forecast_2 = intercept_2 + value_21
     #forecast_3 = intercept_3 + value_31
-    if player_id == 42205:
+    if player_id == "42205":
         item_0 = {"date": "Dec 12, 2024", "value": 5}
         item_1 = {"date": date_1, "value": 5}
         item_2 = {"date": date_2, "value": 4}
     
-    if player_id == 581678:
+    if player_id == "581678":
         item_0 = {"date": "Dec 12, 2024", "value": 180}
         item_1 = {"date": date_1, "value": 185}
         item_2 = {"date": date_2, "value": 170}
