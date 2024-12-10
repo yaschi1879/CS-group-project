@@ -272,7 +272,7 @@ def play_game():
     if st.session_state.change_difficulty == True:
         difficulty = st.selectbox(
         "Select Difficulty:",
-        ("Select Difficulty...", "None", "Easy", "Medium", "Hard"),
+        ("Select Difficulty...", "Random", "Easy", "Medium", "Hard"),
         index=0,
         placeholder="Select a difficulty level for the next round...",
         )

@@ -53,7 +53,7 @@ def who_am_i():
         # Schwierigkeitsauswahl
         difficulty = st.selectbox(
             "Select Difficulty:",
-            ("Select difficulty...", "None", "Easy", "Medium", "Hard"),
+            ("Select difficulty...", "Random", "Easy", "Medium", "Hard"),
             index=0,
             placeholder="Select a difficulty level...",
             )
