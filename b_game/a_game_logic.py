@@ -193,7 +193,7 @@ def play_game():
         st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1])
         with col1:
-            st.session_state.ml_question = col1.text_input("Guess my estimated market value (+/- 25%) for Dec 1, 2027 (in € and millions):", placeholder="e.g. 80")
+            st.session_state.ml_question = col1.text_input("Guess my estimated market value (+/- 25%) for Dec 1, 2025 (in € and millions):", placeholder="e.g. 80")
         with col2:
             st.write("")
             st.write("")
@@ -210,24 +210,24 @@ def play_game():
         st.subheader("Guess the market value")
         col1, col2 = st.columns([4, 1]) 
         with col1:
-            st.session_state.ml_question = col1.text_input("Guess my estimated market value for Dec 1, 2027 (in € and millions):")
+            st.session_state.ml_question = col1.text_input("Guess my estimated market value (+/- 25%) for Dec 1, 2025 (in € and millions):", placeholder="e.g. 80")
         with col2:
             st.session_state.ml_clicked = st.button("Guess")
         
     if st.session_state.ml_clicked:
         if st.session_state.ml_question:
             with st.spinner("Checking your answer... ⚽"):
-                solution = forecast(st.session_state.selected_player)[3]["value"]
+                solution = forecast(st.session_state.selected_player)[1]["value"]
                 tolerance = 0.25 * solution
                 lower_bound = solution - tolerance
                 upper_bound = solution + tolerance
                 percent_off = abs(int(st.session_state.ml_question) - solution) / solution * 100
                 if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                     points_total = st.session_state.points + 10
-                    st.success(f"🎉 Congratulations! My estimated market value for December 2027 is €{solution}m, you were off by {percent_off}%")
+                    st.success(f"🎉 Congratulations! My estimated market value for December 2025 is €{solution}m, you were off by {percent_off}%")
                 else:
                     points_total = st.session_state.points
-                    st.error(f"❌ Wrong! My estimated market value for December 2027 is €{solution}m, you were off by {percent_off}%")
+                    st.error(f"❌ Wrong! My estimated market value for December 2025 is €{solution}m, you were off by {percent_off}%")
                 st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
                 st.session_state.points_total[st.session_state.player_turn] += points_total
                 st.session_state.rounds[st.session_state.player_turn] += 1
