@@ -13,7 +13,7 @@ def searchbar():
     col1, col2 = st.columns([3,1])
 
     with col1:
-        user_input = st.text_input ("Geben Sie ein, wonach Sie suchen möchten:", label_visibility="collapsed", placeholder="Type something...")
+        user_input = st.text_input ("Enter what you want to search for:", label_visibility="collapsed", placeholder="Type something...")
     with col2:
         search_button = st.button("Search")
 
