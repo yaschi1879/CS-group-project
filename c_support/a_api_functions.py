@@ -120,5 +120,5 @@ def get_achievements(player_id):
     try:
         titles = response.json()["achievements"]
     except:
-        titles = ["none"]
+        titles = [{"title": "none"}]
     return titles
