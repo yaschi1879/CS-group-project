@@ -41,7 +41,7 @@ def play_game():
     col1, col2 = st.columns([1, 3])
     if st.session_state.show_solution == False and st.session_state.solution_true == False:
         with col1:
-            image_path = os.path.join("b_game", "Fragezeichen.png")
+            image_path = os.path.join("b_game", "questionmark.png")
             st.image(image_path, caption="Who am I?", width=150)
             
     if st.session_state.show_solution == True:
