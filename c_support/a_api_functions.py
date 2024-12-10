@@ -77,7 +77,11 @@ def get_league(club_id):
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
     league = response.json()
-    return [league["league"]["id"], league["league"]["name"]]
+    try:
+        data = [league["league"]["id"], league["league"]["name"]]
+    except:
+        data = ["n.a.", "none"]
+    return data
 # gibt die Liga des clubs als Liste zrück
 # item = 0 -> Liga ID
 # item = 1 -> Liga Name
@@ -113,4 +117,8 @@ def get_stats(player_id):
 def get_achievements(player_id):
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
     response = requests.get(url)
-    return response.json()["achievements"]
+    try:
+        titles = response.json()["achievements"]
+    except:
+        titles = "none"
+    return titles

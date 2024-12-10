@@ -55,6 +55,13 @@ def player_dictionary(player_id):
     profile = get_profile(player_id)
     league = get_league(profile["club"]["id"])
     old_clubs = get_transfer_history(player_id)
+    try:
+        club_id = profile["club"]["id"]
+        club_name = profile["club"]["name"]
+    except:
+        club_id = "none"
+        club_name = "none"
+        
     
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
@@ -69,8 +76,8 @@ def player_dictionary(player_id):
     # achtung!!! gibt mehrere positionen als liste zurück
     # falls der spieler keine andere positionen hat, bleibt es bei der Hauptposition
     player_dictionary["shirt_number"] = profile["shirtNumber"].replace("#", "")
-    player_dictionary["club_id"] = profile["club"]["id"]
-    player_dictionary["club_name"] = profile["club"]["name"]
+    player_dictionary["club_id"] = club_id
+    player_dictionary["club_name"] = club_name
     player_dictionary["league_id"] = league[0]
     player_dictionary["league_name"] = league[1]
     player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in old_clubs]
