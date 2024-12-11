@@ -15,7 +15,6 @@ def clean_value(value):
 # market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ
 
 date_1 = "Dec 1, 2025"
-intercept_1 = 2.7042
 market_value_t_1 = 0.8412
 u25_1 = 0.0072
 o30_1 = -0.0270
@@ -23,7 +22,6 @@ diff_market_value_1 = 0.4542
 huge_diff_1 = -0.2903
 
 date_2 = "Dec 1, 2026"
-intercept_2 = 5.2399
 market_value_t_2 = 0.7121
 u25_2 = 0.0210
 o30_2 = -0.0695
@@ -50,8 +48,8 @@ def forecast(player_id):
     
         value_list = get_marketvalue_history(player_id)
         current = clean_value(value_list[len(value_list) - 1]["value"])
-        forecast_1 = intercept_1 + value_11 + value_12 + value_13 + value_14 + value_15
-        forecast_2 = intercept_2 + value_21 + value_22 + value_23 + value_24 + value_25
+        forecast_1 = max(0, value_11 + value_12 + value_13 + value_14 + value_15)
+        forecast_2 = max(0, value_21 + value_22 + value_23 + value_24 + value_25)
         
         item_0 = {"date": "Dec 12, 2024", "value": current}
         item_1 = {"date": date_1, "value": forecast_1}
