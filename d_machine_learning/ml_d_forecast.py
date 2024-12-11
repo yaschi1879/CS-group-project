@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from d_machine_learning.ml_a_data import forecast_dictionary
+from d_machine_learning.ml_a_data import forecast_1year, forecast_2year
 from c_support.a_api_functions import get_marketvalue_history
 
 def clean_value(value):
@@ -12,38 +12,54 @@ def clean_value(value):
         return float(value.replace('k', '')) / 1000
 
 # Regression data
+# market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ
+
 date_1 = "Dec 1, 2025"
-intercept_1 = 0
-coefficient_11 = 1
+intercept_1 = 2.7042
+market_value_t_1 = 0.8412
+u25_1 = 0.0072
+o30_1 = -0.0270
+diff_market_value_1 = 0.4542
+huge_diff_1 = -0.2903
 
 date_2 = "Dec 1, 2026"
-intercept_2 = 0
-coefficient_21 = 1
-
-date_3 = "Dec 1, 2027"
-intercept_3 = 0
-coefficient_31 = 1
+intercept_2 = 5.2399
+market_value_t_2 = 0.7121
+u25_2 = 0.0210
+o30_2 = -0.0695
+diff_market_value_2 = 0.4773
+huge_diff_2 = -0.2159
     
 def forecast(player_id):
-    #data = forecast_dictionary(player_id)
+    data1 = forecast_1year(player_id)
+    data2 = forecast_2year(player_id)
     
-    #value_11 = data["market_value_t"] * coefficient_11
-    #value_21 = data["market_value_t"] * coefficient_21
-    #value_31 = data["market_value_t"] * coefficient_31
+    try:
+        value_11 = data1["market_value_t"] * market_value_t_1
+        value_12 = data1["u25"] * u25_1
+        value_13 = data1["o30"] * o30_1
+        value_14 = data1["diff_market_value"] * diff_market_value_1
+        value_15 = data1["huge_diff"] * huge_diff_1
+        
+        value_21 = data2["market_value_t"] * market_value_t_2
+        value_22 = data2["u25"] * u25_2
+        value_23 = data2["o30"] * o30_2
+        value_24 = data2["diff_market_value"] * diff_market_value_2
+        value_25 = data2["huge_diff"] * huge_diff_2
     
-    #value_list = get_marketvalue_history(player_id)
-    #current = clean_value(value_list[len(value_list) - 1]["value"])
-    #forecast_1 = intercept_1 + value_11
-    #forecast_2 = intercept_2 + value_21
-    #forecast_3 = intercept_3 + value_31
-    if player_id == "42205":
-        item_0 = {"date": "Dec 12, 2024", "value": 5}
-        item_1 = {"date": date_1, "value": 5}
-        item_2 = {"date": date_2, "value": 4}
     
-    if player_id == "581678":
-        item_0 = {"date": "Dec 12, 2024", "value": 180}
-        item_1 = {"date": date_1, "value": 185}
-        item_2 = {"date": date_2, "value": 170}
+        value_list = get_marketvalue_history(player_id)
+        current = clean_value(value_list[len(value_list) - 1]["value"])
+        forecast_1 = intercept_1 + value_11 + value_12 + value_13 + value_14 + value_15
+        forecast_2 = intercept_2 + value_21 + value_22 + value_23 + value_24 + value_25
+        
+        item_0 = {"date": "Dec 12, 2024", "value": current}
+        item_1 = {"date": date_1, "value": forecast_1}
+        item_2 = {"date": date_2, "value": forecast_2}
+        
+    except:
+        item_0 = "no forecast available"
+        item_1 = "no forecast available"
+        item_2 = "no forecast available"
     
     return [item_0, item_1, item_2]
