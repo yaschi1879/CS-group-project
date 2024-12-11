@@ -35,7 +35,7 @@ def play_game():
     
     # hier funktion die den user bestimmt
     # speichern von user in st.session_state.player turn
-    st.title((f"{st.session_state.users[st.session_state.player_turn]}, it's your turn!"))
+    st.title((f"{st.session_state.users[st.session_state.player_turn]}, It's Your Turn!"))
     st.write("")
     
     col1, col2 = st.columns([1, 3])

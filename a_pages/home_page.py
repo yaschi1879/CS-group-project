@@ -177,7 +177,7 @@ def home_page():
 
     with col2:
         st.write("""
-                 For any question or recomandations, feel free to contact us
+                 For any question or recommendation, feel free to contact us
                  via our contact form""")
         with st.form("contact_form"):
             name = st.text_input("Your Name")
