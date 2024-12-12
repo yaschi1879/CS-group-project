@@ -35,7 +35,7 @@ def home_page():
                 Here's a hint: all players come from the 40 best clubs across the top leagues in europe – only the elite make the cut!
                 
                 But that’s not all – we’ve implemented a Machine Learning system that predicts the market value of each player 
-                for the next 3 years.
+                for the next 2 years.
                  
                 **Can you guess who it is with fewer questions and rack up the most points?**  
                 Challenge yourself, take on your friends, and rise to the top of the leaderboard. 
@@ -89,7 +89,7 @@ def home_page():
 
         st.subheader("5. Watch Out for Penalties! ⚠️")
         st.markdown("""
-                    - You start with **50 points** and you **lose 2 points** for every question you ask.  
+                    - You start with **50 points** and you **lose 1 or 2 points** for every question you ask, depending on whether the answer is true or false.  
                     - You have **3 lives**. Each time you guess a player and it's wrong, you lose **1 life**.  
                     - Use your guesses wisely to stay in the game!
                     """)
