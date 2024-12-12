@@ -1,3 +1,11 @@
+# We hereby declare that the vast majority of the code for this project has been written by us independently. 
+# We have utilized ChatGPT as a tool for conceptual purposes and for assistance with small, 
+# specific parts of the code, such as generating comments or clarifying implementation ideas.
+# However, all critical design decisions, core functionality, 
+# and the implementation of the primary codebase were developed through our own efforts and understanding.
+
+# This is Link for the Game application: https://cs-group-project-8c9afmnnkpup2ze7c3yxvo.streamlit.app/ 
+
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Add the parent directory to the system path for module access
