@@ -147,7 +147,7 @@ def training_dictionary(player_id):
     return [dict, log_dict]
 
 # Generate features for predicting market value
-def forecast(player_id):
+def forecast_dictionary(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
     reference_date = "2024-12-01" # Reference date for the prediction year

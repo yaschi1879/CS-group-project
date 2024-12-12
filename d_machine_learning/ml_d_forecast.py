@@ -10,7 +10,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Add the parent directory to the system path for module access
-from d_machine_learning.ml_a_data import forecast
+from d_machine_learning.ml_a_data import forecast_dictionary
 from c_support.a_api_functions import get_marketvalue_history
 
 # Function to clean and standardize market value strings
@@ -42,7 +42,7 @@ huge_diff_2 = -0.2159
 
 # Generate market value forecasts for one and two years into the future   
 def forecast(player_id):
-    data = forecast(player_id)
+    data = forecast_dictionary(player_id)
     
     try:
         # Compute forecasted values for year 1
