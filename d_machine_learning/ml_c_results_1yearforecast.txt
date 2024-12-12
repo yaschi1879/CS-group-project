@@ -1,0 +1,133 @@
+OLS Regression Results:
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.875
+Model:                            OLS   Adj. R-squared:                  0.874
+Method:                 Least Squares   F-statistic:                     945.6
+Date:                  Fr, 6 Dec 2024   Prob (F-statistic):          1.73e-301
+Time:                        18:50:01   Log-Likelihood:                -2450.4
+No. Observations:                 679   AIC:                             2913.
+Df Residuals:                     673   BIC:                             2940.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 2.1849      0.453      4.824      0.000       1.296       3.074
+market_value_t        0.8806      0.017     52.512      0.000       0.848       0.914
+u25                   0.0077      0.001      5.718      0.000       0.005       0.010
+o30                  -0.0153      0.008     -1.982      0.048      -0.031      -0.000
+diff_market_value     0.4829      0.063      7.658      0.000       0.359       0.607
+huge_diff            -0.4147      0.072     -5.739      0.000      -0.557      -0.273
+==============================================================================
+Omnibus:                      156.861   Durbin-Watson:                   1.951
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              850.378
+Skew:                           0.917   Prob(JB):                    2.20e-185
+Kurtosis:                       5.166   Cond. No.                         34.3
+==============================================================================
+
+
+
+OLS Log Regression Results:
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.694
+Model:                            OLS   Adj. R-squared:                  0.692
+Method:                 Least Squares   F-statistic:                     318.6
+Date:                  Fr, 6 Dec 2024   Prob (F-statistic):          4.75e-128
+Time:                        18:50:01   Log-Likelihood:                -652.56
+No. Observations:                 679   AIC:                             1317.
+Df Residuals:                     673   BIC:                             1344.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 0.4782      0.048      9.943      0.000       0.384       0.573
+market_value_t        0.7765      0.017     46.698      0.000       0.744       0.809
+u25                   0.0604      0.012      5.064      0.000       0.037       0.084
+o30                  -0.0914      0.023     -3.906      0.000      -0.137      -0.045
+diff_market_value     0.6842      0.116      5.914      0.000       0.457       0.911
+huge_diff            -0.3754      0.124     -3.019      0.003      -0.620      -0.131
+==============================================================================
+Omnibus:                      103.683   Durbin-Watson:                   1.972
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              302.726
+Skew:                           0.748   Prob(JB):                     1.84e-66
+Kurtosis:                       3.909   Cond. No.                         18.1
+==============================================================================
+
+
+
+Potential Outliners (Index): [ 18  22  30  65  69  91 123 136 161 179 184 189 195 200 232 234 246 280
+ 285 288 296 332 343 350 361 372 373 375 394 400 404 407 412 413 419 424
+ 431 462 470 472 476 485 523 527 576 577 579 583 589 594 617 632 638 649
+ 669 676]
+
+Potential Outliners Log: [ 11  14  69  83 118 119 127 134 139 145 177 189 205 211 219 223 233 235
+ 239 255 276 293 295 299 306 317 348 369 372 382 387 407 466 537 574 579
+ 602 605 609 610 636 637 649 651 657 673 674]
+
+
+OLS Regression Results After Removing Outliers:
+                            OLS Regression Results
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.915
+Model:                            OLS   Adj. R-squared:                  0.914
+Method:                 Least Squares   F-statistic:                     1091.7
+Date:                  Fr, 6 Dec 2024   Prob (F-statistic):          1.18e-410
+Time:                        19:32:24   Log-Likelihood:                -2048.9
+No. Observations:                 623   AIC:                             2510.
+Df Residuals:                     617   BIC:                             2436.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 2.7042      0.362      7.473      0.000       1.994       3.415
+market_value_t        0.8412      0.016     52.570      0.000       0.810       0.873
+u25                   0.0072      0.002      3.441      0.001       0.003       0.011
+o30                  -0.0270      0.011     -2.423      0.016      -0.049      -0.005
+diff_market_value     0.4542      0.063      7.204      0.000       0.330       0.578
+huge_diff            -0.2903      0.072     -4.018      0.000      -0.432      -0.148
+==============================================================================
+Omnibus:                      160.546   Durbin-Watson:                   2.013
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              437.417
+Skew:                           1.276   Prob(JB):                     1.04e-95
+Kurtosis:                       6.216   Cond. No.                         34.2
+==============================================================================
+
+OLS Log Regression Results After Removing Outliers:
+                            OLS Regression Result
+==============================================================================
+Dep. Variable:       market_value_t+1   R-squared:                       0.754
+Model:                            OLS   Adj. R-squared:                  0.752
+Method:                 Least Squares   F-statistic:                     518.6
+Date:                  Fr, 6 Dec 2024   Prob (F-statistic):          4.75e-228
+Time:                        18:50:01   Log-Likelihood:                -652.56
+No. Observations:                 679   AIC:                             1317.
+Df Residuals:                     673   BIC:                             1344.
+Df Model:                           5
+Covariance Type:            nonrobust
+=====================================================================================
+                        coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------
+const                 0.7659      0.046     10.003      0.000       0.392       0.457
+market_value_t        0.7582      0.016     47.120      0.000       0.756       0.790
+u25                   0.0612      0.013      5.134      0.000       0.029       0.101
+o30                  -0.0949      0.028     -3.924      0.000      -0.128      -0.120
+diff_market_value     0.6842      0.099      5.956      0.000       0.487       0.980
+huge_diff            -0.3811      0.112     -3.018      0.003      -0.648      -0.123
+==============================================================================
+Omnibus:                      103.683   Durbin-Watson:                   1.972
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              302.726
+Skew:                           0.748   Prob(JB):                     1.84e-66
+Kurtosis:                       5.909   Cond. No.                         17.9
+==============================================================================
+
+R^2 score of random forest: 0.5917098073871175
+
+comparing the two regressions with the random forest approach:
+-> based on the printed results -> take OLS Regression Results After Removing Outliers for the forecast
+-> see the images (1) for further analysis of the OLS Regression
+
+=> market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ
