@@ -125,6 +125,6 @@ R^2 score of random forest: 0.5729834189589521
 
 comparing the two regressions with the random forest approach:
 -> based on the printed results -> take OLS Regression Results After Removing Outliers for the forecast
--> see the images (1) for further analysis of the OLS Regression
+-> see the images (2) for further analysis of the OLS Regression
 
 => market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ
