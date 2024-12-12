@@ -23,7 +23,7 @@ huge_diff            -0.1364      0.114     -1.197      0.232      -0.360       
 Omnibus:                      128.955   Durbin-Watson:                   2.051
 Prob(Omnibus):                  0.000   Jarque-Bera (JB):              602.119
 Skew:                           0.847   Prob(JB):                    1.78e-131
-Kurtosis:                       7.509   Cond. No.                          32.
+Kurtosis:                       7.509   Cond. No.                         32.8
 ==============================================================================
 
 
@@ -89,7 +89,7 @@ huge_diff            -0.2159      0.116     -1.861      0.063      -0.444       
 Omnibus:                       96.772   Durbin-Watson:                   2.054
 Prob(Omnibus):                  0.000   Jarque-Bera (JB):              162.600
 Skew:                           1.013   Prob(JB):                     4.92e-36
-Kurtosis:                       4.598   Cond. No.                          32.
+Kurtosis:                       4.598   Cond. No.                         32.6
 ==============================================================================
 
 
