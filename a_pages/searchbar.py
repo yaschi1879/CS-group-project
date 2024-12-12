@@ -96,7 +96,7 @@ def searchbar():
                     df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
                     df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')
 
-                    # Prüfe auf ungültige Werte
+                    # Check if there is data that is not valid
                     if df['date'].isna().any():
                         st.warning("Some dates could not be parsed. Check the data format.")
 
@@ -106,6 +106,7 @@ def searchbar():
                         st.warning("No valid data to display.")
                     else:
                         # preparing Forecast-Data
+                        # forecast is defined on d_machine_learning.ml_d_forecast
                         forecast_value = forecast(player_id) # Forecast future market values
                         forecast_df = pd.DataFrame(forecast_value)
                         forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')

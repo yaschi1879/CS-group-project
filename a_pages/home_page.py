@@ -111,6 +111,7 @@ def home_page():
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
         # Display a spinner while the original player list is being initialized
         with st.spinner("Add players once the game set up has been completed... ⚽"):
+            # this function is saved on b_game.d_game_initialize
             initialize_original_player_list()
         st.success("🎉 Game Set up completed")
         time.sleep(3)
@@ -118,14 +119,21 @@ def home_page():
 
 
     # Initialize session_state to store users and their game data
+    # all the dictionaries below have the same keys: its the user id (1, 2, 3, ...) depending on how many users want to play
+    
+    # later on the values will be the users names
     if "users" not in st.session_state:
-        st.session_state.users = {}
+        st.session_state.users = {} 
+    # later on the values will be total points achieved, which are displayed on the leaderboard
     if "points_total" not in st.session_state:
-        st.session_state.points_total = {}
+        st.session_state.points_total = {} 
+    # this dictionary will contain a list for each key with the developement of the points achieved in the game
     if "points_history" not in st.session_state:
-        st.session_state.points_history = {}
+        st.session_state.points_history = {} 
+    # later on the values will be the completed rounds per user
     if "rounds" not in st.session_state:
-        st.session_state.rounds = {}
+        st.session_state.rounds = {} 
+    # the variables below are used to determine who is next in the game, see game_initialize for further details
     if "player_turn" not in st.session_state:
         st.session_state.player_turn = None
     if "current_turn_index" not in st.session_state:

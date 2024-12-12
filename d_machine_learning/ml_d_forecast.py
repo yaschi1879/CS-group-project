@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Add the parent directory to the system path for module access
-from d_machine_learning.ml_a_data import forecast_1year, forecast_2year
+from d_machine_learning.ml_a_data import forecast
 from c_support.a_api_functions import get_marketvalue_history
 
 # Function to clean and standardize market value strings
@@ -15,6 +15,8 @@ def clean_value(value):
 # Regression data
 # market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ
 
+# all the hypothesis stated on ml_a_data have been confirmed
+# these are the coefficients of the text files
 date_1 = "Dec 1, 2025"
 market_value_t_1 = 0.8412
 u25_1 = 0.0072
@@ -31,23 +33,22 @@ huge_diff_2 = -0.2159
 
 # Generate market value forecasts for one and two years into the future   
 def forecast(player_id):
-    data1 = forecast_1year(player_id)
-    data2 = forecast_2year(player_id)
+    data = forecast(player_id)
     
     try:
         # Compute forecasted values for year 1
-        value_11 = data1["market_value_t"] * market_value_t_1
-        value_12 = data1["u25"] * u25_1
-        value_13 = data1["o30"] * o30_1
-        value_14 = data1["diff_market_value"] * diff_market_value_1
-        value_15 = data1["huge_diff"] * huge_diff_1
+        value_11 = data["market_value_t"] * market_value_t_1
+        value_12 = data["u25"] * u25_1
+        value_13 = data["o30"] * o30_1
+        value_14 = data["diff_market_value"] * diff_market_value_1
+        value_15 = data["huge_diff"] * huge_diff_1
         
         # Compute forecasted values for year 2
-        value_21 = data2["market_value_t"] * market_value_t_2
-        value_22 = data2["u25"] * u25_2
-        value_23 = data2["o30"] * o30_2
-        value_24 = data2["diff_market_value"] * diff_market_value_2
-        value_25 = data2["huge_diff"] * huge_diff_2
+        value_21 = data["market_value_t"] * market_value_t_2
+        value_22 = data["u25"] * u25_2
+        value_23 = data["o30"] * o30_2
+        value_24 = data["diff_market_value"] * diff_market_value_2
+        value_25 = data["huge_diff"] * huge_diff_2
     
         # Get current market value from historical data
         value_list = get_marketvalue_history(player_id)
