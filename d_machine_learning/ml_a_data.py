@@ -1,10 +1,11 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Add the parent directory to the system path for module access
 from c_support.a_api_functions import get_profile, get_marketvalue_history
 from datetime import datetime
 import math
 
+# Extract the last valid market value of a player before a given reference date
 def last_market_value(values, reference_date):
     try:
         date_reference = datetime.strptime(reference_date, "%Y-%m-%d")
@@ -24,7 +25,8 @@ def last_market_value(values, reference_date):
         return market_value
     except:
         return "n.a."
-    
+
+# Extract current market value and log-transform it for future usage   
 def value_t1(player_profile):
     try:
         value = player_profile["marketValue"].replace("€", "")
@@ -36,12 +38,14 @@ def value_t1(player_profile):
     except:
         return ["n.a.", "n.a."]
 
+# Apply log transformation to a market value
 def log_value_t(last_value):
     try:
         return math.log(last_value)
     except:
         return "n.a."
 
+# Calculate the age of a player as of a reference date
 def calculate_age(birth_date, reference_date):
     try:
         birth = datetime.strptime(birth_date, "%b %d, %Y")
@@ -53,6 +57,7 @@ def calculate_age(birth_date, reference_date):
     except:
         return "n.a."
 
+# Calculate U25 contribution factor (age-related boost for players under 25)
 def u25(profile, reference_date, last_value):
     try:
         value = ((max(0, 25 - calculate_age(profile["dateOfBirth"], reference_date)))**2) * last_value
@@ -62,6 +67,7 @@ def u25(profile, reference_date, last_value):
         return ["n.a.", "n.a."]
     
 
+# Calculate O30 contribution factor (age-related decrease for players over 30)
 def o30(profile, reference_date, last_value):
     try:
         value = (((max(0, calculate_age(profile["dateOfBirth"], reference_date) - 30)))**2) * last_value
@@ -70,7 +76,7 @@ def o30(profile, reference_date, last_value):
     except:
         return ["n.a.", "n.a."]
     
-
+# Calculate the difference between two market values over time and normalize by the last value
 def diff_market_value(values, reference_date, sec_reference_date, last_value):
     try:
         market_value_1 = last_market_value(values, reference_date)
@@ -81,6 +87,7 @@ def diff_market_value(values, reference_date, sec_reference_date, last_value):
     except:
         return ["n.a.", "n.a."]
 
+# Check for significant market value differences exceeding a threshold
 def huge_diff(values, reference_date, sec_reference_date, last_value):
     try:
         if abs(diff_market_value(values, reference_date, sec_reference_date, last_value)[1]) > 0.5:
@@ -93,13 +100,13 @@ def huge_diff(values, reference_date, sec_reference_date, last_value):
     except:
         return ["n.a.", "n.a."]
     
-
+# Create a dictionary for training machine learning models based on player data
 def training_dictionary(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
-    # Beispiel für einen Forecast, der 2 Jahre in die zukunft prognostizieren soll
-    reference_date = "2022-12-01" # immer 2024-12-01 minus die gewünschten jahre in die zukunft
-    sec_reference_date = "2021-12-01" # immer 2024-12-01 minus die gewünschten jahre in die zukunft + 1
+    # Example for a forecast that should predict 2 years into the future 
+    reference_date = "2022-12-01" # always 2024-12-01 minus the wanted years into the future
+    sec_reference_date = "2021-12-01" # always 2024-12-01 minus the wanted years into the future + 1
     last_value = last_market_value(values, reference_date)
     b1 = value_t1(profile)
     b3 = u25(profile, reference_date, last_value)
@@ -125,12 +132,12 @@ def training_dictionary(player_id):
     log_dict["huge_diff"] = b6[1]
     return [dict, log_dict]
 
-
+# Generate features for predicting market value in one year
 def forecast_1year(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
-    reference_date = "2024-12-01"
-    sec_reference_date = "2023-12-01"
+    reference_date = "2024-12-01" # Reference date for the prediction year
+    sec_reference_date = "2023-12-01" # Secondary reference date for year-over-year change
     last_value = last_market_value(values, reference_date)
     b3 = u25(profile, reference_date, last_value)
     b4 = o30(profile, reference_date, last_value)
@@ -145,11 +152,12 @@ def forecast_1year(player_id):
     dict["huge_diff"] = b6[0]
     return dict
 
+# Generate features for predicting market value in two years
 def forecast_2year(player_id):
     profile = get_profile(player_id)
     values = get_marketvalue_history(player_id)
-    reference_date = "2024-12-01"
-    sec_reference_date = "2022-12-01"
+    reference_date = "2024-12-01" # Reference date for the prediction year
+    sec_reference_date = "2022-12-01"  # Secondary reference date for two-year changes
     last_value = last_market_value(values, reference_date)
     b3 = u25(profile, reference_date, last_value)
     b4 = o30(profile, reference_date, last_value)
