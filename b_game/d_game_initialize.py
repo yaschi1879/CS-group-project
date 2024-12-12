@@ -4,39 +4,33 @@ import os
 # Add the parent directory to the system path so Python can find other modules in the project
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import streamlit as st # Library for creating web apps
-from c_support.a_api_functions import get_club_players # imports function that generates list of player IDs
+import streamlit as st
+from c_support.a_api_functions import get_club_players
 
 # List of club IDs used to generate player lists
 club_list = [281, 418, 27, 31, 12, 583, 16, 631, 46, 1050, 15, 985, 131, 294, 720, 
             13, 23826, 379, 800, 11, 506, 5, 610, 6195, 2282, 398, 24, 368, 124, 
             234, 681, 383, 336, 62, 244, 1082, 419, 430, 1090, 148]
 
-# Smaller test list of club IDs
-club_list_test = [281, 418, 27, 31, 12]
-
 
 def generate_player_list(list):
-    # Generates a list of players by retrieving data for each club in the provided list
+    # Generates a list of players by retrieving all players playing for the club for each club in the provided list
     player_list = []
     for club in list:
-        players = get_club_players(club) # Get players for the current club
-        player_list.extend(players) #Add players to the cumulative list
+        # function below is defined on c_support.a_api_functions
+        players = get_club_players(club) 
+        # Add players to the cumulative list
+        player_list.extend(players) 
     return player_list
     
 
 def initialize_original_player_list():
     # Initializes the original player list in the session state
-    # For testing, a predefined list of player IDs is used
-    # Uncomment the line below to generate the player list dynamically
-    # st.session_state.original_player_list = generate_player_list(club_list_test)
-    #st.session_state.original_player_list = generate_player_list(club_list_test)
-    st.session_state.original_player_list = [581678, 42205]
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
+    st.session_state.original_player_list = generate_player_list(club_list)
     
 def initialize_game_variables():
     # Sets initial values for game-related variables in the session state
+    # all variables with value False are used for game control
     st.session_state.show_solution = False
     st.session_state.change_difficulty = False
     st.session_state.check = False
@@ -44,6 +38,7 @@ def initialize_game_variables():
     st.session_state.solution_true = False
     st.session_state.ml_question = False
     st.session_state.ml_clicked = False
+    
     st.session_state.lives = 3 # Number of lives the player starts with
     st.session_state.points = 50 # Starting points for the player
     st.session_state.selected_player = [] # Selected player during the game

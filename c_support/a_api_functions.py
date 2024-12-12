@@ -6,6 +6,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import requests # Library for making HTTP requests
 
+# used API: https://transfermarkt-api.fly.dev/docs
+# API source: https://github.com/felipeall/transfermarkt-api?tab=readme-ov-file
+
 def get_stadium_name(club_id):
     #returns stadium name, if this information is missing, it returns false
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
@@ -61,7 +64,6 @@ def get_club_name_user_input(club_name):
     clubs = response.json()["results"]
     if not clubs:
         return ["n.a.", "n.a."]
-    
     return [clubs[0]["id"], clubs[0]["name"]]
 
 
@@ -101,7 +103,7 @@ def get_league(club_id):
     return data
 
 
-# Directly returns the data from the API as is
+# Directly returns the data from the API as it is
 # player_id as an integer
 def get_profile(player_id):
     # Retrieves the full profile of a player based on their ID.

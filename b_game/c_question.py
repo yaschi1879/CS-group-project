@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # I
 import streamlit as st
 from c_support.a_api_functions import get_club_name_user_input
 
-# This function defines the process of asking questions 
+# This function defines the further process of asking questions 
 def handle_question_selection(question_template):
     
     col1, col2 = st.columns([4, 1])
@@ -25,6 +25,7 @@ def handle_question_selection(question_template):
     }
     
     # First question is processed
+    # the handling is very similar between the question, so its only explained once
     if question_template == "Are you currently playing for ...?":
         st.session_state.user_input = False
         with col1:
@@ -34,21 +35,27 @@ def handle_question_selection(question_template):
             st.write("")
             enter = st.button("Confirm")
         if enter:
-            if st.session_state.user_input:  # Checking if Input really exists
-                # returning club as ID list
+            # Once enter is pressed and the user gave actual input the following steps are executed
+            if st.session_state.user_input:
+                # selected contains the value which will be compared to the player_data dictionary, here its the club id
+                # selected has always to be a list, it makes the comparison to the player_data a lot easier, see this on a_game_logic
                 st.session_state.selected = [get_club_name_user_input(st.session_state.user_input)[0]]
-                # returns club name 
+                # exact input contains the correct club name and uses the api function defined on c_support.a_api_functions
+                # if the user enters Sporting, selected contains the correct name Sporting CP
                 st.session_state.exact_input = get_club_name_user_input(st.session_state.user_input)[1]
+                # index contains the key tied to the compared value of the player_data dictionary
                 st.session_state.index = "club_id"
+                # below the game control variables are adjusted
                 st.session_state.question_procedure = False
                 st.session_state.question_selected = False
                 st.session_state.check = True
+                # Since the code will be rerunned, we go back to the a_game_logic file
                 st.rerun()
             else:
                 with col1:
-                    st.warning("Please enter an input before confirming.") #if user input does not fit 
+                    st.warning("Please enter an input before confirming.") #if user hasnt given input yet 
 
-    #second question processing                      
+    #second question                     
     elif question_template == "Are you currently playing in ...?":
         st.session_state.user_input = False
         with col1: # list of all the leagues for the game

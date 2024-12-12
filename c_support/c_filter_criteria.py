@@ -8,12 +8,13 @@ from c_support.a_api_functions import get_filter_criteria
 import streamlit as st
 
 # This function checks if the player fits the difficulty
-# if yes this function returns true, if no then it returns false
-
+# if yes, this function returns true, if no then it returns false
 
 def check_player_criteria(player_id):
-    difficulty = st.session_state.difficulty # Get the current difficulty level from session state
-    info = get_filter_criteria(player_id) # Retrieve player market value and age
+    # Get the current difficulty level from session state
+    difficulty = st.session_state.difficulty 
+    # Retrieve player market value and age
+    info = get_filter_criteria(player_id) 
     market_value = info[0]
     age = info[1]
     

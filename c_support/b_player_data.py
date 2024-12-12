@@ -4,7 +4,7 @@ import os
 # Add the parent directory to the system path so Python can find other modules in the project
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import random #for generating random values
+import random 
 from c_support.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
@@ -21,7 +21,6 @@ def classify_position(position):
 
 def sort_titles(player_id):
     # Goes through all titles and returns a list of these titles (if won):
-    # [WC, EC, CL, league]
     # "league" refers to a title in a top 5 league, but it doesn't specify which one
     # Returns "none" if none of these titles were won
 
@@ -53,11 +52,12 @@ def stadium_name(player_id):
             return stadium_name
     if len(old_clubs) == 0:
         return "no old stadium"
-    
 
 
 def player_dictionary(player_id):
+    # This dictionary is key for the game and search engine, it contains all the data in a structured way
     player_dictionary = {}
+    # the functinons below are API functions
     profile = get_profile(player_id)
     league = get_league(profile["club"]["id"])
     old_clubs = get_transfer_history(player_id)
@@ -68,7 +68,6 @@ def player_dictionary(player_id):
         club_id = "none"
         club_name = "none"
         
-    
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
     player_dictionary["age"] = int(profile["age"])
@@ -92,9 +91,9 @@ def player_dictionary(player_id):
     # returns the club names of all of the players former clubs
     player_dictionary["titles"] = sort_titles(player_id)
     
+    # these are used as the starting point of the game
     player_dictionary["old_stadium"] = stadium_name(player_id)
     player_dictionary["foot"] = profile["foot"]
     player_dictionary["joined_date"] = profile["club"]["joined"]
-    # these are used as the starting point of the game. First facts to know in which direction it makes sense to aks the questions
     
     return player_dictionary
