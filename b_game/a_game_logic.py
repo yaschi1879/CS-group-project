@@ -4,7 +4,8 @@
 # However, all critical design decisions, core functionality, 
 # and the implementation of the primary codebase were developed through our own efforts and understanding.
 
-# This is Link for the Game application: https://cs-group-project-8c9afmnnkpup2ze7c3yxvo.streamlit.app/ 
+# This is Link for the Game application: https://cs-group-project-8c9afmnnkpup2ze7c3yxvo.streamlit.app/
+# our GitHub: https://github.com/yaschi1879/CS-group-project 
 
 import sys
 import os
