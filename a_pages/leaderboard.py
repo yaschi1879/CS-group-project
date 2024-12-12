@@ -1,13 +1,12 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import streamlit as st
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Include the parent directory in the system path to access project modules
 import pandas as pd
 import matplotlib.pyplot as plt
 from st_aggrid import AgGrid, GridOptionsBuilder
 
-
-# Initialisation des dictionnaires pour les points, l'historique et les parties jouées
+# Initialize dictionaries for points, history, and games played
+# Ensures session state contains necessary structures for user data
 def initialize_game_data():
     if "users" in st.session_state:
         if "points" not in st.session_state:
@@ -19,11 +18,11 @@ def initialize_game_data():
 
 
 
-# Afficher les utilisateurs et leurs points dans un tableau interactif avec Rank
+# Display users and their points in an interactive table with ranks
 def display_leaderboard():
     st.subheader("Ranking Based on AVG Points")
     if "users" in st.session_state and "points_total" in st.session_state and "rounds" in st.session_state:
-        # Créer un DataFrame des utilisateurs, points et AVG Points
+        # Create a DataFrame with usernames, points, and average points
         data = {
             "Username": list(st.session_state.users.values()),
             "Points": [st.session_state.points_total[user_id] for user_id in st.session_state.users.keys()],
@@ -36,23 +35,23 @@ def display_leaderboard():
         }
         leaderboard_df = pd.DataFrame(data)
 
-        # Trier par AVG Points décroissants et ajouter la colonne Rank
+        # Sort by AVG Points in descending order and add a Rank column
         leaderboard_df.sort_values(by="AVG Points", ascending=False, inplace=True)
         leaderboard_df.reset_index(drop=True, inplace=True)
         ranks = []
         for idx in leaderboard_df.index:
             if idx == 0:
-                ranks.append("🥇")  # Médaille d'or
+                ranks.append("🥇")  # Gold medal
             elif idx == 1:
-                ranks.append("🥈")  # Médaille d'argent
+                ranks.append("🥈")  # Silver medal
             elif idx == 2:
-                ranks.append("🥉")  # Médaille de bronze
+                ranks.append("🥉")  # Bronze medal
             else:
-                ranks.append(str(idx + 1))  # Rang numérique à partir de la 4ème place
+                ranks.append(str(idx + 1))  # Numeric rank from 4th place onwards
 
-        leaderboard_df.insert(0, "Rank", ranks)  # Insérer la colonne Rank au début
+        leaderboard_df.insert(0, "Rank", ranks)  # Insert Rank column at the beginning
 
-        # Affichage avec AgGrid
+        # Display with AgGrid
         gb = GridOptionsBuilder.from_dataframe(leaderboard_df)
         gb.configure_pagination(paginationAutoPageSize=True)
         gb.configure_side_bar()
@@ -63,7 +62,7 @@ def display_leaderboard():
         st.info("No users found. Please register users on the Home page.")
 
 
-# Afficher l'évolution des points des joueurs
+# Display the evolution of player points over time
 def plot_points_evolution():
     st.subheader("Points Evolution Over Time")
     if "points_history" in st.session_state and "users" in st.session_state:
@@ -73,13 +72,13 @@ def plot_points_evolution():
         plt.figure(figsize=(10, 6))
 
         if selected_user == "Select All":
-            # Afficher l'évolution des points pour tous les joueurs
+            # Display points evolution for all players
             for user_id, history in st.session_state.points_history.items():
-                if history:  # Ne tracer que si l'historique existe
+                if history:  # Only plot if history exists
                     plt.plot(range(1, len(history) + 1), history, marker="o", label=st.session_state.users[user_id])
             plt.title("Points Evolution for All Players")
         else:
-            # Trouver l'ID de l'utilisateur sélectionné
+            # Find the selected user's ID
             user_id = next((uid for uid, uname in st.session_state.users.items() if uname == selected_user), None)
             if user_id and st.session_state.points_history[user_id]:
                 plt.plot(
@@ -92,12 +91,12 @@ def plot_points_evolution():
             else:
                 st.warning(f"No data available for {selected_user}.")
 
-        # Ajuster les axes en excluant les historiques vides
+        # Adjust axes excluding empty histories
         non_empty_histories = [hist for hist in st.session_state.points_history.values() if hist]
         if non_empty_histories:
             plt.ylim(0, max(max(hist) for hist in non_empty_histories) + 10)
         else:
-            plt.ylim(0, 10)  # Limite par défaut si aucun historique
+            plt.ylim(0, 10)  # Default limit if no history
 
         plt.xlabel("Game Number")
         plt.ylabel("Total Points")
@@ -110,22 +109,22 @@ def plot_points_evolution():
 
 
 
-# Fonction principale pour la page Leaderboard
+# Main function for the Leaderboard page
 def leaderboard():
     st.title("Leaderboard")
 
-    # Initialiser les données de jeu
-    #initialize_game_data()  # Assure que tous les dictionnaires sont synchronisés avec les utilisateurs
+    # Initialize game data to ensure dictionaries are synced with users
+    #initialize_game_data()
 
-    # Afficher le leaderboard
+    # Display the leaderboard
     display_leaderboard()
     
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
-    # Afficher l'évolution des points
+    # Display points evolution
     plot_points_evolution()
 
 
-# Exécuter la page Leaderboard
+# Run the Leaderboard page
 if __name__ == "__main__":
     leaderboard()

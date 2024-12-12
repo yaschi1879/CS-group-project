@@ -1,10 +1,11 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Include the parent directory in the system path to access project modules
 
 import streamlit as st
 from c_support.a_api_functions import get_club_name_user_input
 
+# This function defines the process of asking questions 
 def handle_question_selection(question_template):
     
     col1, col2 = st.columns([4, 1])
@@ -18,24 +19,25 @@ def handle_question_selection(question_template):
     "Scottish Premiership": "SC1",
     "Liga Portugal": "PO1",
     "Eredivisie": "NL1", 
-    "Jupiler Pro League": "BE1", # Belgische Liga
-    "Chance Liga": "TS1", # Tschechische Liga
-    "SuperSport HNL": "KR1", # Kroatische Liga
+    "Jupiler Pro League": "BE1", # Belgian league
+    "Chance Liga": "TS1", # Czech league
+    "SuperSport HNL": "KR1", # Croatian League
     }
     
+    # First question is processed
     if question_template == "Are you currently playing for ...?":
         st.session_state.user_input = False
         with col1:
-            st.session_state.user_input = col1.text_input("Enter my club name:")
+            st.session_state.user_input = col1.text_input("Enter my club name:") # User Input
         with col2:
             st.write("")
             st.write("")
             enter = st.button("Confirm")
         if enter:
-            if st.session_state.user_input:  # Prüfen, ob Eingabe existiert
-                # gibt club id als liste zurück
+            if st.session_state.user_input:  # Checking if Input really exists
+                # returning club as ID list
                 st.session_state.selected = [get_club_name_user_input(st.session_state.user_input)[0]]
-                # gibt club namen zurück
+                # returns club name 
                 st.session_state.exact_input = get_club_name_user_input(st.session_state.user_input)[1]
                 st.session_state.index = "club_id"
                 st.session_state.question_procedure = False
@@ -44,11 +46,12 @@ def handle_question_selection(question_template):
                 st.rerun()
             else:
                 with col1:
-                    st.warning("Please enter an input before confirming.")
-                          
+                    st.warning("Please enter an input before confirming.") #if user input does not fit 
+
+    #second question processing                      
     elif question_template == "Are you currently playing in ...?":
         st.session_state.user_input = False
-        with col1:
+        with col1: # list of all the leagues for the game
             st.session_state.user_input = col1.selectbox(
             "Choose a league:",
             ["", "Premier League", "Bundesliga", "Serie A", 
@@ -71,7 +74,7 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-                
+    #third question           
     elif question_template == "Do you come from ...?":
         st.session_state.user_input = False
         with col1:
@@ -92,7 +95,8 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-            
+    
+    #fourth question        
     elif question_template == "Did you use to play for ...?":
         st.session_state.user_input = False
         with col1:
@@ -103,9 +107,9 @@ def handle_question_selection(question_template):
             enter = st.button("Confirm")
         if enter:
             if st.session_state.user_input:
-                # gibt alte club id als liste zurück
+                # returns former club ID as list
                 st.session_state.selected = [get_club_name_user_input(st.session_state.user_input)[0]]
-                # gibt alten club namen zurück
+                # returns former club name 
                 st.session_state.exact_input = get_club_name_user_input(st.session_state.user_input)[1]
                 st.session_state.index = "old_clubs_ids"
                 st.session_state.question_procedure = False
@@ -116,6 +120,7 @@ def handle_question_selection(question_template):
                 with col1:
                     st.warning("Please enter an input before confirming.")
     
+    #fifth question
     elif question_template == "Are you a ... winner?":
         st.session_state.user_input = False
         with col1:
@@ -139,7 +144,8 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-            
+    
+    #sixth question       
     elif question_template == "Are you ... years old?":
         st.session_state.user_input = False
         with col1:
@@ -164,10 +170,11 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-                
+    
+    #seventh question           
     elif question_template == "Is your position ...?":
         st.session_state.user_input = False
-        with col1:
+        with col1: # List of positions available to chose from
             st.session_state.user_input = col1.selectbox(
             "Choose a main position:",
             ["Goalkeeper", "Defender", "Midfielder", "Striker"]
@@ -189,7 +196,7 @@ def handle_question_selection(question_template):
                 with col1:
                     st.warning("Please enter an input before confirming.")
                     
-                    
+    #eighth question              
     elif question_template == "Do you currently wear the shirt number ...?":
         st.session_state.user_input = False
         with col1:
@@ -210,7 +217,8 @@ def handle_question_selection(question_template):
             else:
                 with col1:
                     st.warning("Please enter an input before confirming.")
-        
+
+    #ninth question    
     elif question_template == "Are you ...cm tall?":
         st.session_state.user_input = False
         with col1:

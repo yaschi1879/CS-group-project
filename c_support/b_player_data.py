@@ -1,11 +1,14 @@
 import sys
 import os
+
+# Add the parent directory to the system path so Python can find other modules in the project
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import random
+import random #for generating random values
 from c_support.a_api_functions import get_profile, get_league, get_transfer_history, get_achievements, get_stadium_name
 
 def classify_position(position):
+    #  Groups player positions into these categories: Goalkeeper, Defender, Midfielder und Striker
     if "Goalkeeper" in position:
         return "Goalkeeper"
     elif "Back" in position:
@@ -14,9 +17,14 @@ def classify_position(position):
         return "Midfielder"
     elif "Winger" in position or "Forward" in position or "Striker" in position:
         return "Striker"
-# sortiert die Positionen zu: Goalkeeper, Defender, Midfielder und Striker
+
 
 def sort_titles(player_id):
+    # Goes through all titles and returns a list of these titles (if won):
+    # [WC, EC, CL, league]
+    # "league" refers to a title in a top 5 league, but it doesn't specify which one
+    # Returns "none" if none of these titles were won
+
     achievements = get_achievements(player_id)
     titles = []
     for i in achievements:
@@ -32,12 +40,10 @@ def sort_titles(player_id):
     if not titles:
         return ["none"]
     return list(set(titles))
-# geht durch alle Titel durch und retourniert eine Liste mit folgenden Titeln (falls diese gewonnen wurden)
-# [WC, EC, CL, league]
-# mit league ist der Titel in einer Top 5 Liga gemeint, aber nicht spezifiziert in welcher Liga
-# falls keiner dieser Titel gwonnen wurde, wird "none" retourniert
+
 
 def stadium_name(player_id):
+    # returns the name of a random stadium, in which the player has played before
     old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
     while len(old_clubs) > 0:
         random_club = random.choice(old_clubs)
@@ -48,7 +54,7 @@ def stadium_name(player_id):
     if len(old_clubs) == 0:
         return "no old stadium"
     
-# gibt den stadion namen eines zufälligen alten clubs zurück
+
 
 def player_dictionary(player_id):
     player_dictionary = {}
@@ -67,28 +73,28 @@ def player_dictionary(player_id):
     player_dictionary["name"] = profile["name"]
     player_dictionary["age"] = int(profile["age"])
     player_dictionary["height"] = int(float(profile["height"].replace(",", ".").replace("m", "")) * 100)
-    # gibt grösse in centimeter als integer zurück
+    # returns the height in centimeters as an integer
     player_dictionary["image"] = profile["imageURL"]
     player_dictionary["country"] = profile["citizenship"][0]
     player_dictionary["classified_position"] = classify_position(profile["position"]["main"])
-    # gibt klassifizierte position zurück
+    # returns classified position 
     player_dictionary["position"] = [profile["position"]["main"]] + profile["position"].get("other", [])
-    # achtung!!! gibt mehrere positionen als liste zurück
-    # falls der spieler keine andere positionen hat, bleibt es bei der Hauptposition
+    # Attention!! returns more positions as a list 
+    # if the player does not have more than one position, only the main position is returned
     player_dictionary["shirt_number"] = profile["shirtNumber"].replace("#", "")
     player_dictionary["club_id"] = club_id
     player_dictionary["club_name"] = club_name
     player_dictionary["league_id"] = league[0]
     player_dictionary["league_name"] = league[1]
     player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in old_clubs]
-    # gibt die club id's aller ehemaligen clubs als liste zurück
+    # returns the club id`s of all of the player`s former clubs 
     player_dictionary["old_clubs_name"] = [i["from"]["clubName"] for i in old_clubs]
-    # gibt die club namen aller ehemaligen clubs als liste zurück
+    # returns the club names of all of the players former clubs
     player_dictionary["titles"] = sort_titles(player_id)
     
     player_dictionary["old_stadium"] = stadium_name(player_id)
     player_dictionary["foot"] = profile["foot"]
     player_dictionary["joined_date"] = profile["club"]["joined"]
-    # werden als Startpunkt verwendet
+    # these are used as the starting point of the game. First facts to know in which direction it makes sense to aks the questions
     
     return player_dictionary

@@ -3,14 +3,15 @@ import pandas as pd
 import plotly.graph_objects as go
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Include the parent directory in the system path to access project modules
 from c_support.b_player_data import player_dictionary
 from c_support.a_api_functions import get_player_name_user_input, get_marketvalue_history
 from d_machine_learning.ml_d_forecast import forecast
 
 def searchbar():
+    # Header for the search engine page
     st.header("Search Engine")
-    col1, col2 = st.columns([3,1])
+    col1, col2 = st.columns([3,1]) # Columns for search input and button
 
     with col1:
         user_input = st.text_input ("Enter what you want to search for:", label_visibility="collapsed", placeholder="Type something...")
@@ -19,22 +20,22 @@ def searchbar():
 
     if search_button:
         with st.spinner ("Searching for player... ⚽"):
-            player_id = get_player_name_user_input(user_input)[0]
+            player_id = get_player_name_user_input(user_input)[0] # Retrieve player ID based on user input
         if player_id == "n.a.":
             st.warning(f"no active player found for: {user_input}")
         else:
             with st.spinner ("Gathering data... ⚽"):
-                player = player_dictionary(player_id)
+                player = player_dictionary(player_id) # Fetch player data
                 st.write(f"search result for: {user_input}")
 
             if isinstance(player, dict):
                 # If the `player` dictionary itself represents the result
-                if player_id in player.get("id", ""):  # Safely check if the ID matches
-                    # Spielerinfo als Überschrift und Bild
+                if player_id in player.get("id", ""):  # Validate the player ID
+                    # Display player info as title and image
                     st.title(player["name"])
                     st.image(player["image"], caption=f"{player['name']} ({player['classified_position']})", width=250)
 
-                    # Informationen in zwei Spalten aufteilen
+                     # Split information into two columns
                     col1, col2 = st.columns(2)
 
                     with col1:
@@ -55,7 +56,7 @@ def searchbar():
                         - *League:* {player['league_name']}
                         """)
 
-                    # Positionen und Erfolge als separate Abschnitte
+                    # Display positions and titles
                     st.subheader("Position:")
                     st.markdown(", ".join(player["position"]))
 
@@ -74,15 +75,15 @@ def searchbar():
         st.subheader("Market Value:")
         try:
             with st.spinner ("Loading market value ... ⚽"):
-                market_value = get_marketvalue_history(player_id) 
+                market_value = get_marketvalue_history(player_id) # Retrieve market value history
                 last_market_value = market_value[len(market_value)-1]["value"]
                 market_value.append({"date": "Dec 12, 2024", "value": last_market_value})
 
-                # Prüfe, ob Daten vorhanden sind
+                # Checking if Data is available or exists
                 if market_value == "n.a.":
                     st.warning("No market value data available.")
                 else:
-                    # Daten in ein DataFrame umwandeln
+                    # Transform Data into a DataFrame
                     df = pd.DataFrame(market_value)
 
                     def clean_value(value):
@@ -104,15 +105,15 @@ def searchbar():
                     if df.empty or df['value'].isna().all():
                         st.warning("No valid data to display.")
                     else:
-                        # Forecast-Daten vorbereiten
-                        forecast_value = forecast(player_id)
+                        # preparing Forecast-Data
+                        forecast_value = forecast(player_id) # Forecast future market values
                         forecast_df = pd.DataFrame(forecast_value)
                         forecast_df['date'] = pd.to_datetime(forecast_df['date'], format="%b %d, %Y", errors='coerce')
 
-                        # Diagramm erstellen mit Plotly
+                        # Create a Plotly chart
                         fig = go.Figure()
 
-                        # Historische Daten hinzufügen
+                        # Add historical Data
                         fig.add_trace(go.Scatter(
                             x=df['date'],
                             y=df['value'],
@@ -121,7 +122,7 @@ def searchbar():
                             line=dict(color='blue', width=2)
                         ))
 
-                        # Prognose-Daten hinzufügen
+                        # Add forecast data
                         fig.add_trace(go.Scatter(
                             x=forecast_df['date'],
                             y=forecast_df['value'],
@@ -130,7 +131,7 @@ def searchbar():
                             line=dict(color='red', width=2, dash='dot')  # Punktierte Linie für Prognosen
                         ))
 
-                        # Layout anpassen
+                        # adjust layout
                         fig.update_layout(
                             title="Market Value Development (in Mio. EUR)",
                             xaxis_title="Date",
@@ -138,7 +139,7 @@ def searchbar():
                             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
                         )
 
-                        # Diagramm anzeigen
+                        # show diagramm
                         st.plotly_chart(fig, use_container_width=True)
 
         except Exception as e:

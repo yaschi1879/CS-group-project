@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # Include the parent directory in the system path to access project modules
 import streamlit as st
 from b_game.d_game_initialize import initialize_original_player_list
 import time
@@ -9,8 +9,8 @@ def home_page():
     st.write("")
     st.write("")
     st.write("")
-    # Titre et logo
-    col1, col2, col3 = st.columns([2, 1, 1])  # Trois colonnes : titre, logo, bouton
+    # Title and logo
+    col1, col2, col3 = st.columns([2, 1, 1])  # Three columns: title, logo, button
     with col1:
         st.title("Who am I ?")
         st.subheader("Guess. Compete. Celebrate!")
@@ -20,10 +20,10 @@ def home_page():
     with col3:
         st.write("")
 
-    # Séparation visuelle
+    # Visual separation
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
-    # Sous-titre "Concept" et description
+    # Subtitle "Concept" and description
     col1, col2 = st.columns([2, 1])
     with col1: 
         st.title("Game Concept")
@@ -50,10 +50,10 @@ def home_page():
     with col2:
         st.write("")
 
-    # Séparation visuelle
+    # Visual separation
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
-    # Sous-titre "Rules" et description
+    # Subtitle "Rules" and description
     col1, col2 = st.columns([2, 1])
     with col1: 
         st.markdown("""
@@ -109,6 +109,7 @@ def home_page():
     col1, col2, = st.columns([3, 1])
     
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
+        # Display a spinner while the original player list is being initialized
         with st.spinner("Add players once the game set up has been completed... ⚽"):
             initialize_original_player_list()
         st.success("🎉 Game Set up completed")
@@ -168,7 +169,7 @@ def home_page():
     st.write("")    
     st.markdown('<hr style="border: 1px solid #ddd;">', unsafe_allow_html=True)
 
-    # Formulaire de contact
+    # Contact form
     st.subheader("Contact")
     col1, col2, col3 = st.columns([0.5, 1, 1])
     with col1:

@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Include the parent directory in the system path to access project modules
 import streamlit as st
 import random
 import os
@@ -15,6 +15,7 @@ from d_machine_learning.ml_d_forecast import forecast
 
 
 def play_game():
+    # Randomly selects a player who meets the criteria, removing players that do not
     with st.spinner("Searching for a player... ⚽"):
         while not st.session_state.selected_player:
             player = random.choice(st.session_state.current_player_list)
@@ -25,6 +26,7 @@ def play_game():
             else:
                 st.session_state.current_player_list.remove(player)
     
+    # If player data is not yet fetched, gather it
     if not st.session_state.player_data:
         try:
             with st.spinner("Gathering data for the selected player... ⚽"):
@@ -33,12 +35,13 @@ def play_game():
             st.session_state.selected_player = []
             st.rerun()
     
-    # hier funktion die den user bestimmt
-    # speichern von user in st.session_state.player turn
+    # Display the current player's turn
+    # user saved in st.session_state.player turn
     st.title((f"{st.session_state.users[st.session_state.player_turn]}, It's Your Turn!"))
     st.write("")
     
     col1, col2 = st.columns([1, 3])
+    # Show hint or solution image
     if st.session_state.show_solution == False and st.session_state.solution_true == False:
         with col1:
             image_path = os.path.join("b_game", "questionmark.png")
@@ -53,6 +56,7 @@ def play_game():
             st.image(st.session_state.player_data["image"], caption=f"I am {st.session_state.player_data['name']}", width=150)
     
     with col2:
+        # Display player hints
         with st.container():
             st.subheader("Hints:")
             st.markdown(f"""
@@ -60,7 +64,8 @@ def play_game():
                         - I joined my current club on {st.session_state.player_data["joined_date"]}
                         - I have played in this stadium: {st.session_state.player_data["old_stadium"]}
                         """)
-    
+            
+    # Display player stats (lives and points)
     col1, col2, col3 = st.columns([1, 1, 0.5])
     
     with st.container():
@@ -73,7 +78,7 @@ def play_game():
         st.write("")
 
     col1, col2 = st.columns([4, 1]) 
-    with col1:
+    with col1: # selectbox with thw questions that are available to choose from
         question_template = st.selectbox(
         "Choose a question",
         ["",
@@ -89,11 +94,12 @@ def play_game():
         )
     st.session_state.question_chosen = question_template
     
+    # Handle question selection and response
     if st.session_state.question_chosen:
         st.session_state.question_procedure = True
     
     if st.session_state.question_procedure == True:
-        # wechsel auf b_questions file
+        # change to b_questions file
         handle_question_selection(st.session_state.question_chosen)
         
     if st.session_state.check == True:
@@ -133,7 +139,7 @@ def play_game():
     st.write("")
     st.write("")
     st.write("")
-    st.subheader("Questions asked so far:")  # Subheader verwenden
+    st.subheader("Questions asked so far:")  # Display list of asked questions
     if st.session_state.questions:
         questions_list = "\n".join(
         [f"{i}. {question}" for i, question in enumerate(reversed(st.session_state.questions), start=1)]
@@ -143,7 +149,7 @@ def play_game():
     st.write("")
     st.write("")
     st.write("")
-    st.subheader("Guess the Player")
+    st.subheader("Guess the Player") #Handle player guesses
     
     col1, col2 = st.columns([4, 1])
     with col1:
@@ -159,14 +165,14 @@ def play_game():
             st.warning("No player found, please try again.")
         elif st.session_state.lives > 0:
             if guessed_player_id == st.session_state.player_data["id"]:
-                # Spieler korrekt erraten
+                # Player guessed correctly
                 st.balloons()
                 time.sleep(2)
                 st.session_state.solution_true = True
                 st.rerun()
             
             else:
-                # Spieler nicht korrekt erraten
+                # Player not guessed correctly
                 st.session_state.lives -= 1
                 if st.session_state.lives > 0:
                     col1, col2 = st.columns([4,1])
@@ -185,6 +191,7 @@ def play_game():
             st.session_state.show_solution = True
             st.rerun()
     
+    # That will be shown when user guesses player correctly and game asks for a second round
     if st.session_state.solution_true == True:
         st.success(f"🎉 Congratulations, I am {st.session_state.player_data["name"]}! Continue with guessing my future market value")
         st.write("")
@@ -200,7 +207,7 @@ def play_game():
             st.session_state.ml_clicked = st.button("Guess")
             
     if st.session_state.show_solution == True:
-        st.error("❌ Game over! Continue with guessing the future market value")
+        st.error("❌ Game over! Continue with guessing the future market value") # This is shown when user does not guess player correctly and has no lives left
         if st.session_state.points > 0:
             st.session_state.points = 0
             st.rerun()
@@ -216,7 +223,7 @@ def play_game():
             st.write("")
             st.session_state.ml_clicked = st.button("Guess")
         
-    if st.session_state.ml_clicked:
+    if st.session_state.ml_clicked: # Processing of the future market value input by the user
         if st.session_state.ml_question:
             with st.spinner("Checking your answer... ⚽"):
                 solution = forecast(str(st.session_state.selected_player))[1]["value"]
@@ -226,9 +233,11 @@ def play_game():
                 percent_off = round(abs(int(st.session_state.ml_question) - solution) / solution * 100, 2)
                 if lower_bound <= int(st.session_state.ml_question) <= upper_bound:
                     points_total = st.session_state.points + 10
+                    # If estimated market value is guessed correctly
                     st.success(f"🎉 Congratulations! My estimated market value for December 2025 is €{solution}m, you were off by {percent_off}%")
                 else:
                     points_total = st.session_state.points
+                    # If estimated market value is guessed wrong
                     st.error(f"❌ Wrong! My estimated market value for December 2025 is €{solution}m, you were off by {percent_off}%")
                 st.info(f"{st.session_state.users[st.session_state.player_turn]}, you earned {points_total} points this round. Choose one of the options below to continue")
                 st.session_state.points_total[st.session_state.player_turn] += points_total
@@ -241,21 +250,24 @@ def play_game():
     st.write("")
     st.write("")
     st.write("")
+
+    # Game control
     with st.container():
         col1, col2, col3, col4 = st.columns([1, 1.1, 1, 0.75])     
         with col1:
-            # Button zum Verlassen des Spiels
+            # Button for leaving the game
             if st.button("Reset the Game"):
                 st.session_state.game_started = False
                 st.rerun()
 
         with col2:
-            # Button zum Wechseln der Schwierigkeit
+            # Button for changing the Difficulty level
             if st.button("Change Difficulty"):
                 st.session_state.change_difficulty = True
                 st.rerun()
         
         with col3:
+            # Button to show solution
             if st.button("Show Solution"):
                 st.session_state.lives = 0
                 st.session_state.points = 0
@@ -263,12 +275,13 @@ def play_game():
                 st.rerun()
 
         with col4:
-            # Button für die nächste Runde
+            # Button for the next round
             if st.button("Next Round"):
                 initialize_game_variables()
                 determine_next_turn()
                 st.rerun()
-            
+    
+    # Handle difficulty change during game play
     if st.session_state.change_difficulty == True:
         difficulty = st.selectbox(
         "Select Difficulty:",

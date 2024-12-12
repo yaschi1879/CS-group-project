@@ -1,19 +1,24 @@
 import sys
 import os
+
+# Add the parent directory to the system path so Python can find other modules in the project
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import requests
+import requests # Library for making HTTP requests
 
 def get_stadium_name(club_id):
+    #returns stadium name, if this information is missing, it returns false
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
     club_info = response.json()
     stadium_name = club_info.get("stadiumName", "n.a.")
     return stadium_name
 
-# gibt stadion name zurück, falls diese info fehlt, gibt sie false zurück
+
 
 def get_club_players(club_id, season_id="2024"):
+   # Returns a list of player IDs for the club, defaulting to the current season
+    # club_id as an integer, season_id as a string
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/players"
     response = requests.get(url, season_id)
     club_players = response.json()
@@ -22,10 +27,14 @@ def get_club_players(club_id, season_id="2024"):
     for players in club_players:
         club_player_id.append(players["id"])
     return club_player_id
-# gibt die jeweiligen Spieler ID's des Clubs als Liste zurück, mit default aktuelle Saison
-# club_id als integer, season_id als string
+
 
 def get_filter_criteria(player_id):
+    # Returns market value in millions as a float, e.g., 10.34, with value in Euros
+    # If no market value is available, returns "not_available"
+    # Returns age as an integer; player_id is an integer
+    # Gets a player's market value and age. Converts value to millions if applicable.
+
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/profile"
     response = requests.get(url)
     player_profile = response.json()
@@ -39,12 +48,14 @@ def get_filter_criteria(player_id):
         market_value = "n.a."
     age = int(player_profile["age"])
     return [market_value, age]
-# gibt Markwert in mio als float zurück z.B. 10.34, Markwert ist in Euro
-# falls kein market value vorhanden, wird "not_available" zurückgegeben
-# gibt Alter als integer zurück
-# player_id als integer
+
 
 def get_club_name_user_input(club_name):
+    # Searches for a club by name and returns its ID and official name.
+    # Item 0 returns the correct club ID
+    # Item 1 returns the correct club name
+    # club_name as a string
+
     url = f"https://transfermarkt-api.fly.dev/clubs/search/{club_name}"
     response = requests.get(url)
     clubs = response.json()["results"]
@@ -52,11 +63,14 @@ def get_club_name_user_input(club_name):
         return ["n.a.", "n.a."]
     
     return [clubs[0]["id"], clubs[0]["name"]]
-# item 0 gibt die korrekte club id zurück
-# item 1 gibt den korrekten club namen zurück
-# club_name als string
+
 
 def get_player_name_user_input(player_name):
+    # Searches for a player by name and returns their ID and name if not retired.
+    # Item 0 returns the correct player ID
+    # Item 1 returns the correct player name
+    # player_name as a string
+
     url = f"https://transfermarkt-api.fly.dev/players/search/{player_name}"
     response = requests.get(url)
     players = response.json()["results"]
@@ -69,11 +83,14 @@ def get_player_name_user_input(player_name):
             return [current_player["id"], current_player["name"]]
     else:
         return ["n.a.", "n.a."]
-# item 0 gibt die korrekte player id zurück
-# item 1 gibt den korrekten player namen zurück
-# player_name als string
+
 
 def get_league(club_id):
+    # Retrieves league ID and name for a given club. Returns 'n.a.' if unavailable.
+    # Returns the league of the club as a list
+    # Item 0 -> League ID
+    # Item 1 -> League Name
+
     url = f"https://transfermarkt-api.fly.dev/clubs/{club_id}/profile"
     response = requests.get(url)
     league = response.json()
@@ -82,18 +99,20 @@ def get_league(club_id):
     except:
         data = ["n.a.", "none"]
     return data
-# gibt die Liga des clubs als Liste zrück
-# item = 0 -> Liga ID
-# item = 1 -> Liga Name
 
-# geben jeweils 1 zu 1 das von API wieder:
-# player_id als integer
+
+# Directly returns the data from the API as is
+# player_id as an integer
 def get_profile(player_id):
+    # Retrieves the full profile of a player based on their ID.
+
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/profile"
     response = requests.get(url)
     return response.json()
 
 def get_marketvalue_history(player_id):
+    # Retrieves the market value history of a player. Returns 'n.a.' if unavailable.
+
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/market_value"
     response = requests.get(url)
     history = response.json()
@@ -104,17 +123,23 @@ def get_marketvalue_history(player_id):
     return values
 
 def get_transfer_history(player_id):
+    # Retrieves the transfer history of a player as a list of records.
+    #returns list of transfers
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/transfers"
     response = requests.get(url)
     return response.json()["transfers"]
-# gibt liste der transfers zurück
+
 
 def get_stats(player_id):
+    # Retrieves detailed statistics of a player from their profile.
+    
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/stats"
     response = requests.get(url)
     return response.json()["stats"]
 
 def get_achievements(player_id):
+# Retrieves a player's achievements. Returns placeholder if unavailable.
+
     url = f"https://transfermarkt-api.fly.dev/players/{player_id}/achievements"
     response = requests.get(url)
     try:
