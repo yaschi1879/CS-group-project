@@ -119,7 +119,7 @@ def home_page():
     
     if "original_player_list" not in st.session_state or not st.session_state.original_player_list:
         # Display a spinner while the original player list is being initialized
-        with st.spinner("Add players once the game set up has been completed (it takes about 1min)... ⚽"):
+        with st.spinner("Add players once the game set up has been completed (takes about 1min)... ⚽"):
             # this function is saved on b_game.d_game_initialize
             initialize_original_player_list()
         st.success("🎉 Game Set up completed")
