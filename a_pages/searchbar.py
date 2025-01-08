@@ -96,11 +96,7 @@ def searchbar():
                     df = pd.DataFrame(market_value)
 
                     def clean_value(value):
-                        value = value.replace('€', '').replace(',', '')
-                        if 'm' in value:
-                            return float(value.replace('m', ''))
-                        elif 'k' in value:
-                            return float(value.replace('k', '')) / 1000
+                        return value
 
                     df["value"] = df["value"].apply(lambda x: clean_value(x) if isinstance(x, str) else None)
                     df['date'] = pd.to_datetime(df['date'], format="%b %d, %Y", errors='coerce')

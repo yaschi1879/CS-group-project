@@ -15,11 +15,7 @@ from c_support.a_api_functions import get_marketvalue_history
 
 # Function to clean and standardize market value strings
 def clean_value(value):
-    value = value.replace('€', '').replace(',', '')
-    if 'm' in value:
-        return float(value.replace('m', ''))
-    elif 'k' in value:
-        return float(value.replace('k', '')) / 1000
+    return value
 
 # Regression data
 # market_value t+1 = β0 + β1*market_value t + β2*u25 + β3*o30 + β4*diff_market_value + B5*huge_diff + ϵ

@@ -51,14 +51,10 @@ def get_filter_criteria(player_id):
     response = requests.get(url)
     player_profile = response.json()
     if "marketValue" in player_profile:
-        market_value = player_profile["marketValue"].replace("€", "")
-        if "m" in market_value:
-            market_value = float(market_value.replace("m", ""))
-        elif "k" in market_value:
-            market_value = float(market_value.replace("k", "")) / 1000
+        market_value = player_profile["marketValue"]
     else:
         market_value = "n.a."
-    age = int(player_profile["age"])
+    age = player_profile["age"]
     return [market_value, age]
 
 
