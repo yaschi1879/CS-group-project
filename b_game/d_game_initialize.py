@@ -21,6 +21,8 @@ club_list = [281, 418, 27, 31, 12, 583, 16, 631, 46, 1050, 15, 985, 131, 294, 72
             13, 23826, 379, 800, 11, 506, 5, 610, 6195, 2282, 398, 24, 368, 124, 
             234, 681, 383, 336, 62, 244, 1082, 419, 430, 1090, 148]
 
+club_list_test = [281, 418, 27]
+
 
 def generate_player_list(list):
     # Generates a list of players by retrieving all players playing for the club for each club in the provided list
@@ -31,11 +33,13 @@ def generate_player_list(list):
         # Add players to the cumulative list
         player_list.extend(players) 
     return player_list
+
+print(generate_player_list(club_list))
     
 
 def initialize_original_player_list():
     # Initializes the original player list in the session state
-    st.session_state.original_player_list = generate_player_list(club_list)
+    st.session_state.original_player_list = generate_player_list(club_list_test)
     
 def initialize_game_variables():
     # Sets initial values for game-related variables in the session state
