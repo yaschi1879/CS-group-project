@@ -79,8 +79,8 @@ def player_dictionary(player_id):
         
     player_dictionary["id"] = profile["id"]
     player_dictionary["name"] = profile["name"]
-    player_dictionary["age"] = float["age"]
-    player_dictionary["height"] = float(profile["height"])
+    player_dictionary["age"] = int["age"]
+    player_dictionary["height"] = int(profile["height"])
     # returns the height in centimeters as an integer
     player_dictionary["image"] = profile["imageURL"]
     player_dictionary["country"] = profile["citizenship"][0]
