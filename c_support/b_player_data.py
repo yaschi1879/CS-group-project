@@ -52,7 +52,7 @@ def sort_titles(player_id):
 
 def stadium_name(player_id):
     # returns the name of a random stadium, in which the player has played before
-    old_clubs = [i["from"]["clubID"] for i in get_transfer_history(player_id)]
+    old_clubs = [i["clubFrom"]["id"] for i in get_transfer_history(player_id)]
     while len(old_clubs) > 0:
         random_club = random.choice(old_clubs)
         old_clubs.remove(random_club)
