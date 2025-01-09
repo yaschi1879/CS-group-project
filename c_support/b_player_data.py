@@ -94,7 +94,7 @@ def player_dictionary(player_id):
     player_dictionary["club_name"] = club_name
     player_dictionary["league_id"] = league[0]
     player_dictionary["league_name"] = league[1]
-    player_dictionary["old_clubs_ids"] = [i["from"]["clubID"] for i in old_clubs]
+    player_dictionary["old_clubs_ids"] = [i["clubFrom"]["id"] for i in old_clubs]
     # returns the club id`s of all of the player`s former clubs 
     player_dictionary["old_clubs_name"] = [i["from"]["clubName"] for i in old_clubs]
     # returns the club names of all of the players former clubs
