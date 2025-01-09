@@ -82,7 +82,7 @@ def player_dictionary(player_id):
     player_dictionary["age"] = profile["age"]
     player_dictionary["height"] = profile["height"]
     # returns the height in centimeters as an integer
-    player_dictionary["image"] = profile["imageURL"]
+    player_dictionary["image"] = profile["imageUrl"]
     player_dictionary["country"] = profile["citizenship"][0]
     player_dictionary["classified_position"] = classify_position(profile["position"]["main"])
     # returns classified position 
